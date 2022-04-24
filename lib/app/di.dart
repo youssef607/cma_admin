@@ -7,7 +7,6 @@ import 'package:cma_admin/domain/repository/repository.dart';
 import 'package:cma_admin/domain/usecase/signIn_usecase.dart';
 import 'package:cma_admin/presentation/signIn/signIn_view_model.dart';
 import 'package:get_it/get_it.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_prefs.dart';
@@ -24,9 +23,9 @@ Future<void> initAppModule() async {
   instance
       .registerLazySingleton<AppPreferences>(() => AppPreferences(instance()));
 
-  // // network info
-  instance.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoImpl(InternetConnectionChecker()));
+  // // // network info
+  // instance.registerLazySingleton<NetworkInfo>(
+  //     () => NetworkInfoImpl(InternetConnectionChecker()));
 
   // dio factory
   instance.registerLazySingleton<DioFactory>(() => DioFactory(instance()));
@@ -37,8 +36,7 @@ Future<void> initAppModule() async {
 
   // // //repo
   // // repository
-  instance.registerLazySingleton<Repository>(
-      () => RepositoryImpl(instance(), instance()));
+  instance.registerLazySingleton<Repository>(() => RepositoryImpl(instance()));
 
   // // remote data source
   instance.registerLazySingleton<RemoteDataSource>(

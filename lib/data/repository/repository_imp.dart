@@ -9,23 +9,23 @@ import 'package:dartz/dartz.dart';
 
 class RepositoryImpl extends Repository {
   RemoteDataSource _remoteDataSource;
-  NetworkInfo _networkInfo;
-  RepositoryImpl(this._networkInfo, this._remoteDataSource);
+  // NetworkInfo _networkInfo;
+  RepositoryImpl(this._remoteDataSource);
 
   @override
   Future<Either<Failure, SignInData>> signIn(
       String userName, String password) async {
-    if (await _networkInfo.isConnected) {
-      try {
-        // its safe to call API
-        final response = await _remoteDataSource.signIn(userName, password);
+    // if (await _networkInfo.isConnected) {
+    try {
+      // its safe to call API
+      final response = await _remoteDataSource.signIn(userName, password);
 
-        return Right(response.toDomain());
-      } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
-      }
-    } else {
-      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
     }
   }
+  // else {
+  //   return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  // }
 }
