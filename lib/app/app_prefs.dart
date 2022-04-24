@@ -8,6 +8,7 @@ const String PREFS_KEY_ONBOARDING_SCREEN = "PREFS_KEY_ONBOARDING_SCREEN";
 const String PREFS_KEY_IS_USER_LOGGED_IN = "PREFS_KEY_IS_USER_LOGGED_IN";
 const String PREFS_KEY_TOKEN = "PREFS_KEY_TOKEN";
 const String PREFS_KEY_ROLE = "PREFS_KEY_ROLE";
+const String PREFS_KEY_CURRENT_USER_ID = "PREFS_KEY_CURRENT_USER_ID";
 
 class AppPreferences {
   SharedPreferences _sharedPreferences;
@@ -70,6 +71,14 @@ class AppPreferences {
 
   Future<String> getUserRole() async {
     return _sharedPreferences.getString(PREFS_KEY_ROLE) ?? EMPTY;
+  }
+
+  Future<void> setCurrentUserId(int id) async {
+    _sharedPreferences.setInt(PREFS_KEY_CURRENT_USER_ID, id);
+  }
+
+  Future<int> getCurrentUserId() async {
+    return _sharedPreferences.getInt(PREFS_KEY_CURRENT_USER_ID) ?? ZERO;
   }
 
   Future<void> setIsUserLoggedIn() async {

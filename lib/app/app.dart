@@ -1,6 +1,5 @@
 import 'package:cma_admin/presentation/resources/routes_manager.dart';
 import 'package:cma_admin/presentation/resources/theme_manager.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -29,11 +28,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: RouteGenerator.getRoute,
-      initialRoute: Routes.homeRoute,
+      initialRoute: Routes.loginRoute,
       theme: getApplicationTheme(),
     );
   }
