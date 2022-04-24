@@ -42,7 +42,7 @@ class _SignInViewState extends State<SignInView> {
         _appPreferences.setUserToken(dataa.token.toString());
         _appPreferences.setIsUserLoggedIn();
         _appPreferences.setUserRole(dataa.user!.role);
-        // _appPreferences.setCurrentUserId(dataa.user!.id);
+        _appPreferences.setCurrentUserId(dataa.user!.id);
 
         resetModules();
         if (dataa.user?.role == Constant.BARMAN) {
@@ -90,82 +90,101 @@ class _SignInViewState extends State<SignInView> {
   Widget _getContentWidget() {
     return Container(
         padding: EdgeInsets.only(top: AppPadding.p100),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Image(image: AssetImage(ImageAssets.signInImage)),
-                SizedBox(height: AppSize.s28),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: AppPadding.p28, right: AppPadding.p28),
-                  child: StreamBuilder<bool>(
-                    stream: _viewModel.outputIsUserNameValid,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: _userNameController,
-                        decoration: InputDecoration(
-                            hintText: AppStrings.username,
-                            labelText: AppStrings.username,
-                            errorText: (snapshot.data ?? true)
-                                ? null
-                                : AppStrings.usernameError),
-                      );
-                    },
+        child: Row(
+          children: [
+            Expanded(
+                flex: 1,
+                child: Image(
+                  image: AssetImage(
+                    ImageAssets.signInImage,
                   ),
-                ),
-                SizedBox(height: AppSize.s28),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: AppPadding.p28, right: AppPadding.p28),
-                  child: StreamBuilder<bool>(
-                    stream: _viewModel.outputIsPasswordValid,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                            hintText: AppStrings.password,
-                            labelText: AppStrings.password,
-                            errorText: (snapshot.data ?? true)
-                                ? null
-                                : AppStrings.passwordError),
-                      );
-                    },
+                  fit: BoxFit.contain,
+                )),
+            SizedBox(height: AppSize.s28),
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: AppPadding.p28, right: AppPadding.p28),
+                            child: StreamBuilder<bool>(
+                              stream: _viewModel.outputIsUserNameValid,
+                              builder: (context, snapshot) {
+                                return TextFormField(
+                                  keyboardType: TextInputType.emailAddress,
+                                  controller: _userNameController,
+                                  decoration: InputDecoration(
+                                      hintText: AppStrings.username,
+                                      labelText: AppStrings.username,
+                                      errorText: (snapshot.data ?? true)
+                                          ? null
+                                          : AppStrings.usernameError),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(height: AppSize.s28),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: AppPadding.p28, right: AppPadding.p28),
+                            child: StreamBuilder<bool>(
+                              stream: _viewModel.outputIsPasswordValid,
+                              builder: (context, snapshot) {
+                                return TextFormField(
+                                  keyboardType: TextInputType.visiblePassword,
+                                  controller: _passwordController,
+                                  decoration: InputDecoration(
+                                      hintText: AppStrings.password,
+                                      labelText: AppStrings.password,
+                                      errorText: (snapshot.data ?? true)
+                                          ? null
+                                          : AppStrings.passwordError),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(height: AppSize.s28),
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  left: AppPadding.p28, right: AppPadding.p28),
+                              child: StreamBuilder<bool>(
+                                stream: _viewModel.outputIsAllInputsValid,
+                                builder: (context, snapshot) {
+                                  return SizedBox(
+                                    width: double.infinity,
+                                    height: AppSize.s40,
+                                    child: ElevatedButton(
+                                        onPressed: (snapshot.data ?? false)
+                                            ? () {
+                                                _viewModel.login();
+                                              }
+                                            : null,
+                                        child: Text(AppStrings.login)),
+                                  );
+                                },
+                              )),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: AppPadding.p8,
+                              left: AppPadding.p28,
+                              right: AppPadding.p28,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(height: AppSize.s28),
-                Padding(
-                    padding: EdgeInsets.only(
-                        left: AppPadding.p28, right: AppPadding.p28),
-                    child: StreamBuilder<bool>(
-                      stream: _viewModel.outputIsAllInputsValid,
-                      builder: (context, snapshot) {
-                        return SizedBox(
-                          width: double.infinity,
-                          height: AppSize.s40,
-                          child: ElevatedButton(
-                              onPressed: (snapshot.data ?? false)
-                                  ? () {
-                                      _viewModel.login();
-                                    }
-                                  : null,
-                              child: Text(AppStrings.login)),
-                        );
-                      },
-                    )),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: AppPadding.p8,
-                    left: AppPadding.p28,
-                    right: AppPadding.p28,
-                  ),
-                ),
-              ],
-            ),
-          ),
+                ],
+              ),
+            )
+          ],
         ));
   }
 }
