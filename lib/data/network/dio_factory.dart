@@ -32,6 +32,9 @@ class DioFactory {
         baseUrl: Constant.baseUrl,
         connectTimeout: _timeOut,
         receiveTimeout: _timeOut,
+        receiveDataWhenStatusError: true,
+        followRedirects: true,
+        responseType: ResponseType.json,
         headers: headers);
 
     if (kReleaseMode) {
@@ -39,9 +42,10 @@ class DioFactory {
     } else {
       dio.interceptors.add(PrettyDioLogger(
           requestHeader: true,
-          requestBody: false,
+          requestBody: true,
           responseHeader: true,
-          responseBody: false));
+          error: true,
+          responseBody: true));
     }
 
     return dio;

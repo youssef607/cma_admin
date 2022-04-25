@@ -37,23 +37,26 @@ class _SignInViewState extends State<SignInView> {
 
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream.listen((data) {
       SchedulerBinding.instance?.addPostFrameCallback((_) {
-        SignInData dataa = data;
+        // SignInData dataa = data;
+        Navigator.pushNamedAndRemoveUntil(
+            context, Routes.homeRoute, ModalRoute.withName('/'),
+            arguments: 0);
 
-        _appPreferences.setUserToken(dataa.token.toString());
-        _appPreferences.setIsUserLoggedIn();
-        _appPreferences.setUserRole(dataa.user!.role);
-        _appPreferences.setCurrentUserId(dataa.user!.id);
+        // _appPreferences.setUserToken(dataa.token.toString());
+        // _appPreferences.setIsUserLoggedIn();
+        // _appPreferences.setUserRole(dataa.user!.role);
+        // _appPreferences.setCurrentUserId(dataa.user!.id);
 
-        resetModules();
-        if (dataa.user?.role == Constant.BARMAN) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, Routes.homeRoute, ModalRoute.withName('/'),
-              arguments: 0);
-        } else if ((dataa.user?.role == Constant.WAITER)) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, Routes.homeRoute, ModalRoute.withName('/'),
-              arguments: 0);
-        }
+        // resetModules();
+        // if (dataa.user?.role == Constant.BARMAN) {
+        //   Navigator.pushNamedAndRemoveUntil(
+        //       context, Routes.homeRoute, ModalRoute.withName('/'),
+        //       arguments: 0);
+        // } else if ((dataa.user?.role == Constant.WAITER)) {
+        //   Navigator.pushNamedAndRemoveUntil(
+        //       context, Routes.homeRoute, ModalRoute.withName('/'),
+        //       arguments: 0);
+        // }
       });
     });
   }
