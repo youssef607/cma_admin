@@ -41,7 +41,7 @@ ThemeData getApplicationTheme() {
               textStyle: getRegularStyle(color: ColorManager.white),
               primary: ColorManager.primary,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppSize.s12)))),
+                  borderRadius: BorderRadius.circular(AppSize.s8)))),
 
       // Text theme
       textTheme: TextTheme(
@@ -75,14 +75,14 @@ ThemeData getApplicationTheme() {
         // enabled border
         enabledBorder: OutlineInputBorder(
             borderSide:
-                BorderSide(color: ColorManager.grey, width: AppSize.s1_5),
+                BorderSide(color: ColorManager.secondry, width: AppSize.s1_5),
             borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
 
         // focused border
         focusedBorder: OutlineInputBorder(
             borderSide:
                 BorderSide(color: ColorManager.primary, width: AppSize.s1_5),
-            borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
+            borderRadius: BorderRadius.all(Radius.circular(AppSize.s4))),
 
         // error border
         errorBorder: OutlineInputBorder(

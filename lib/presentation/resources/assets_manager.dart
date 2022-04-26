@@ -4,6 +4,7 @@ const String JSON_PATH = "assets/json";
 class ImageAssets {
   static const String signInImageSVG = "$IMAGE_PATH/signIn.svg";
   static const String signInImage = "$IMAGE_PATH/signIn.png";
+  static const String resImage = "$IMAGE_PATH/restaurant.jpg";
 }
 
 class JsonAssets {
