@@ -61,4 +61,9 @@ class AppStrings {
 
   //Barman
   static const String orderDone = "order done";
+
+  //Sign IN
+  static const String welcomeAdmin = "Welcom Admin ";
+  static const String loginInYour = "Login In your account ";
+
 }

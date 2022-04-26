@@ -134,7 +134,7 @@ class _SignInViewState extends State<SignInView> {
                                   Container(
                                       height: AppSize.s35,
                                       child: Text(
-                                        "Welcom Admin ",
+                                        AppStrings.welcomeAdmin,
                                         style: getBoldStyle(
                                             color: ColorManager.black,
                                             fontSize: FontSize.s24),
@@ -142,7 +142,7 @@ class _SignInViewState extends State<SignInView> {
                                   Container(
                                       height: AppSize.s80,
                                       child: Text(
-                                        "Login In your account ",
+                                        AppStrings.loginInYour,
                                         style: getLightStyle(
                                             color: ColorManager.lightGrey,
                                             fontSize: FontSize.s14),
