@@ -1,5 +1,5 @@
 import 'package:cma_admin/app/di.dart';
-import 'package:cma_admin/main.dart';
+import 'package:cma_admin/presentation/addUser/user.dart';
 import 'package:cma_admin/presentation/home/homeview.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/signIn/signIn.dart';
@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 class Routes {
   static const String homeRoute = "/home";
   static const String loginRoute = "/login";
+  static const String addUserRoute = "/addUser";
   static const String splashRoute = "/splash";
   static const String testRoute = "/test";
 }
@@ -22,6 +23,9 @@ class RouteGenerator {
         initSignInModule();
         return CupertinoPageRoute(builder: (_) => SignInView());
 
+      case Routes.addUserRoute:
+        initAddUserModule();
+        return CupertinoPageRoute(builder: (_) => AddUserView());
       case Routes.homeRoute:
         return CupertinoPageRoute(builder: (_) => HomeView());
       case Routes.splashRoute:

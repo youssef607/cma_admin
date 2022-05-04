@@ -17,3 +17,14 @@ class RegisterObject with _$RegisterObject {
       String password,
       String profilePicture) = _RegisterObject;
 }
+
+@freezed
+class AddUserObject with _$AddUserObject {
+  factory AddUserObject(
+    String image,
+    String name,
+    String role,
+    String password,
+    String username,
+  ) = _AddUserObject;
+}

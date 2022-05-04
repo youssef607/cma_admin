@@ -32,6 +32,30 @@ class _AppServiceClient implements AppServiceClient {
     return value;
   }
 
+  @override
+  Future<SignInResponse> addUser(
+      {required image,
+      required name,
+      required password,
+      required role,
+      required username}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry('image', image));
+    _data.fields.add(MapEntry('name', name));
+    _data.fields.add(MapEntry('password', password));
+    _data.fields.add(MapEntry('username', username));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SignInResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/auth/signUp/$role',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SignInResponse.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

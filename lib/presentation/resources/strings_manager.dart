@@ -2,6 +2,8 @@ class AppStrings {
   static const String noRouteFound = "No Route Found";
   static const String skip = "Skip";
   static const String username = "Username";
+  static const String name = "name";
+  static const String role = "role";
   static const String mobileNumber = "Mobile Number";
   static const String usernameError = "Username is wrong";
   static const String passwordError = "password is wrong";
@@ -65,5 +67,4 @@ class AppStrings {
   //Sign IN
   static const String welcomeAdmin = "Welcom Admin ";
   static const String loginInYour = "Login In your account ";
-
 }

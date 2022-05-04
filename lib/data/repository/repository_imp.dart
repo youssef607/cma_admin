@@ -2,7 +2,7 @@ import 'package:cma_admin/data/data_source/remote_data_source.dart';
 import 'package:cma_admin/data/mapper/mapper.dart';
 import 'package:cma_admin/data/network/error_handler.dart';
 import 'package:cma_admin/data/network/failure.dart';
-import 'package:cma_admin/data/network/network_info.dart';
+import 'package:cma_admin/data/request/request.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/repository/repository.dart';
 import 'package:dartz/dartz.dart';
@@ -25,7 +25,16 @@ class RepositoryImpl extends Repository {
       return Left(ErrorHandler.handle(error).failure);
     }
   }
-  // else {
-  //   return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
-  // }
+
+  @override
+  Future<Either<Failure, SignInData>> addUser(
+      AddUserRequest addUserRequest) async {
+    try {
+      final response = await _remoteDataSource.addUser(addUserRequest);
+
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
 }

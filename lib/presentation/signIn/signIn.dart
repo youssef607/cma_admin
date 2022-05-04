@@ -48,11 +48,11 @@ class _SignInViewState extends State<SignInView> {
         _appPreferences.setCurrentUserId(dataa.user!.id);
 
         resetModules();
-        if (dataa.user?.role == Constant.BARMAN) {
+        if (dataa.user?.role == Constant.OWNER) {
           Navigator.pushNamedAndRemoveUntil(
-              context, Routes.homeRoute, ModalRoute.withName('/'),
+              context, Routes.addUserRoute, ModalRoute.withName('/'),
               arguments: 0);
-        } else if ((dataa.user?.role == Constant.WAITER)) {
+        } else if ((dataa.user?.role == Constant.MANAGER)) {
           Navigator.pushNamedAndRemoveUntil(
               context, Routes.homeRoute, ModalRoute.withName('/'),
               arguments: 0);

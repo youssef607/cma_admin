@@ -13,4 +13,13 @@ abstract class AppServiceClient {
     @Part() required String username,
     @Part() required String password,
   });
+
+  @POST("/auth/signUp/{role}")
+  Future<SignInResponse> addUser({
+    @Part() required String image,
+    @Part() required String name,
+    @Part() required String password,
+    @Path() required String role,
+    @Part() required String username,
+  });
 }

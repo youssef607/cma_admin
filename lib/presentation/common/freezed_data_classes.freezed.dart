@@ -410,3 +410,224 @@ abstract class _RegisterObject implements RegisterObject {
   _$RegisterObjectCopyWith<_RegisterObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$AddUserObjectTearOff {
+  const _$AddUserObjectTearOff();
+
+  _AddUserObject call(String image, String name, String role, String password,
+      String username) {
+    return _AddUserObject(
+      image,
+      name,
+      role,
+      password,
+      username,
+    );
+  }
+}
+
+/// @nodoc
+const $AddUserObject = _$AddUserObjectTearOff();
+
+/// @nodoc
+mixin _$AddUserObject {
+  String get image => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get role => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AddUserObjectCopyWith<AddUserObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AddUserObjectCopyWith<$Res> {
+  factory $AddUserObjectCopyWith(
+          AddUserObject value, $Res Function(AddUserObject) then) =
+      _$AddUserObjectCopyWithImpl<$Res>;
+  $Res call(
+      {String image,
+      String name,
+      String role,
+      String password,
+      String username});
+}
+
+/// @nodoc
+class _$AddUserObjectCopyWithImpl<$Res>
+    implements $AddUserObjectCopyWith<$Res> {
+  _$AddUserObjectCopyWithImpl(this._value, this._then);
+
+  final AddUserObject _value;
+  // ignore: unused_field
+  final $Res Function(AddUserObject) _then;
+
+  @override
+  $Res call({
+    Object? image = freezed,
+    Object? name = freezed,
+    Object? role = freezed,
+    Object? password = freezed,
+    Object? username = freezed,
+  }) {
+    return _then(_value.copyWith(
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: password == freezed
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$AddUserObjectCopyWith<$Res>
+    implements $AddUserObjectCopyWith<$Res> {
+  factory _$AddUserObjectCopyWith(
+          _AddUserObject value, $Res Function(_AddUserObject) then) =
+      __$AddUserObjectCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String image,
+      String name,
+      String role,
+      String password,
+      String username});
+}
+
+/// @nodoc
+class __$AddUserObjectCopyWithImpl<$Res>
+    extends _$AddUserObjectCopyWithImpl<$Res>
+    implements _$AddUserObjectCopyWith<$Res> {
+  __$AddUserObjectCopyWithImpl(
+      _AddUserObject _value, $Res Function(_AddUserObject) _then)
+      : super(_value, (v) => _then(v as _AddUserObject));
+
+  @override
+  _AddUserObject get _value => super._value as _AddUserObject;
+
+  @override
+  $Res call({
+    Object? image = freezed,
+    Object? name = freezed,
+    Object? role = freezed,
+    Object? password = freezed,
+    Object? username = freezed,
+  }) {
+    return _then(_AddUserObject(
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String,
+      name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String,
+      password == freezed
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddUserObject implements _AddUserObject {
+  _$_AddUserObject(
+      this.image, this.name, this.role, this.password, this.username);
+
+  @override
+  final String image;
+  @override
+  final String name;
+  @override
+  final String role;
+  @override
+  final String password;
+  @override
+  final String username;
+
+  @override
+  String toString() {
+    return 'AddUserObject(image: $image, name: $name, role: $role, password: $password, username: $username)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _AddUserObject &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.role, role) ||
+                const DeepCollectionEquality().equals(other.role, role)) &&
+            (identical(other.password, password) ||
+                const DeepCollectionEquality()
+                    .equals(other.password, password)) &&
+            (identical(other.username, username) ||
+                const DeepCollectionEquality()
+                    .equals(other.username, username)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(role) ^
+      const DeepCollectionEquality().hash(password) ^
+      const DeepCollectionEquality().hash(username);
+
+  @JsonKey(ignore: true)
+  @override
+  _$AddUserObjectCopyWith<_AddUserObject> get copyWith =>
+      __$AddUserObjectCopyWithImpl<_AddUserObject>(this, _$identity);
+}
+
+abstract class _AddUserObject implements AddUserObject {
+  factory _AddUserObject(String image, String name, String role,
+      String password, String username) = _$_AddUserObject;
+
+  @override
+  String get image => throw _privateConstructorUsedError;
+  @override
+  String get name => throw _privateConstructorUsedError;
+  @override
+  String get role => throw _privateConstructorUsedError;
+  @override
+  String get password => throw _privateConstructorUsedError;
+  @override
+  String get username => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$AddUserObjectCopyWith<_AddUserObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}

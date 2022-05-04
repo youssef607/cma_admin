@@ -21,3 +21,14 @@ class UserRequest {
   // to json
   Map<String, dynamic> toJson() => _$UserRequestToJson(this);
 }
+
+class AddUserRequest {
+  String image;
+  String name;
+  String role;
+  String password;
+  String username;
+
+  AddUserRequest(
+      this.image, this.name, this.password, this.role, this.username);
+}
