@@ -1,11 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cma_admin/app/app_prefs.dart';
+import 'package:cma_admin/app/constant.dart';
+import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/domain/usecase/adduser_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddUserViewModel extends BaseViewModel
     with AddUserViewModelInput, AddUserViewModelOutput {
@@ -14,6 +18,8 @@ class AddUserViewModel extends BaseViewModel
   StreamController _roleStreamController = StreamController<String>.broadcast();
 
   StreamController _nameStreamController = StreamController<String>.broadcast();
+
+  AppPreferences _appPreferences = instance<AppPreferences>();
 
   StreamController _passwordStreamController =
       StreamController<String>.broadcast();
@@ -33,10 +39,13 @@ class AddUserViewModel extends BaseViewModel
 
   AddUserViewModel(this._addUserUseCase);
 
+  List<String>? rolechecked;
+
   //  -- inputs
   @override
   void start() {
     inputState.add(ContentState());
+    RoleChecked();
   }
 
   @override
@@ -213,6 +222,28 @@ class AddUserViewModel extends BaseViewModel
 
   _validate() {
     inputAllInputsValid.add(null);
+  }
+
+  RoleChecked() {
+    _appPreferences.getUserRole().then((role) {
+      print("**********");
+      print(role);
+      if (role == Constant.OWNER) {
+        rolechecked = [
+          Constant.MANAGER,
+          Constant.OWNER,
+          Constant.WAITER,
+          Constant.BARMAN
+        ];
+      } else if (role == Constant.MANAGER) {
+        rolechecked = [
+          Constant.WAITER,
+          Constant.BARMAN,
+        ];
+      }
+    });
+
+    return rolechecked;
   }
 }
 

@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:cma_admin/app/app_prefs.dart';
-import 'package:cma_admin/app/constant.dart';
 import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/presentation/addUser/user_view_model.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
-import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/routes_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
@@ -15,8 +13,6 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AddUserView extends StatefulWidget {
   const AddUserView({Key? key}) : super(key: key);
@@ -34,7 +30,6 @@ class _AddUserViewState extends State<AddUserView> {
   TextEditingController _userNameTextEditingController =
       TextEditingController();
   TextEditingController _nameTextEditingController = TextEditingController();
-  TextEditingController _roleEditingController = TextEditingController();
   TextEditingController _passwordEditingController = TextEditingController();
 
   @override
@@ -55,10 +50,6 @@ class _AddUserViewState extends State<AddUserView> {
 
     _nameTextEditingController.addListener(() {
       _viewModel.setName(_nameTextEditingController.text);
-    });
-
-    _roleEditingController.addListener(() {
-      _viewModel.setRole(_roleEditingController.text);
     });
 
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream
@@ -103,22 +94,23 @@ class _AddUserViewState extends State<AddUserView> {
             key: _formKey,
             child: Column(
               children: [
-                Image(image: AssetImage(ImageAssets.signInImage)),
-                SizedBox(height: AppSize.s28),
+                // Image(image: AssetImage(ImageAssets.signInImage)),
+                // SizedBox(height: AppSize.s28),
                 Padding(
                   padding: EdgeInsets.only(
                       top: AppPadding.p12,
                       left: AppPadding.p28,
                       right: AppPadding.p28),
-                  child: Container(
-                    height: AppSize.s40,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: ColorManager.lightGrey)),
-                    child: GestureDetector(
+                  child: GestureDetector(
+                    onTap: () {
+                      _imageFormGallery();
+                    },
+                    child: Container(
                       child: _getMediaWidget(),
-                      onTap: () {
-                        _showPicker(context);
-                      },
+                      width: AppSize.s200,
+                      height: AppSize.s200,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: ColorManager.lightGrey)),
                     ),
                   ),
                 ),
@@ -171,31 +163,20 @@ class _AddUserViewState extends State<AddUserView> {
                   padding: EdgeInsets.only(
                       left: AppPadding.p28, right: AppPadding.p28),
                   child: StreamBuilder<String?>(
-                    // **,,
                     stream: _viewModel.outputRole,
                     builder: (context, snapshot) {
-                      return DropdownSearch<String>(
+                      return DropdownSearch(
                         mode: Mode.MENU,
                         showSelectedItems: true,
-                        items: [
-                          Constant.MANAGER,
-                          Constant.OWNER,
-                        ],
+                        items: _viewModel.rolechecked,
                         dropdownSearchDecoration: InputDecoration(
                           labelText: AppStrings.role,
                           hintText: AppStrings.role,
                         ),
-                        popupItemDisabled: (String s) => s.startsWith('I'),
-                        onChanged: print,
+                        onChanged: (value) {
+                          _viewModel.setRole(value.toString());
+                        },
                       );
-
-                      //  TextFormField(
-                      //     keyboardType: TextInputType.text,
-                      //     controller: _roleEditingController,
-                      //     decoration: InputDecoration(
-                      //         hintText: AppStrings.role,
-                      //         labelText: AppStrings.role,
-                      //         errorText: snapshot.data));
                     },
                   ),
                 ),
@@ -238,20 +219,6 @@ class _AddUserViewState extends State<AddUserView> {
                         );
                       },
                     )),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: AppPadding.p8,
-                    left: AppPadding.p28,
-                    right: AppPadding.p28,
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(AppStrings.haveAccount,
-                        style: Theme.of(context).textTheme.subtitle2),
-                  ),
-                )
               ],
             ),
           ),
@@ -259,71 +226,32 @@ class _AddUserViewState extends State<AddUserView> {
   }
 
   Widget _getMediaWidget() {
-    return Padding(
-      padding: EdgeInsets.only(left: AppPadding.p8, right: AppPadding.p8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(child: Text(AppStrings.profilePicture)),
-          Flexible(
-              child: StreamBuilder<File?>(
-            stream: _viewModel.outputProfilePicture,
-            builder: (context, snapshot) {
-              return _imagePickedByUser(snapshot.data);
-            },
-          )),
-          Flexible(child: SvgPicture.asset(ImageAssets.signInImage)),
-        ],
+    return Container(
+      child: StreamBuilder<File?>(
+        stream: _viewModel.outputProfilePicture,
+        builder: (context, snapshot) {
+          return _imagePickedByUser(snapshot.data);
+        },
       ),
+      // Flexible(child: SvgPicture.asset(ImageAssets.signInImage)),
     );
   }
 
   Widget _imagePickedByUser(File? image) {
     if (image != null && image.path.isNotEmpty) {
-      return Image.file(image);
+      return Image.file(
+        image,
+        fit: BoxFit.contain,
+      );
     } else {
-      return Container();
+      return Center(
+        child: Text("Pecked"),
+      );
     }
-  }
-
-  _showPicker(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SafeArea(
-            child: Wrap(
-              children: [
-                ListTile(
-                  trailing: Icon(Icons.arrow_forward),
-                  leading: Icon(Icons.camera),
-                  title: Text(AppStrings.photoGalley),
-                  onTap: () {
-                    _imageFormGallery();
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ListTile(
-                  trailing: Icon(Icons.arrow_forward),
-                  leading: Icon(Icons.camera_alt_rounded),
-                  title: Text(AppStrings.photoCamera),
-                  onTap: () {
-                    _imageFormCamera();
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            ),
-          );
-        });
   }
 
   _imageFormGallery() async {
     var image = await picker.pickImage(source: ImageSource.gallery);
-    _viewModel.setProfilePicture(File(image?.path ?? ""));
-  }
-
-  _imageFormCamera() async {
-    var image = await picker.pickImage(source: ImageSource.camera);
     _viewModel.setProfilePicture(File(image?.path ?? ""));
   }
 

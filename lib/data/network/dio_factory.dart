@@ -32,9 +32,6 @@ class DioFactory {
         baseUrl: Constant.baseUrl,
         connectTimeout: _timeOut,
         receiveTimeout: _timeOut,
-        receiveDataWhenStatusError: true,
-        followRedirects: true,
-        responseType: ResponseType.json,
         headers: headers);
 
     if (kReleaseMode) {
@@ -44,7 +41,6 @@ class DioFactory {
           requestHeader: true,
           requestBody: true,
           responseHeader: true,
-          error: true,
           responseBody: true));
     }
 

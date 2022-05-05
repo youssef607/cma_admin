@@ -54,7 +54,7 @@ class _SignInViewState extends State<SignInView> {
               arguments: 0);
         } else if ((dataa.user?.role == Constant.MANAGER)) {
           Navigator.pushNamedAndRemoveUntil(
-              context, Routes.homeRoute, ModalRoute.withName('/'),
+              context, Routes.addUserRoute, ModalRoute.withName('/'),
               arguments: 0);
         }
       });

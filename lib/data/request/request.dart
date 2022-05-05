@@ -25,8 +25,9 @@ class UserRequest {
 class AddUserRequest {
   String image;
   String name;
-  String role;
   String password;
+
+  String role;
   String username;
 
   AddUserRequest(
