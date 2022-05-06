@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-
 import 'package:cma_admin/app/app_prefs.dart';
 import 'package:cma_admin/app/constant.dart';
 import 'package:cma_admin/app/di.dart';
@@ -10,6 +9,7 @@ import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
+import 'package:flutter/cupertino.dart';
 
 class AddUserViewModel extends BaseViewModel
     with AddUserViewModelInput, AddUserViewModelOutput {
@@ -117,7 +117,13 @@ class AddUserViewModel extends BaseViewModel
   @override
   setProfilePicture(File? file) {
     inputProfilePicture.add(file);
-    adduserViewObject = adduserViewObject.copyWith(image: file);
+    if (file!.path.isNotEmpty) {
+      adduserViewObject = adduserViewObject.copyWith(image: file);
+    } else {
+      adduserViewObject = adduserViewObject.copyWith(image: null);
+    }
+    // inputProfilePicture.add(file);
+    // adduserViewObject = adduserViewObject.copyWith(image: file);
     _validate();
   }
 

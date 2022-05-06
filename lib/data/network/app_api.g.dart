@@ -43,6 +43,12 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromFileSync(image.path,
+              filename: image.path.split(Platform.pathSeparator).last)));
+    }
     _data.fields.add(MapEntry('name', name));
     _data.fields.add(MapEntry('password', password));
     _data.fields.add(MapEntry('username', username));

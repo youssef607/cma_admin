@@ -18,7 +18,7 @@ abstract class AppServiceClient {
   @POST("/auth/signUp/{role}")
   @MultiPart()
   Future<SignInResponse> addUser({
-    File? image,
+    @Part() File? image,
     @Part() required String name,
     @Part() required String password,
     @Path() required String role,
