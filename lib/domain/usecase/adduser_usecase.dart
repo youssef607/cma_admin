@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cma_admin/data/network/failure.dart';
 import 'package:cma_admin/data/request/request.dart';
 import 'package:cma_admin/domain/model/model.dart';
@@ -18,7 +20,7 @@ class AddUserUseCase implements BaseUseCase<AddUserUseCaseInput, SignInData> {
 }
 
 class AddUserUseCaseInput {
-  String image;
+  File? image;
   String name;
   String password;
   String role;

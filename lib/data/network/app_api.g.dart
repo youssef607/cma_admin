@@ -34,15 +34,15 @@ class _AppServiceClient implements AppServiceClient {
 
   @override
   Future<SignInResponse> addUser(
-      {required image,
+      {image,
       required name,
       required password,
       required role,
       required username}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry('image', image));
     _data.fields.add(MapEntry('name', name));
     _data.fields.add(MapEntry('password', password));
     _data.fields.add(MapEntry('username', username));

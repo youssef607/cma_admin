@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+
 import 'package:cma_admin/app/app_prefs.dart';
 import 'package:cma_admin/app/constant.dart';
 import 'package:cma_admin/app/di.dart';
@@ -9,7 +10,6 @@ import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AddUserViewModel extends BaseViewModel
     with AddUserViewModelInput, AddUserViewModelOutput {
@@ -25,7 +25,7 @@ class AddUserViewModel extends BaseViewModel
       StreamController<String>.broadcast();
 
   StreamController _profilePictureStreamController =
-      StreamController<File>.broadcast();
+      StreamController<File?>.broadcast();
 
   StreamController _isAllInputsValidStreamController =
       StreamController<void>.broadcast();
@@ -35,7 +35,7 @@ class AddUserViewModel extends BaseViewModel
 
   AddUserUseCase _addUserUseCase;
 
-  var adduserViewObject = AddUserObject("", "", "", "", "");
+  var adduserViewObject = AddUserObject(null, "", "", "", "");
 
   AddUserViewModel(this._addUserUseCase);
 
@@ -115,13 +115,9 @@ class AddUserViewModel extends BaseViewModel
   }
 
   @override
-  setProfilePicture(File file) {
+  setProfilePicture(File? file) {
     inputProfilePicture.add(file);
-    if (file.path.isNotEmpty) {
-      adduserViewObject = adduserViewObject.copyWith(image: file.path);
-    } else {
-      adduserViewObject = adduserViewObject.copyWith(image: "");
-    }
+    adduserViewObject = adduserViewObject.copyWith(image: file);
     _validate();
   }
 
@@ -226,8 +222,6 @@ class AddUserViewModel extends BaseViewModel
 
   RoleChecked() {
     _appPreferences.getUserRole().then((role) {
-      print("**********");
-      print(role);
       if (role == Constant.OWNER) {
         rolechecked = [
           Constant.MANAGER,

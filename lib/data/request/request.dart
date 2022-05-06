@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:json_annotation/json_annotation.dart';
 part 'request.g.dart';
 
@@ -23,7 +25,7 @@ class UserRequest {
 }
 
 class AddUserRequest {
-  String image;
+  File? image;
   String name;
   String password;
 
