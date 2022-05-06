@@ -24,6 +24,7 @@ class ColorManager {
   static Color green = HexColor.fromHex("#43A047"); // green color
   static Color yellow = HexColor.fromHex("#FFEB3B"); // yellow color
   static Color orange = HexColor.fromHex("#FF9800"); // yellow color
+  static Color gold = HexColor.fromHex("#F9A825"); // gold
 }
 
 extension HexColor on Color {

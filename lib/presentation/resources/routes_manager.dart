@@ -1,5 +1,4 @@
 import 'package:cma_admin/app/di.dart';
-import 'package:cma_admin/main.dart';
 import 'package:cma_admin/presentation/home/homeview.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/signIn/signIn.dart';
@@ -21,8 +20,11 @@ class RouteGenerator {
       case Routes.loginRoute:
         initSignInModule();
         return CupertinoPageRoute(builder: (_) => SignInView());
-
       case Routes.homeRoute:
+        initDashboardModule();
+        initCategoryModule();
+        initProductsModule();
+        initSupplementsModule();
         return CupertinoPageRoute(builder: (_) => HomeView());
       case Routes.splashRoute:
         return CupertinoPageRoute(builder: (_) => SplashView());

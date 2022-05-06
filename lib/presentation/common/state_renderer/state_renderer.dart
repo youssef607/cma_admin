@@ -46,26 +46,26 @@ class StateRenderer extends StatelessWidget {
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
         return _getPopUpDialog(
-            context, [_getAnimatedImage(JsonAssets.loading)]);
+            context, [/*_getAnimatedImage(JsonAssets.loading)*/ Center(child: CircularProgressIndicator()), _getMessage(message)]);
       case StateRendererType.POPUP_ERROR_STATE:
         return _getPopUpDialog(context, [
-          _getAnimatedImage(JsonAssets.error),
+          // _getAnimatedImage(JsonAssets.error),
           _getMessage(message),
           _getRetryButton(AppStrings.ok, context)
         ]);
       case StateRendererType.POPUP_SUCCESS:
         return _getPopUpDialog(context, [
-          _getAnimatedImage(JsonAssets.success),
+          // _getAnimatedImage(JsonAssets.success),
           _getMessage(title),
           _getMessage(message),
           _getRetryButton(AppStrings.ok, context)
         ]);
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
         return _getItemsInColumn(
-            [_getAnimatedImage(JsonAssets.loading), _getMessage(message)]);
+            [/*_getAnimatedImage(JsonAssets.loading), _getMessage(message)*/Center(child: CircularProgressIndicator()),_getMessage(message)]);
       case StateRendererType.FULL_SCREEN_ERROR_STATE:
         return _getItemsInColumn([
-          _getAnimatedImage(JsonAssets.error),
+          // _getAnimatedImage(JsonAssets.error),
           _getMessage(message),
           _getRetryButton(AppStrings.retry_again, context)
         ]);
@@ -73,7 +73,9 @@ class StateRenderer extends StatelessWidget {
         return Container();
       case StateRendererType.EMPTY_SCREEN_STATE:
         return _getItemsInColumn(
-            [_getAnimatedImage(JsonAssets.notFound), _getMessage(message)]);
+            [
+              // _getAnimatedImage(JsonAssets.notFound),
+              _getMessage(message)]);
       default:
         return Container();
     }
@@ -81,11 +83,14 @@ class StateRenderer extends StatelessWidget {
 
   Widget _getPopUpDialog(BuildContext context, List<Widget> children) {
     return Dialog(
+      insetPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.s14)),
       elevation: AppSize.s1_5,
       backgroundColor: Colors.transparent,
       child: Container(
+        width: AppSize.s180,
+        height: AppSize.s180,
         decoration: BoxDecoration(
             color: ColorManager.white,
             shape: BoxShape.rectangle,

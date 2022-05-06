@@ -44,8 +44,7 @@ class DioFactory {
           requestHeader: true,
           requestBody: true,
           responseHeader: true,
-          error: true,
-          responseBody: true));
+          responseBody: false));
     }
 
     return dio;

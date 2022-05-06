@@ -27,7 +27,7 @@ ThemeData getApplicationTheme() {
           elevation: AppSize.s4,
           shadowColor: ColorManager.primaryOpacity70,
           titleTextStyle: getRegularStyle(
-              color: ColorManager.white, fontSize: FontSize.s16)),
+              color: ColorManager.black, fontSize: FontSize.s16)),
       // Button theme
       buttonTheme: ButtonThemeData(
           shape: StadiumBorder(),

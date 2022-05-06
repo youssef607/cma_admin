@@ -165,11 +165,27 @@ class Statique {
       this.numOfOrders);
 }
 
+class Waiter {
+  User? waiter;
+  int ordersCount;
+
+  Waiter(this.waiter,this.ordersCount);
+}
+
+
+class CategoryCount {
+  int id;
+  String color;
+  String label;
+  int itemsCount;
+  CategoryCount(this.id,this.color,this.label,this.itemsCount);
+}
 class HomeData {
   Statique? statique;
   List<OrderModel>? orders;
-
-  HomeData(this.statique, this.orders);
+  List<Waiter>? waiters;
+  List<CategoryCount>? categoryCounts;
+  HomeData(this.statique, this.orders,this.waiters,this.categoryCounts);
 }
 
 class SignInData {

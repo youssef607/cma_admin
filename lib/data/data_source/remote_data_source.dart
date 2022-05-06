@@ -3,6 +3,11 @@ import 'package:cma_admin/data/responses/responses.dart';
 
 abstract class RemoteDataSource {
   Future<SignInResponse> signIn(String userName, String password);
+  Future<List<CategoryResponse>> getAllCategory();
+  Future<List<ProductResponse>> getAllProduct();
+  Future<List<SupplementResponse>> getAllSupplement();
+  Future<bool> activeToggle(String type,String id);
+  Future<HomeResponse> home(String date1,String date2);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -14,5 +19,30 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   Future<SignInResponse> signIn(String userName, String password) async {
     return await _appServiceClient.signIn(
         username: userName, password: password);
+  }
+
+  @override
+  Future<List<CategoryResponse>> getAllCategory() {
+    return _appServiceClient.getAllCategory();
+  }
+
+  @override
+  Future<List<ProductResponse>> getAllProduct() {
+    return _appServiceClient.getAllProduct();
+  }
+
+  @override
+  Future<List<SupplementResponse>> getAllSupplement() {
+    return _appServiceClient.getAllSupplement();
+  }
+
+  @override
+  Future<bool> activeToggle(String type, String id) {
+    return _appServiceClient.activeTogle(type, id);
+  }
+
+  @override
+  Future<HomeResponse> home(String date1, String date2) {
+    return _appServiceClient.home(date1, date2);
   }
 }
