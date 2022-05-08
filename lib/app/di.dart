@@ -8,7 +8,6 @@ import 'package:cma_admin/domain/usecase/signIn_usecase.dart';
 import 'package:cma_admin/presentation/addUser/user_view_model.dart';
 import 'package:cma_admin/presentation/signIn/signIn_view_model.dart';
 import 'package:get_it/get_it.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_prefs.dart';
@@ -58,7 +57,7 @@ initAddUserModule() {
     instance.registerFactory<AddUserUseCase>(() => AddUserUseCase(instance()));
     instance
         .registerFactory<AddUserViewModel>(() => AddUserViewModel(instance()));
-    instance.registerFactory<ImagePicker>(() => ImagePicker());
+    // instance.registerFactory<ImagePicker>(() => ImagePicker());
   }
 }
 

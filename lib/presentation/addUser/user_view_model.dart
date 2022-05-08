@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cma_admin/app/app_prefs.dart';
 import 'package:cma_admin/app/constant.dart';
 import 'package:cma_admin/app/di.dart';
+import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/usecase/adduser_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
-import 'package:flutter/cupertino.dart';
 
 class AddUserViewModel extends BaseViewModel
     with AddUserViewModelInput, AddUserViewModelOutput {
@@ -25,7 +26,7 @@ class AddUserViewModel extends BaseViewModel
       StreamController<String>.broadcast();
 
   StreamController _profilePictureStreamController =
-      StreamController<File?>.broadcast();
+      StreamController<PickerFile?>.broadcast();
 
   StreamController _isAllInputsValidStreamController =
       StreamController<void>.broadcast();
@@ -115,15 +116,9 @@ class AddUserViewModel extends BaseViewModel
   }
 
   @override
-  setProfilePicture(File? file) {
+  setProfilePicture(PickerFile? file) {
     inputProfilePicture.add(file);
-    if (file!.path.isNotEmpty) {
-      adduserViewObject = adduserViewObject.copyWith(image: file);
-    } else {
-      adduserViewObject = adduserViewObject.copyWith(image: null);
-    }
-    // inputProfilePicture.add(file);
-    // adduserViewObject = adduserViewObject.copyWith(image: file);
+    adduserViewObject = adduserViewObject.copyWith(image: file);
     _validate();
   }
 
@@ -136,6 +131,11 @@ class AddUserViewModel extends BaseViewModel
       adduserViewObject = adduserViewObject.copyWith(username: "");
     }
     _validate();
+  }
+
+  @override
+  setVisiblePassword(bool visible) {
+    return !visible;
   }
 
   @override
@@ -195,7 +195,7 @@ class AddUserViewModel extends BaseViewModel
       .map((isPasswordValid) => isPasswordValid ? null : "Invalid Password");
 
   @override
-  Stream<File?> get outputProfilePicture =>
+  Stream<PickerFile?> get outputProfilePicture =>
       _profilePictureStreamController.stream.map((file) => file);
 
   // -- private methods
@@ -258,7 +258,7 @@ abstract class AddUserViewModelInput {
 
   setPassword(String password);
 
-  setProfilePicture(File file);
+  setProfilePicture(PickerFile file);
 
   Sink get inputUserName;
 
@@ -290,7 +290,7 @@ abstract class AddUserViewModelOutput {
 
   Stream<String?> get outputErrorPassword;
 
-  Stream<File?> get outputProfilePicture;
+  Stream<PickerFile?> get outputProfilePicture;
 
   Stream<bool> get outputIsAllInputsValid;
 }

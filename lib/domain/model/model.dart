@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cma_admin/data/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 
@@ -99,6 +101,12 @@ class Supplement {
     this.title,
     this.price,
   );
+}
+
+class PickerFile {
+  Uint8List byte;
+  String extensions;
+  PickerFile(this.byte, this.extensions);
 }
 
 class OrderProdcut {

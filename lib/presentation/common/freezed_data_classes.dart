@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:cma_admin/domain/model/model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'freezed_data_classes.freezed.dart';
@@ -12,7 +14,7 @@ class LoginObject with _$LoginObject {
 @freezed
 class AddUserObject with _$AddUserObject {
   factory AddUserObject(
-    File? image,
+    PickerFile? image,
     String name,
     String role,
     String password,

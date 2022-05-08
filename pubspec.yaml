@@ -35,14 +35,17 @@ dependencies:
   flutter_svg: ^1.0.3
   freezed: ^0.14.2
   get_it: ^7.2.0
-  image_picker: ^0.8.5
+  file_picker: ^4.5.1  
   intl: ^0.17.0
   json_serializable: ^4.1.4
   lottie: ^1.2.1
   pretty_dio_logger: ^1.2.0-beta-1
-  retrofit: ^2.0.1
+  retrofit: ^2.2.0
   rxdart: ^0.27.2
   shared_preferences: ^2.0.13
+  dotted_border: ^2.0.0+2
+
+
 
 dev_dependencies:
   build_runner: ^2.1.4
@@ -63,6 +66,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/signIn.png
+    - assets/images/gallery.png
     - assets/images/restaurant.jpg
     - assets/images/signIn.svg
     - assets/json/loading.json

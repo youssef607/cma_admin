@@ -5,6 +5,7 @@ class ImageAssets {
   static const String signInImageSVG = "$IMAGE_PATH/signIn.svg";
   static const String signInImage = "$IMAGE_PATH/signIn.png";
   static const String resImage = "$IMAGE_PATH/restaurant.jpg";
+  static const String gallery = "$IMAGE_PATH/gallery.png";
 }
 
 class JsonAssets {

@@ -7,7 +7,7 @@ class AppStrings {
   static const String mobileNumber = "Mobile Number";
   static const String usernameError = "Username is wrong";
   static const String passwordError = "password is wrong";
-  static const String password = "Password :";
+  static const String password = "Password";
   static const String login = "Login";
   static const String forgetPassword = "Forget password";
   static const String registerText = "Not a member ? Sign up";
@@ -67,4 +67,5 @@ class AppStrings {
   //Sign IN
   static const String welcomeAdmin = "Welcom Admin ";
   static const String loginInYour = "Login In your account ";
+  static const String createAccount = "Create account ";
 }

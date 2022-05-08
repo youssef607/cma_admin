@@ -165,8 +165,8 @@ abstract class _LoginObject implements LoginObject {
 class _$AddUserObjectTearOff {
   const _$AddUserObjectTearOff();
 
-  _AddUserObject call(
-      File? image, String name, String role, String password, String username) {
+  _AddUserObject call(PickerFile? image, String name, String role,
+      String password, String username) {
     return _AddUserObject(
       image,
       name,
@@ -182,7 +182,7 @@ const $AddUserObject = _$AddUserObjectTearOff();
 
 /// @nodoc
 mixin _$AddUserObject {
-  File? get image => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
@@ -199,7 +199,7 @@ abstract class $AddUserObjectCopyWith<$Res> {
           AddUserObject value, $Res Function(AddUserObject) then) =
       _$AddUserObjectCopyWithImpl<$Res>;
   $Res call(
-      {File? image,
+      {PickerFile? image,
       String name,
       String role,
       String password,
@@ -227,7 +227,7 @@ class _$AddUserObjectCopyWithImpl<$Res>
       image: image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as File?,
+              as PickerFile?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -256,7 +256,7 @@ abstract class _$AddUserObjectCopyWith<$Res>
       __$AddUserObjectCopyWithImpl<$Res>;
   @override
   $Res call(
-      {File? image,
+      {PickerFile? image,
       String name,
       String role,
       String password,
@@ -286,7 +286,7 @@ class __$AddUserObjectCopyWithImpl<$Res>
       image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as File?,
+              as PickerFile?,
       name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -314,7 +314,7 @@ class _$_AddUserObject implements _AddUserObject {
       this.image, this.name, this.role, this.password, this.username);
 
   @override
-  final File? image;
+  final PickerFile? image;
   @override
   final String name;
   @override
@@ -363,11 +363,11 @@ class _$_AddUserObject implements _AddUserObject {
 }
 
 abstract class _AddUserObject implements AddUserObject {
-  factory _AddUserObject(File? image, String name, String role, String password,
-      String username) = _$_AddUserObject;
+  factory _AddUserObject(PickerFile? image, String name, String role,
+      String password, String username) = _$_AddUserObject;
 
   @override
-  File? get image => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
   @override
