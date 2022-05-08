@@ -68,4 +68,5 @@ class AppStrings {
   static const String welcomeAdmin = "Welcom Admin ";
   static const String loginInYour = "Login In your account ";
   static const String createAccount = "Create account ";
+  static const String browsImage = "brows your image here";
 }

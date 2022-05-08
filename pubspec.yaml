@@ -68,6 +68,7 @@ flutter:
     - assets/images/signIn.png
     - assets/images/gallery.png
     - assets/images/restaurant.jpg
+    - assets/images/adduser.jpg
     - assets/images/signIn.svg
     - assets/json/loading.json
     - assets/json/error.json

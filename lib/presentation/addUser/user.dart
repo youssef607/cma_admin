@@ -32,7 +32,6 @@ class AddUserView extends StatefulWidget {
 class _AddUserViewState extends State<AddUserView> {
   AddUserViewModel _viewModel = instance<AddUserViewModel>();
   AppPreferences _appPreferences = instance<AppPreferences>();
-  // ImagePicker picker = instance<ImagePicker>();
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _userNameTextEditingController =
@@ -73,12 +72,6 @@ class _AddUserViewState extends State<AddUserView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: ColorManager.white,
-      // appBar: AppBar(
-      //   elevation: AppSize.s0,
-      //   iconTheme: IconThemeData(color: ColorManager.primary),
-      //   backgroundColor: ColorManager.white,
-      // ),
       body: StreamBuilder<FlowState>(
         stream: _viewModel.outputState,
         builder: (context, snapshot) {
@@ -96,184 +89,188 @@ class _AddUserViewState extends State<AddUserView> {
 
   Widget _getContentWidget() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(
+          horizontal: AppPadding.p8, vertical: AppPadding.p8),
       child: Container(
+          width: AppSize.s500,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
+            border: Border.all(width: 1),
           ),
           padding: EdgeInsets.symmetric(vertical: AppPadding.p30),
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
-              child: Column(
+              child: Row(
                 children: [
-                  Container(
-                      child: Text(
-                    AppStrings.createAccount,
-                    style: getBoldStyle(
-                        color: ColorManager.black, fontSize: FontSize.s24),
-                  )),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: AppPadding.p28, right: AppPadding.p28),
-                    child: GestureDetector(
-                      onTap: () {
-                        _startFilePicker();
-                      },
-                      child: DottedBorder(
-                        borderType: BorderType.RRect,
-                        radius: Radius.circular(12),
-                        child: Container(
-                          child: _getMediaWidget(),
-                          height: AppSize.s200,
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          // decoration: BoxDecoration(
-                          //     border: FDottedLine(color: ColorManager.lightGrey)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: AppSize.s12),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        Container(
+                            child: Text(
+                          AppStrings.createAccount,
+                          style: getBoldStyle(
+                              color: ColorManager.black,
+                              fontSize: FontSize.s24),
+                        )),
+                        Padding(
                           padding: EdgeInsets.only(
                               left: AppPadding.p28, right: AppPadding.p28),
+                          child: GestureDetector(
+                            onTap: () {
+                              _startFilePicker();
+                            },
+                            child: DottedBorder(
+                              borderType: BorderType.RRect,
+                              radius: Radius.circular(12),
+                              child: Container(
+                                child: _getMediaWidget(),
+                                height: AppSize.s200,
+                                width: MediaQuery.of(context).size.width * 0.5,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: AppSize.s12),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: AppPadding.p28,
+                                    right: AppPadding.p28),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    RequiredLabel(text: AppStrings.name),
+                                    StreamBuilder<String?>(
+                                      stream: _viewModel.outputErrorName,
+                                      builder: (context, snapshot) {
+                                        return TextFormField(
+                                            keyboardType: TextInputType.text,
+                                            controller:
+                                                _nameTextEditingController,
+                                            decoration: InputDecoration(
+                                                hintText: AppStrings.name,
+                                                errorText: snapshot.data));
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: AppSize.s12),
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: AppPadding.p28,
+                                    right: AppPadding.p28),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    RequiredLabel(text: AppStrings.role),
+                                    StreamBuilder<String?>(
+                                      stream: _viewModel.outputRole,
+                                      builder: (context, snapshot) {
+                                        return DropdownSearch(
+                                          mode: Mode.MENU,
+                                          showSelectedItems: true,
+                                          items: _viewModel.rolechecked,
+                                          dropdownSearchDecoration:
+                                              InputDecoration(
+                                            hintText: AppStrings.role,
+                                          ),
+                                          onChanged: (value) {
+                                            _viewModel
+                                                .setRole(value.toString());
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: AppSize.s12),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: AppPadding.p12,
+                              left: AppPadding.p28,
+                              right: AppPadding.p28),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              RequiredLabel(text: AppStrings.name),
+                              RequiredLabel(text: AppStrings.username),
                               StreamBuilder<String?>(
-                                stream: _viewModel.outputErrorName,
+                                stream: _viewModel.outputErrorUserName,
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                       keyboardType: TextInputType.text,
-                                      controller: _nameTextEditingController,
+                                      controller:
+                                          _userNameTextEditingController,
                                       decoration: InputDecoration(
-                                          hintText: AppStrings.name,
+                                          hintText: AppStrings.username,
                                           errorText: snapshot.data));
                                 },
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(height: AppSize.s12),
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
+                        Padding(
                           padding: EdgeInsets.only(
-                              left: AppPadding.p28, right: AppPadding.p28),
+                              top: AppPadding.p20,
+                              left: AppPadding.p28,
+                              right: AppPadding.p28,
+                              bottom: AppPadding.p12),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              RequiredLabel(text: AppStrings.role),
+                              RequiredLabel(text: AppStrings.password),
                               StreamBuilder<String?>(
-                                stream: _viewModel.outputRole,
+                                stream: _viewModel.outputErrorPassword,
                                 builder: (context, snapshot) {
-                                  return DropdownSearch(
-                                    mode: Mode.MENU,
-                                    showSelectedItems: true,
-                                    items: _viewModel.rolechecked,
-                                    dropdownSearchDecoration: InputDecoration(
-                                      hintText: AppStrings.role,
+                                  return TextFormField(
+                                    keyboardType: TextInputType.visiblePassword,
+                                    controller: _passwordEditingController,
+                                    decoration: InputDecoration(
+                                      hintText: AppStrings.password,
+                                      labelText: AppStrings.password,
+                                      errorText: snapshot.data,
                                     ),
-                                    onChanged: (value) {
-                                      _viewModel.setRole(value.toString());
-                                    },
                                   );
                                 },
                               ),
                             ],
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: AppSize.s12),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: AppPadding.p12,
-                        left: AppPadding.p28,
-                        right: AppPadding.p28),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        RequiredLabel(text: AppStrings.username),
-                        StreamBuilder<String?>(
-                          stream: _viewModel.outputErrorUserName,
-                          builder: (context, snapshot) {
-                            return TextFormField(
-                                keyboardType: TextInputType.text,
-                                controller: _userNameTextEditingController,
-                                decoration: InputDecoration(
-                                    hintText: AppStrings.username,
-                                    errorText: snapshot.data));
-                          },
-                        ),
+                        SizedBox(height: AppSize.s28),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: AppPadding.p28, right: AppPadding.p28),
+                            child: StreamBuilder<bool>(
+                              stream: _viewModel.outputIsAllInputsValid,
+                              builder: (context, snapshot) {
+                                return SizedBox(
+                                  width: double.infinity,
+                                  height: AppSize.s40,
+                                  child: ElevatedButton(
+                                      onPressed: (snapshot.data ?? false)
+                                          ? () {
+                                              _viewModel.register();
+                                            }
+                                          : null,
+                                      child: Text(AppStrings.register)),
+                                );
+                              },
+                            )),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: AppPadding.p20,
-                        left: AppPadding.p28,
-                        right: AppPadding.p28,
-                        bottom: AppPadding.p12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        RequiredLabel(text: AppStrings.password),
-                        StreamBuilder<String?>(
-                          stream: _viewModel.outputErrorPassword,
-                          builder: (context, snapshot) {
-                            return TextFormField(
-                              keyboardType: TextInputType.visiblePassword,
-                              controller: _passwordEditingController,
-                              decoration: InputDecoration(
-                                hintText: AppStrings.password,
-                                labelText: AppStrings.password,
-                                errorText: snapshot.data,
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: AppSize.s28),
-                  Padding(
-                      padding: EdgeInsets.only(
-                          left: AppPadding.p28, right: AppPadding.p28),
-                      child: StreamBuilder<bool>(
-                        stream: _viewModel.outputIsAllInputsValid,
-                        builder: (context, snapshot) {
-                          return SizedBox(
-                            width: double.infinity,
-                            height: AppSize.s40,
-                            child: ElevatedButton(
-                                onPressed: (snapshot.data ?? false)
-                                    ? () {
-                                        _viewModel.register();
-                                      }
-                                    : null,
-                                child: Text(AppStrings.register)),
-                          );
-                        },
-                      )),
                 ],
               ),
             ),
@@ -297,7 +294,7 @@ class _AddUserViewState extends State<AddUserView> {
                           ImageAssets.gallery,
                           fit: BoxFit.cover,
                         )),
-                    Expanded(flex: 1, child: Text("brows your image here")),
+                    Expanded(flex: 1, child: Text(AppStrings.browsImage)),
                   ],
                 );
           ;
