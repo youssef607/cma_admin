@@ -38,3 +38,12 @@ class AddUserRequest {
   AddUserRequest(
       this.image, this.name, this.password, this.role, this.username);
 }
+
+class AddCategoryRequest {
+  String color;
+
+  PickerFile? image;
+  String label;
+
+  AddCategoryRequest(this.color, this.image, this.label);
+}

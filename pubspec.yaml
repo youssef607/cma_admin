@@ -44,6 +44,8 @@ dependencies:
   rxdart: ^0.27.2
   shared_preferences: ^2.0.13
   dotted_border: ^2.0.0+2
+  flutter_colorpicker: ^1.0.3
+
 
 
 

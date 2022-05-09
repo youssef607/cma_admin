@@ -28,4 +28,51 @@ abstract class AppServiceClient {
     @Path() required String role,
     @Part() required String username,
   });
+
+  @POST("/category/save")
+  @MultiPart()
+  Future<CategoryResponse> addCategory({
+    @Part() required String color,
+    @Part() PickerFile? image,
+    @Part() required String label,
+  });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // if (image != null) {
+    //   _data.files.add(MapEntry(
+    //       'image',
+    //       MultipartFile.fromBytes(image.byte,
+    //           filename: "image.${image.extensions}")));
+    // }

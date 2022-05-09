@@ -21,3 +21,12 @@ class AddUserObject with _$AddUserObject {
     String username,
   ) = _AddUserObject;
 }
+
+@freezed
+class AddCategoryObject with _$AddCategoryObject {
+  factory AddCategoryObject(
+    String color,
+    PickerFile? image,
+    String label,
+  ) = _AddCategoryObject;
+}

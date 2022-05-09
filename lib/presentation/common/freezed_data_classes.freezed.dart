@@ -381,3 +381,172 @@ abstract class _AddUserObject implements AddUserObject {
   _$AddUserObjectCopyWith<_AddUserObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$AddCategoryObjectTearOff {
+  const _$AddCategoryObjectTearOff();
+
+  _AddCategoryObject call(String color, PickerFile? image, String label) {
+    return _AddCategoryObject(
+      color,
+      image,
+      label,
+    );
+  }
+}
+
+/// @nodoc
+const $AddCategoryObject = _$AddCategoryObjectTearOff();
+
+/// @nodoc
+mixin _$AddCategoryObject {
+  String get color => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
+  String get label => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AddCategoryObjectCopyWith<AddCategoryObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AddCategoryObjectCopyWith<$Res> {
+  factory $AddCategoryObjectCopyWith(
+          AddCategoryObject value, $Res Function(AddCategoryObject) then) =
+      _$AddCategoryObjectCopyWithImpl<$Res>;
+  $Res call({String color, PickerFile? image, String label});
+}
+
+/// @nodoc
+class _$AddCategoryObjectCopyWithImpl<$Res>
+    implements $AddCategoryObjectCopyWith<$Res> {
+  _$AddCategoryObjectCopyWithImpl(this._value, this._then);
+
+  final AddCategoryObject _value;
+  // ignore: unused_field
+  final $Res Function(AddCategoryObject) _then;
+
+  @override
+  $Res call({
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? label = freezed,
+  }) {
+    return _then(_value.copyWith(
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      label: label == freezed
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$AddCategoryObjectCopyWith<$Res>
+    implements $AddCategoryObjectCopyWith<$Res> {
+  factory _$AddCategoryObjectCopyWith(
+          _AddCategoryObject value, $Res Function(_AddCategoryObject) then) =
+      __$AddCategoryObjectCopyWithImpl<$Res>;
+  @override
+  $Res call({String color, PickerFile? image, String label});
+}
+
+/// @nodoc
+class __$AddCategoryObjectCopyWithImpl<$Res>
+    extends _$AddCategoryObjectCopyWithImpl<$Res>
+    implements _$AddCategoryObjectCopyWith<$Res> {
+  __$AddCategoryObjectCopyWithImpl(
+      _AddCategoryObject _value, $Res Function(_AddCategoryObject) _then)
+      : super(_value, (v) => _then(v as _AddCategoryObject));
+
+  @override
+  _AddCategoryObject get _value => super._value as _AddCategoryObject;
+
+  @override
+  $Res call({
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? label = freezed,
+  }) {
+    return _then(_AddCategoryObject(
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      label == freezed
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddCategoryObject implements _AddCategoryObject {
+  _$_AddCategoryObject(this.color, this.image, this.label);
+
+  @override
+  final String color;
+  @override
+  final PickerFile? image;
+  @override
+  final String label;
+
+  @override
+  String toString() {
+    return 'AddCategoryObject(color: $color, image: $image, label: $label)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _AddCategoryObject &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)) &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.label, label) ||
+                const DeepCollectionEquality().equals(other.label, label)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(color) ^
+      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(label);
+
+  @JsonKey(ignore: true)
+  @override
+  _$AddCategoryObjectCopyWith<_AddCategoryObject> get copyWith =>
+      __$AddCategoryObjectCopyWithImpl<_AddCategoryObject>(this, _$identity);
+}
+
+abstract class _AddCategoryObject implements AddCategoryObject {
+  factory _AddCategoryObject(String color, PickerFile? image, String label) =
+      _$_AddCategoryObject;
+
+  @override
+  String get color => throw _privateConstructorUsedError;
+  @override
+  PickerFile? get image => throw _privateConstructorUsedError;
+  @override
+  String get label => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$AddCategoryObjectCopyWith<_AddCategoryObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}

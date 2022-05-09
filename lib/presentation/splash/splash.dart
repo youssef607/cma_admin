@@ -32,7 +32,7 @@ class _SplashViewState extends State<SplashView> {
                       arguments: 0);
                 } else if ((role == Constant.MANAGER)) {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, Routes.addUserRoute, ModalRoute.withName('/'),
+                      context, Routes.categoryRoute, ModalRoute.withName('/'),
                       arguments: 0);
                 }
               })

@@ -6,4 +6,6 @@ import 'package:dartz/dartz.dart';
 abstract class Repository {
   Future<Either<Failure, SignInData>> signIn(String userName, String password);
   Future<Either<Failure, SignInData>> addUser(AddUserRequest addUserRequest);
+  Future<Either<Failure, Category>> addCategory(
+      AddCategoryRequest addCategoryRequest);
 }

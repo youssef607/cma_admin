@@ -5,6 +5,7 @@ import 'package:cma_admin/data/responses/responses.dart';
 abstract class RemoteDataSource {
   Future<SignInResponse> signIn(String userName, String password);
   Future<SignInResponse> addUser(AddUserRequest addUserRequest);
+  Future<CategoryResponse> addCategory(AddCategoryRequest addCategoryRequest);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -26,5 +27,14 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
         password: addUserRequest.password,
         role: addUserRequest.role,
         username: addUserRequest.username);
+  }
+
+  @override
+  Future<CategoryResponse> addCategory(
+      AddCategoryRequest addCategoryRequest) async {
+    return await _appServiceClient.addCategory(
+        color: addCategoryRequest.color,
+        image: addCategoryRequest.image,
+        label: addCategoryRequest.label);
   }
 }

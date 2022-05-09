@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter/cupertino.dart';
 
 part 'responses.g.dart';
 
@@ -61,4 +62,23 @@ class UserResponse extends BaseResponse {
 
   // to json
   Map<String, dynamic> toJson() => _$UserResponseToJson(this);
+}
+
+@JsonSerializable()
+class CategoryResponse extends BaseResponse {
+  @JsonKey(name: "color")
+  String? color;
+  @JsonKey(name: "image")
+  String? image;
+  @JsonKey(name: "label")
+  String? label;
+
+  CategoryResponse(this.color, this.image, this.label);
+
+// from json
+  factory CategoryResponse.fromJson(Map<String, dynamic> json) =>
+      _$CategoryResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$CategoryResponseToJson(this);
 }

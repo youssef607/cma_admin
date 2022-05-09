@@ -23,6 +23,20 @@ extension UserResponseExtension on UserResponse? {
   }
 }
 
+extension CategoryResponseExtension on CategoryResponse? {
+  Category toDomain() {
+    return Category(
+        this?.id?.orZero() ?? ZERO,
+        this?.createdAt?.orEmpty() ?? EMPTY,
+        this?.deletedAt?.orEmpty() ?? EMPTY,
+        this?.modifiedAt?.orEmpty() ?? EMPTY,
+        this?.active?.orFalse() ?? FALSE,
+        this?.color.orEmpty() ?? EMPTY,
+        Constant.ImageUrl + (this?.image?.orEmpty() ?? EMPTY),
+        this?.label?.orEmpty() ?? EMPTY);
+  }
+}
+
 extension SignInResponseExtension on SignInResponse? {
   SignInData toDomain() {
     return SignInData(this?.token.orEmpty() ?? EMPTY, this?.user?.toDomain());
