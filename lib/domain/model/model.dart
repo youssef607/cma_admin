@@ -36,7 +36,7 @@ class Category {
   String deletedAt;
   String modifiedAt;
   bool active;
-  String color;
+  Color color;
   String image;
   String label;
 

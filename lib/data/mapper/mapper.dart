@@ -2,11 +2,14 @@ import 'package:cma_admin/app/constant.dart';
 import 'package:cma_admin/app/extensions.dart';
 import 'package:cma_admin/data/responses/responses.dart';
 import 'package:cma_admin/domain/model/model.dart';
+import 'package:cma_admin/presentation/resources/color_manager.dart';
+import 'package:flutter/cupertino.dart';
 
 const EMPTY = "";
 const ZERO = 0;
 const FALSE = false;
 const ZEROD = 0.0;
+Color COLOR = ColorManager.white;
 
 extension UserResponseExtension on UserResponse? {
   User toDomain() {
@@ -31,7 +34,7 @@ extension CategoryResponseExtension on CategoryResponse? {
         this?.deletedAt?.orEmpty() ?? EMPTY,
         this?.modifiedAt?.orEmpty() ?? EMPTY,
         this?.active?.orFalse() ?? FALSE,
-        this?.color.orEmpty() ?? EMPTY,
+        this?.color?.orEmptyColor() ?? COLOR,
         Constant.ImageUrl + (this?.image?.orEmpty() ?? EMPTY),
         this?.label?.orEmpty() ?? EMPTY);
   }

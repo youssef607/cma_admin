@@ -73,4 +73,5 @@ class AppStrings {
   //category
   static const String color = "color";
   static const String label = "label";
+  static const String addCategory = "Add Category";
 }

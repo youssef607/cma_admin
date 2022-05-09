@@ -4,6 +4,7 @@ import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/repository/repository.dart';
 import 'package:cma_admin/domain/usecase/base_usecase.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 
 class AddCategoryUseCase
     implements BaseUseCase<AddCategoryUseCaseInput, Category> {
@@ -15,12 +16,12 @@ class AddCategoryUseCase
   Future<Either<Failure, Category>> execute(
       AddCategoryUseCaseInput input) async {
     return await _repository
-        .addCategory(AddCategoryRequest(input.color, input.image, input.label));
+        .addCategory(AddCategoryRequest(input.image, input.label, input.color));
   }
 }
 
 class AddCategoryUseCaseInput {
-  String color;
+  Color color;
   PickerFile? image;
   String label;
 

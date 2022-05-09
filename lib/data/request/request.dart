@@ -40,10 +40,9 @@ class AddUserRequest {
 }
 
 class AddCategoryRequest {
-  String color;
-
   PickerFile? image;
   String label;
+  Color color;
 
-  AddCategoryRequest(this.color, this.image, this.label);
+  AddCategoryRequest(this.image, this.label, this.color);
 }

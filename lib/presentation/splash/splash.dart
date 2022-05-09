@@ -28,7 +28,7 @@ class _SplashViewState extends State<SplashView> {
               _appPreferences.getUserRole().then((role) {
                 if (role == Constant.OWNER) {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, Routes.addUserRoute, ModalRoute.withName('/'),
+                      context, Routes.categoryRoute, ModalRoute.withName('/'),
                       arguments: 0);
                 } else if ((role == Constant.MANAGER)) {
                   Navigator.pushNamedAndRemoveUntil(

@@ -5,6 +5,7 @@ import 'package:cma_admin/app/constant.dart';
 import 'package:cma_admin/data/responses/responses.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:retrofit/http.dart';
 
 part 'app_api.g.dart';
@@ -32,9 +33,9 @@ abstract class AppServiceClient {
   @POST("/category/save")
   @MultiPart()
   Future<CategoryResponse> addCategory({
-    @Part() required String color,
     @Part() PickerFile? image,
     @Part() required String label,
+    @Part() required Color color,
   });
 }
 

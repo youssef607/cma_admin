@@ -1,15 +1,16 @@
 import 'dart:async';
+import 'package:cma_admin/data/mapper/mapper.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/usecase/addcategory_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
+import 'package:flutter/material.dart';
 
 class AddCategoryViewModel extends BaseViewModel
     with AddCategoryViewModelInput, AddCategoryViewModelOutput {
-  StreamController _colorStreamController =
-      StreamController<String>.broadcast();
+  StreamController _colorStreamController = StreamController<Color>.broadcast();
 
   StreamController _profilePictureStreamController =
       StreamController<PickerFile?>.broadcast();
@@ -24,10 +25,11 @@ class AddCategoryViewModel extends BaseViewModel
       StreamController<bool>();
 
   AddCategoryUseCase _addCategoryUseCase;
+  Color pickerColor;
 
-  var addCategoryViewObject = AddCategoryObject("", null, "");
+  var addCategoryViewObject = AddCategoryObject(COLOR, null, "");
 
-  AddCategoryViewModel(this._addCategoryUseCase);
+  AddCategoryViewModel(this._addCategoryUseCase, this.pickerColor);
 
   //  -- inputs
   @override
@@ -50,7 +52,7 @@ class AddCategoryViewModel extends BaseViewModel
                       StateRendererType.POPUP_ERROR_STATE, failure.message))
                 }, (data) {
       inputState.add(ContentState());
-      isAddCategorySuccessfullyStreamController.add(true);
+      isAddCategorySuccessfullyStreamController.add(data);
     });
   }
 
@@ -66,12 +68,13 @@ class AddCategoryViewModel extends BaseViewModel
   }
 
   @override
-  setColor(String color) {
+  setColor(Color color) {
     inputColor.add(color);
     if (_isColorValid(color)) {
       addCategoryViewObject = addCategoryViewObject.copyWith(color: color);
+      pickerColor = color;
     } else {
-      addCategoryViewObject = addCategoryViewObject.copyWith(color: "");
+      addCategoryViewObject = addCategoryViewObject.copyWith(color: COLOR);
     }
     _validate();
   }
@@ -113,8 +116,8 @@ class AddCategoryViewModel extends BaseViewModel
       _colorStreamController.stream.map((color) => _isColorValid(color));
 
   @override
-  Stream<String?> get outputErrorColor => outputIsColorValid
-      .map((isColorValid) => isColorValid ? null : "invalid color");
+  Stream<Color?> get outputErrorColor =>
+      outputIsColorValid.map((isColorValid) => isColorValid ? null : null);
 
   @override
   Stream<bool> get outputIsLabelValid =>
@@ -133,8 +136,8 @@ class AddCategoryViewModel extends BaseViewModel
       _isAllInputsValidStreamController.stream.map((_) => _validateAllInputs());
 
   // -- private methods
-  bool _isColorValid(String color) {
-    return color.length >= 0;
+  bool _isColorValid(Color color) {
+    return color.value >= 0;
   }
 
   bool _isLabelValid(String label) {
@@ -142,8 +145,8 @@ class AddCategoryViewModel extends BaseViewModel
   }
 
   bool _validateAllInputs() {
-    return addCategoryViewObject.color.isNotEmpty &&
-        addCategoryViewObject.label.isNotEmpty;
+    return addCategoryViewObject.label.isNotEmpty &&
+        addCategoryViewObject.image!.byte.isNotEmpty;
   }
 
   _validate() {
@@ -154,7 +157,7 @@ class AddCategoryViewModel extends BaseViewModel
 abstract class AddCategoryViewModelInput {
   register();
 
-  setColor(String color);
+  setColor(Color color);
 
   setProfilePicture(PickerFile file);
 
@@ -172,7 +175,7 @@ abstract class AddCategoryViewModelInput {
 abstract class AddCategoryViewModelOutput {
   Stream<bool> get outputIsColorValid;
 
-  Stream<String?> get outputErrorColor;
+  Stream<Color?> get outputErrorColor;
 
   Stream<PickerFile?> get outputProfilePicture;
 

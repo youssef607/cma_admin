@@ -386,7 +386,7 @@ abstract class _AddUserObject implements AddUserObject {
 class _$AddCategoryObjectTearOff {
   const _$AddCategoryObjectTearOff();
 
-  _AddCategoryObject call(String color, PickerFile? image, String label) {
+  _AddCategoryObject call(Color color, PickerFile? image, String label) {
     return _AddCategoryObject(
       color,
       image,
@@ -400,7 +400,7 @@ const $AddCategoryObject = _$AddCategoryObjectTearOff();
 
 /// @nodoc
 mixin _$AddCategoryObject {
-  String get color => throw _privateConstructorUsedError;
+  Color get color => throw _privateConstructorUsedError;
   PickerFile? get image => throw _privateConstructorUsedError;
   String get label => throw _privateConstructorUsedError;
 
@@ -414,7 +414,7 @@ abstract class $AddCategoryObjectCopyWith<$Res> {
   factory $AddCategoryObjectCopyWith(
           AddCategoryObject value, $Res Function(AddCategoryObject) then) =
       _$AddCategoryObjectCopyWithImpl<$Res>;
-  $Res call({String color, PickerFile? image, String label});
+  $Res call({Color color, PickerFile? image, String label});
 }
 
 /// @nodoc
@@ -436,7 +436,7 @@ class _$AddCategoryObjectCopyWithImpl<$Res>
       color: color == freezed
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Color,
       image: image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -456,7 +456,7 @@ abstract class _$AddCategoryObjectCopyWith<$Res>
           _AddCategoryObject value, $Res Function(_AddCategoryObject) then) =
       __$AddCategoryObjectCopyWithImpl<$Res>;
   @override
-  $Res call({String color, PickerFile? image, String label});
+  $Res call({Color color, PickerFile? image, String label});
 }
 
 /// @nodoc
@@ -480,7 +480,7 @@ class __$AddCategoryObjectCopyWithImpl<$Res>
       color == freezed
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Color,
       image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -499,7 +499,7 @@ class _$_AddCategoryObject implements _AddCategoryObject {
   _$_AddCategoryObject(this.color, this.image, this.label);
 
   @override
-  final String color;
+  final Color color;
   @override
   final PickerFile? image;
   @override
@@ -536,11 +536,11 @@ class _$_AddCategoryObject implements _AddCategoryObject {
 }
 
 abstract class _AddCategoryObject implements AddCategoryObject {
-  factory _AddCategoryObject(String color, PickerFile? image, String label) =
+  factory _AddCategoryObject(Color color, PickerFile? image, String label) =
       _$_AddCategoryObject;
 
   @override
-  String get color => throw _privateConstructorUsedError;
+  Color get color => throw _privateConstructorUsedError;
   @override
   PickerFile? get image => throw _privateConstructorUsedError;
   @override

@@ -69,7 +69,7 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry('color', color));
+    _data.fields.add(MapEntry('color', color.toString()));
     if (image != null) {
       _data.files.add(MapEntry(
           'image',

@@ -55,12 +55,10 @@ class SignInViewModel extends BaseViewModel
             SignInUseCaseInput(loginObject.userName, loginObject.password)))
         .fold(
             (failure) => {
-                  // left -> failure
                   inputState.add(ErrorState(
                       StateRendererType.POPUP_ERROR_STATE, failure.message))
                 }, (data) {
       inputState.add(ContentState());
-      // navigate to main screen after the login
       isUserLoggedInSuccessfullyStreamController.add(data);
     });
   }

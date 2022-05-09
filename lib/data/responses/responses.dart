@@ -67,7 +67,7 @@ class UserResponse extends BaseResponse {
 @JsonSerializable()
 class CategoryResponse extends BaseResponse {
   @JsonKey(name: "color")
-  String? color;
+  Color? color;
   @JsonKey(name: "image")
   String? image;
   @JsonKey(name: "label")

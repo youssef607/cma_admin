@@ -9,7 +9,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
-import 'package:cma_admin/presentation/resources/routes_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -29,7 +28,6 @@ class _AddCategoryViewState extends State<AddCategoryView> {
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _labelTextEditingController = TextEditingController();
-  Color pickerColor = Color.fromARGB(255, 58, 73, 58);
 
   @override
   void initState() {
@@ -45,7 +43,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
     });
 
     _viewModel.isAddCategorySuccessfullyStreamController.stream
-        .listen((isSuccessLoggedIn) {
+        .listen((isSuccessAddCategory) {
       Navigator.of(context).pop();
     });
   }
@@ -143,14 +141,14 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               RequiredLabel(text: AppStrings.color),
-                              StreamBuilder<String?>(
+                              StreamBuilder<Color?>(
                                 stream: _viewModel.outputErrorColor,
                                 builder: (context, snapshot) {
                                   return ColorPicker(
                                     colorPickerWidth: AppSize.s100,
-                                    pickerColor: pickerColor,
+                                    pickerColor: _viewModel.pickerColor,
                                     onColorChanged: (value) {
-                                      _viewModel.setColor(value.toString());
+                                      _viewModel.setColor(value);
                                     },
                                   );
                                 },
@@ -174,7 +172,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                                               _viewModel.register();
                                             }
                                           : null,
-                                      child: Text(AppStrings.register)),
+                                      child: Text(AppStrings.addCategory)),
                                 );
                               },
                             )),
@@ -207,10 +205,8 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                     Expanded(flex: 1, child: Text(AppStrings.browsImage)),
                   ],
                 );
-          ;
         },
       ),
-      // Flexible(child: SvgPicture.asset(ImageAssets.signInImage)),
     );
   }
 
