@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/presentation/category/category_view_model.dart';
+import 'package:cma_admin/presentation/category/addcategory_view_model.dart';
 import 'package:cma_admin/presentation/common/widgets/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
@@ -142,11 +142,13 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                             children: [
                               RequiredLabel(text: AppStrings.color),
                               StreamBuilder<Color?>(
-                                stream: _viewModel.outputErrorColor,
+                                stream: _viewModel.outputPickerColor,
                                 builder: (context, snapshot) {
+                                  Color color =
+                                      snapshot.data ?? ColorManager.grey;
                                   return ColorPicker(
                                     colorPickerWidth: AppSize.s100,
-                                    pickerColor: _viewModel.pickerColor,
+                                    pickerColor: color,
                                     onColorChanged: (value) {
                                       _viewModel.setColor(value);
                                     },

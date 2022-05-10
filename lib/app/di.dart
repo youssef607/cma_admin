@@ -7,7 +7,7 @@ import 'package:cma_admin/domain/usecase/addcategory_usecase.dart';
 import 'package:cma_admin/domain/usecase/adduser_usecase.dart';
 import 'package:cma_admin/domain/usecase/signIn_usecase.dart';
 import 'package:cma_admin/presentation/addUser/user_view_model.dart';
-import 'package:cma_admin/presentation/category/category_view_model.dart';
+import 'package:cma_admin/presentation/category/addcategory_view_model.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/signIn/signIn_view_model.dart';
 import 'package:file_picker/file_picker.dart';
@@ -36,9 +36,6 @@ Future<void> initAppModule() async {
 
   // dio factory
   instance.registerLazySingleton<DioFactory>(() => DioFactory(instance()));
-
-  //ColorPicker
-  instance.registerLazySingleton<Color>(() => Color(ColorManager.white.value));
 
   // // app  service client
   final dio = await instance<DioFactory>().getDio();
@@ -75,7 +72,7 @@ initAddCategoryModule() {
         () => AddCategoryUseCase(instance()));
 
     instance.registerFactory<AddCategoryViewModel>(
-        () => AddCategoryViewModel(instance(), instance()));
+        () => AddCategoryViewModel(instance()));
   }
 }
 

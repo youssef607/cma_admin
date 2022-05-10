@@ -52,7 +52,7 @@ Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
 
 CategoryResponse _$CategoryResponseFromJson(Map<String, dynamic> json) {
   return CategoryResponse(
-    json['color'] as Color?,
+    json['color'] as String?,
     json['image'] as String?,
     json['label'] as String?,
   )

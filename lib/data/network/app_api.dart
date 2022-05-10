@@ -35,7 +35,7 @@ abstract class AppServiceClient {
   Future<CategoryResponse> addCategory({
     @Part() PickerFile? image,
     @Part() required String label,
-    @Part() required Color color,
+    @Part() required String color,
   });
 }
 

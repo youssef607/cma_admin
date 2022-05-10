@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -26,7 +23,7 @@ class AddUserObject with _$AddUserObject {
 @freezed
 class AddCategoryObject with _$AddCategoryObject {
   factory AddCategoryObject(
-    Color color,
+    String color,
     PickerFile? image,
     String label,
   ) = _AddCategoryObject;

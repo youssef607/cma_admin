@@ -42,7 +42,7 @@ class AddUserRequest {
 class AddCategoryRequest {
   PickerFile? image;
   String label;
-  Color color;
+  String color;
 
   AddCategoryRequest(this.image, this.label, this.color);
 }

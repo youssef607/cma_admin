@@ -1,6 +1,6 @@
 import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/presentation/addUser/user.dart';
-import 'package:cma_admin/presentation/category/category.dart';
+import 'package:cma_admin/presentation/category/addcategory.dart';
 import 'package:cma_admin/presentation/home/homeview.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/signIn/signIn.dart';

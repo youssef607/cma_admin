@@ -33,8 +33,8 @@ extension CategoryResponseExtension on CategoryResponse? {
         this?.createdAt?.orEmpty() ?? EMPTY,
         this?.deletedAt?.orEmpty() ?? EMPTY,
         this?.modifiedAt?.orEmpty() ?? EMPTY,
-        this?.active?.orFalse() ?? FALSE,
-        this?.color?.orEmptyColor() ?? COLOR,
+        this?.active.orFalse() ?? FALSE,
+        HexColor.fromHex("#${this?.color?.orEmpty() ?? EMPTY}"),
         Constant.ImageUrl + (this?.image?.orEmpty() ?? EMPTY),
         this?.label?.orEmpty() ?? EMPTY);
   }

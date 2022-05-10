@@ -4,7 +4,6 @@ import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/repository/repository.dart';
 import 'package:cma_admin/domain/usecase/base_usecase.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
 
 class AddCategoryUseCase
     implements BaseUseCase<AddCategoryUseCaseInput, Category> {
@@ -21,7 +20,7 @@ class AddCategoryUseCase
 }
 
 class AddCategoryUseCaseInput {
-  Color color;
+  String color;
   PickerFile? image;
   String label;
 
