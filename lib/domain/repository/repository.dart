@@ -8,4 +8,6 @@ abstract class Repository {
   Future<Either<Failure, SignInData>> addUser(AddUserRequest addUserRequest);
   Future<Either<Failure, Category>> addCategory(
       AddCategoryRequest addCategoryRequest);
+  Future<Either<Failure, Supplement>> addSupplement(
+      AddSupplementRequest addSupplementRequest);
 }

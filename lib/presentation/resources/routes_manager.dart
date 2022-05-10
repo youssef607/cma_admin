@@ -1,6 +1,7 @@
 import 'package:cma_admin/app/di.dart';
+import 'package:cma_admin/presentation/addSupplement/addSupplement.dart';
 import 'package:cma_admin/presentation/addUser/user.dart';
-import 'package:cma_admin/presentation/category/addcategory.dart';
+import 'package:cma_admin/presentation/addCategory/addcategory.dart';
 import 'package:cma_admin/presentation/home/homeview.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/signIn/signIn.dart';
@@ -13,7 +14,8 @@ class Routes {
   static const String homeRoute = "/home";
   static const String loginRoute = "/login";
   static const String addUserRoute = "/addUser";
-  static const String categoryRoute = "/category";
+  static const String addCategoryRoute = "/addCategory";
+  static const String addSupplementRoute = "/addSupplement";
   static const String splashRoute = "/splash";
   static const String testRoute = "/test";
 }
@@ -25,9 +27,12 @@ class RouteGenerator {
         initSignInModule();
         return CupertinoPageRoute(builder: (_) => SignInView());
 
-      case Routes.categoryRoute:
+      case Routes.addCategoryRoute:
         initAddCategoryModule();
         return CupertinoPageRoute(builder: (_) => AddCategoryView());
+      case Routes.addSupplementRoute:
+        initAddSupplementModule();
+        return CupertinoPageRoute(builder: (_) => AddSupplementView());
       case Routes.addUserRoute:
         initAddUserModule();
         return CupertinoPageRoute(builder: (_) => AddUserView());

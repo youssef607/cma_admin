@@ -550,3 +550,194 @@ abstract class _AddCategoryObject implements AddCategoryObject {
   _$AddCategoryObjectCopyWith<_AddCategoryObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$AddSupplementObjectTearOff {
+  const _$AddSupplementObjectTearOff();
+
+  _AddSupplementObject call(
+      String color, PickerFile? image, String title, String price) {
+    return _AddSupplementObject(
+      color,
+      image,
+      title,
+      price,
+    );
+  }
+}
+
+/// @nodoc
+const $AddSupplementObject = _$AddSupplementObjectTearOff();
+
+/// @nodoc
+mixin _$AddSupplementObject {
+  String get color => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AddSupplementObjectCopyWith<AddSupplementObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AddSupplementObjectCopyWith<$Res> {
+  factory $AddSupplementObjectCopyWith(
+          AddSupplementObject value, $Res Function(AddSupplementObject) then) =
+      _$AddSupplementObjectCopyWithImpl<$Res>;
+  $Res call({String color, PickerFile? image, String title, String price});
+}
+
+/// @nodoc
+class _$AddSupplementObjectCopyWithImpl<$Res>
+    implements $AddSupplementObjectCopyWith<$Res> {
+  _$AddSupplementObjectCopyWithImpl(this._value, this._then);
+
+  final AddSupplementObject _value;
+  // ignore: unused_field
+  final $Res Function(AddSupplementObject) _then;
+
+  @override
+  $Res call({
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? title = freezed,
+    Object? price = freezed,
+  }) {
+    return _then(_value.copyWith(
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$AddSupplementObjectCopyWith<$Res>
+    implements $AddSupplementObjectCopyWith<$Res> {
+  factory _$AddSupplementObjectCopyWith(_AddSupplementObject value,
+          $Res Function(_AddSupplementObject) then) =
+      __$AddSupplementObjectCopyWithImpl<$Res>;
+  @override
+  $Res call({String color, PickerFile? image, String title, String price});
+}
+
+/// @nodoc
+class __$AddSupplementObjectCopyWithImpl<$Res>
+    extends _$AddSupplementObjectCopyWithImpl<$Res>
+    implements _$AddSupplementObjectCopyWith<$Res> {
+  __$AddSupplementObjectCopyWithImpl(
+      _AddSupplementObject _value, $Res Function(_AddSupplementObject) _then)
+      : super(_value, (v) => _then(v as _AddSupplementObject));
+
+  @override
+  _AddSupplementObject get _value => super._value as _AddSupplementObject;
+
+  @override
+  $Res call({
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? title = freezed,
+    Object? price = freezed,
+  }) {
+    return _then(_AddSupplementObject(
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddSupplementObject implements _AddSupplementObject {
+  _$_AddSupplementObject(this.color, this.image, this.title, this.price);
+
+  @override
+  final String color;
+  @override
+  final PickerFile? image;
+  @override
+  final String title;
+  @override
+  final String price;
+
+  @override
+  String toString() {
+    return 'AddSupplementObject(color: $color, image: $image, title: $title, price: $price)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _AddSupplementObject &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)) &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.price, price) ||
+                const DeepCollectionEquality().equals(other.price, price)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(color) ^
+      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(price);
+
+  @JsonKey(ignore: true)
+  @override
+  _$AddSupplementObjectCopyWith<_AddSupplementObject> get copyWith =>
+      __$AddSupplementObjectCopyWithImpl<_AddSupplementObject>(
+          this, _$identity);
+}
+
+abstract class _AddSupplementObject implements AddSupplementObject {
+  factory _AddSupplementObject(
+          String color, PickerFile? image, String title, String price) =
+      _$_AddSupplementObject;
+
+  @override
+  String get color => throw _privateConstructorUsedError;
+  @override
+  PickerFile? get image => throw _privateConstructorUsedError;
+  @override
+  String get title => throw _privateConstructorUsedError;
+  @override
+  String get price => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$AddSupplementObjectCopyWith<_AddSupplementObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}

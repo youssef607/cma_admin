@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:cma_admin/data/mapper/mapper.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/usecase/addcategory_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
@@ -128,7 +127,7 @@ class AddCategoryViewModel extends BaseViewModel
 
   // -- private methods
   bool _isColorValid(Color color) {
-    return color.value >= 0;
+    return color.value > 0;
   }
 
   bool _isLabelValid(String label) {

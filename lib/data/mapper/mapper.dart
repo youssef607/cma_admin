@@ -40,6 +40,22 @@ extension CategoryResponseExtension on CategoryResponse? {
   }
 }
 
+extension SupplementResponseExtension on SupplementResponse? {
+  Supplement toDomain() {
+    return Supplement(
+      this?.id?.orZero() ?? ZERO,
+      this?.createdAt?.orEmpty() ?? EMPTY,
+      this?.deletedAt?.orEmpty() ?? EMPTY,
+      this?.modifiedAt?.orEmpty() ?? EMPTY,
+      this?.active.orFalse() ?? FALSE,
+      HexColor.fromHex("#${this?.color?.orEmpty() ?? EMPTY}"),
+      Constant.ImageUrl + (this?.image?.orEmpty() ?? EMPTY),
+      this?.title?.orEmpty() ?? EMPTY,
+      this?.price?.orZeroD() ?? ZEROD,
+    );
+  }
+}
+
 extension SignInResponseExtension on SignInResponse? {
   SignInData toDomain() {
     return SignInData(this?.token.orEmpty() ?? EMPTY, this?.user?.toDomain());

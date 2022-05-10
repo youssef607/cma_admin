@@ -6,6 +6,8 @@ abstract class RemoteDataSource {
   Future<SignInResponse> signIn(String userName, String password);
   Future<SignInResponse> addUser(AddUserRequest addUserRequest);
   Future<CategoryResponse> addCategory(AddCategoryRequest addCategoryRequest);
+  Future<SupplementResponse> AddSupplement(
+      AddSupplementRequest addSupplementRequest);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -36,5 +38,16 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
         color: addCategoryRequest.color,
         image: addCategoryRequest.image,
         label: addCategoryRequest.label);
+  }
+
+  @override
+  Future<SupplementResponse> AddSupplement(
+      AddSupplementRequest addSupplementRequest) async {
+    return await _appServiceClient.addSupplement(
+      color: addSupplementRequest.color,
+      image: addSupplementRequest.image,
+      title: addSupplementRequest.title,
+      price: addSupplementRequest.price,
+    );
   }
 }

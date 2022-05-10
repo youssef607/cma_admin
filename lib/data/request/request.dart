@@ -46,3 +46,12 @@ class AddCategoryRequest {
 
   AddCategoryRequest(this.image, this.label, this.color);
 }
+
+class AddSupplementRequest {
+  PickerFile? image;
+  String title;
+  String color;
+  String price;
+
+  AddSupplementRequest(this.image, this.title, this.color, this.price);
+}

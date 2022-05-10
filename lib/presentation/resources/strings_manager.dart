@@ -26,6 +26,8 @@ class AppStrings {
   static const String register = "Register";
   static const String haveAccount = "Already have an account? Login";
   static const String home = "Home";
+  static const String title = "title";
+  static const String price = "price";
   static const String notifications = "Notifications";
   static const String search = "Search";
   static const String settings = "Settings";

@@ -37,36 +37,16 @@ abstract class AppServiceClient {
     @Part() required String label,
     @Part() required String color,
   });
+
+  @POST("/supplement/save")
+  @MultiPart()
+  Future<SupplementResponse> addSupplement({
+    @Part() PickerFile? image,
+    @Part() required String title,
+    @Part() required String color,
+    @Part() required String price,
+  });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

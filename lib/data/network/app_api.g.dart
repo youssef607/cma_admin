@@ -43,13 +43,13 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
+
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromBytes(image.byte,
               filename: "image.${image.extensions}")));
     }
-
     _data.fields.add(MapEntry('name', name));
     _data.fields.add(MapEntry('password', password));
     _data.fields.add(MapEntry('username', username));
@@ -70,13 +70,13 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
+
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromBytes(image.byte,
               filename: "image.${image.extensions}")));
     }
-
     _data.fields.add(MapEntry('label', label));
     _data.fields.add(MapEntry('color', color));
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -86,6 +86,33 @@ class _AppServiceClient implements AppServiceClient {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = CategoryResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<SupplementResponse> addSupplement(
+      {image, required title, required color, required price}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
+    }
+    _data.fields.add(MapEntry('title', title));
+    _data.fields.add(MapEntry('color', color));
+    _data.fields.add(MapEntry('price', price));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SupplementResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/supplement/save',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SupplementResponse.fromJson(_result.data!);
     return value;
   }
 

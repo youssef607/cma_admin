@@ -46,4 +46,17 @@ class RepositoryImpl extends Repository {
       return Left(ErrorHandler.handle(error).failure);
     }
   }
+
+  @override
+  Future<Either<Failure, Supplement>> addSupplement(
+      AddSupplementRequest addSupplementRequest) async {
+    try {
+      final response =
+          await _remoteDataSource.AddSupplement(addSupplementRequest);
+
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
 }

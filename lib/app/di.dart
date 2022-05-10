@@ -4,15 +4,13 @@ import 'package:cma_admin/data/network/dio_factory.dart';
 import 'package:cma_admin/data/repository/repository_imp.dart';
 import 'package:cma_admin/domain/repository/repository.dart';
 import 'package:cma_admin/domain/usecase/addcategory_usecase.dart';
+import 'package:cma_admin/domain/usecase/addsupplement_usecase.dart';
 import 'package:cma_admin/domain/usecase/adduser_usecase.dart';
 import 'package:cma_admin/domain/usecase/signIn_usecase.dart';
+import 'package:cma_admin/presentation/addCategory/addcategory_view_model.dart';
+import 'package:cma_admin/presentation/addSupplement/addSupplement_view_model.dart';
 import 'package:cma_admin/presentation/addUser/user_view_model.dart';
-import 'package:cma_admin/presentation/category/addcategory_view_model.dart';
-import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/signIn/signIn_view_model.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -76,10 +74,21 @@ initAddCategoryModule() {
   }
 }
 
+initAddSupplementModule() {
+  if (!GetIt.I.isRegistered<AddSupplementUseCase>()) {
+    instance.registerFactory<AddSupplementUseCase>(
+        () => AddSupplementUseCase(instance()));
+
+    instance.registerFactory<AddSupplementViewModel>(
+        () => AddSupplementViewModel(instance()));
+  }
+}
+
 resetModules() {
   instance.reset(dispose: false);
   initAppModule();
   initSignInModule();
   initAddUserModule();
   initAddCategoryModule();
+  initAddSupplementModule();
 }
