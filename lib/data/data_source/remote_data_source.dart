@@ -46,8 +46,8 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
     return await _appServiceClient.addSupplement(
       color: addSupplementRequest.color,
       image: addSupplementRequest.image,
-      title: addSupplementRequest.title,
       price: addSupplementRequest.price,
+      title: addSupplementRequest.title,
     );
   }
 }

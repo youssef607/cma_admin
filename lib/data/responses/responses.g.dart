@@ -98,6 +98,6 @@ Map<String, dynamic> _$SupplementResponseToJson(SupplementResponse instance) =>
       'active': instance.active,
       'color': instance.color,
       'image': instance.image,
-      'title': instance.title,
       'price': instance.price,
+      'title': instance.title,
     };

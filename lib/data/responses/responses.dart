@@ -89,10 +89,10 @@ class SupplementResponse extends BaseResponse {
   String? color;
   @JsonKey(name: "image")
   String? image;
-  @JsonKey(name: "title")
-  String? title;
   @JsonKey(name: "price")
   double? price;
+  @JsonKey(name: "title")
+  String? title;
 
   SupplementResponse(this.color, this.image, this.title, this.price);
 

@@ -15,16 +15,15 @@ class AddSupplementUseCase
   Future<Either<Failure, Supplement>> execute(
       AddSupplementUseCaseInput input) async {
     return await _repository.addSupplement(AddSupplementRequest(
-        input.image, input.title, input.color, input.price));
+        input.color, input.image, input.price, input.title));
   }
 }
 
 class AddSupplementUseCaseInput {
   String color;
-
   PickerFile? image;
   String price;
   String title;
 
-  AddSupplementUseCaseInput(this.color, this.image, this.title, this.price);
+  AddSupplementUseCaseInput(this.color, this.image, this.price, this.title);
 }

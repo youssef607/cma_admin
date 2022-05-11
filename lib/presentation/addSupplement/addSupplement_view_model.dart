@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/usecase/addsupplement_usecase.dart';
-import 'package:cma_admin/domain/usecase/adduser_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
@@ -12,10 +11,9 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class AddSupplementViewModel extends BaseViewModel
     with AddSupplementViewModelInput, AddSupplementViewModelOutput {
-  StreamController _colorStreamController =
-      StreamController<String>.broadcast();
+  StreamController _colorStreamController = StreamController<Color>.broadcast();
   StreamController _priceStreamController =
-      StreamController<String>.broadcast();
+      StreamController<double>.broadcast();
 
   StreamController _titleStreamController =
       StreamController<String>.broadcast();
@@ -42,14 +40,14 @@ class AddSupplementViewModel extends BaseViewModel
   }
 
   @override
-  register() async {
+  addSupplement() async {
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _addSupplementUseCase.execute(AddSupplementUseCaseInput(
-      addSupplementViewObject.color,
+      addSupplementViewObject.color.toString(),
       addSupplementViewObject.image,
-      addSupplementViewObject.title,
       addSupplementViewObject.price,
+      addSupplementViewObject.title,
     )))
         .fold(
             (failure) => {
@@ -117,6 +115,7 @@ class AddSupplementViewModel extends BaseViewModel
   @override
   Sink get inputTitle => _titleStreamController.sink;
 
+  @override
   Sink get inputPrice => _priceStreamController.sink;
 
   @override
@@ -153,12 +152,8 @@ class AddSupplementViewModel extends BaseViewModel
       _isAllInputsValidStreamController.stream.map((_) => _validateAllInputs());
 
   // -- private methods
-  bool _isColorValid(Color color) {
-    return color.value > 0;
-  }
-
   bool _isTitleValid(String title) {
-    return title.length > 0;
+    return title.isNotEmpty;
   }
 
   bool _isPriceValid(String price) {
@@ -177,7 +172,7 @@ class AddSupplementViewModel extends BaseViewModel
 }
 
 abstract class AddSupplementViewModelInput {
-  register();
+  addSupplement();
 
   setColor(Color color);
 

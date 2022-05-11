@@ -57,7 +57,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
           return Center(
             child: snapshot.data?.getScreenWidget(context, _getContentWidget(),
                     () {
-                  _viewModel.register();
+                  _viewModel.addCategory();
                 }) ??
                 _getContentWidget(),
           );
@@ -88,7 +88,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                       children: [
                         Container(
                             child: Text(
-                          AppStrings.createAccount,
+                          AppStrings.createCategory,
                           style: getBoldStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s24),
@@ -171,7 +171,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                                   child: ElevatedButton(
                                       onPressed: (snapshot.data ?? false)
                                           ? () {
-                                              _viewModel.register();
+                                              _viewModel.addCategory();
                                             }
                                           : null,
                                       child: Text(AppStrings.addCategory)),

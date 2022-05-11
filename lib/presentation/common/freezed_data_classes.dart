@@ -34,7 +34,7 @@ class AddSupplementObject with _$AddSupplementObject {
   factory AddSupplementObject(
     String color,
     PickerFile? image,
-    String title,
     String price,
+    String title,
   ) = _AddSupplementObject;
 }

@@ -556,12 +556,12 @@ class _$AddSupplementObjectTearOff {
   const _$AddSupplementObjectTearOff();
 
   _AddSupplementObject call(
-      String color, PickerFile? image, String title, String price) {
+      String color, PickerFile? image, String price, String title) {
     return _AddSupplementObject(
       color,
       image,
-      title,
       price,
+      title,
     );
   }
 }
@@ -573,8 +573,8 @@ const $AddSupplementObject = _$AddSupplementObjectTearOff();
 mixin _$AddSupplementObject {
   String get color => throw _privateConstructorUsedError;
   PickerFile? get image => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
   String get price => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddSupplementObjectCopyWith<AddSupplementObject> get copyWith =>
@@ -586,7 +586,7 @@ abstract class $AddSupplementObjectCopyWith<$Res> {
   factory $AddSupplementObjectCopyWith(
           AddSupplementObject value, $Res Function(AddSupplementObject) then) =
       _$AddSupplementObjectCopyWithImpl<$Res>;
-  $Res call({String color, PickerFile? image, String title, String price});
+  $Res call({String color, PickerFile? image, String price, String title});
 }
 
 /// @nodoc
@@ -602,8 +602,8 @@ class _$AddSupplementObjectCopyWithImpl<$Res>
   $Res call({
     Object? color = freezed,
     Object? image = freezed,
-    Object? title = freezed,
     Object? price = freezed,
+    Object? title = freezed,
   }) {
     return _then(_value.copyWith(
       color: color == freezed
@@ -614,13 +614,13 @@ class _$AddSupplementObjectCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as PickerFile?,
-      title: title == freezed
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
       price: price == freezed
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -633,7 +633,7 @@ abstract class _$AddSupplementObjectCopyWith<$Res>
           $Res Function(_AddSupplementObject) then) =
       __$AddSupplementObjectCopyWithImpl<$Res>;
   @override
-  $Res call({String color, PickerFile? image, String title, String price});
+  $Res call({String color, PickerFile? image, String price, String title});
 }
 
 /// @nodoc
@@ -651,8 +651,8 @@ class __$AddSupplementObjectCopyWithImpl<$Res>
   $Res call({
     Object? color = freezed,
     Object? image = freezed,
-    Object? title = freezed,
     Object? price = freezed,
+    Object? title = freezed,
   }) {
     return _then(_AddSupplementObject(
       color == freezed
@@ -663,13 +663,13 @@ class __$AddSupplementObjectCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as PickerFile?,
-      title == freezed
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
       price == freezed
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -678,20 +678,20 @@ class __$AddSupplementObjectCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AddSupplementObject implements _AddSupplementObject {
-  _$_AddSupplementObject(this.color, this.image, this.title, this.price);
+  _$_AddSupplementObject(this.color, this.image, this.price, this.title);
 
   @override
   final String color;
   @override
   final PickerFile? image;
   @override
-  final String title;
-  @override
   final String price;
+  @override
+  final String title;
 
   @override
   String toString() {
-    return 'AddSupplementObject(color: $color, image: $image, title: $title, price: $price)';
+    return 'AddSupplementObject(color: $color, image: $image, price: $price, title: $title)';
   }
 
   @override
@@ -702,10 +702,10 @@ class _$_AddSupplementObject implements _AddSupplementObject {
                 const DeepCollectionEquality().equals(other.color, color)) &&
             (identical(other.image, image) ||
                 const DeepCollectionEquality().equals(other.image, image)) &&
-            (identical(other.title, title) ||
-                const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.price, price) ||
-                const DeepCollectionEquality().equals(other.price, price)));
+                const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)));
   }
 
   @override
@@ -713,8 +713,8 @@ class _$_AddSupplementObject implements _AddSupplementObject {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(color) ^
       const DeepCollectionEquality().hash(image) ^
-      const DeepCollectionEquality().hash(title) ^
-      const DeepCollectionEquality().hash(price);
+      const DeepCollectionEquality().hash(price) ^
+      const DeepCollectionEquality().hash(title);
 
   @JsonKey(ignore: true)
   @override
@@ -725,7 +725,7 @@ class _$_AddSupplementObject implements _AddSupplementObject {
 
 abstract class _AddSupplementObject implements AddSupplementObject {
   factory _AddSupplementObject(
-          String color, PickerFile? image, String title, String price) =
+          String color, PickerFile? image, String price, String title) =
       _$_AddSupplementObject;
 
   @override
@@ -733,9 +733,9 @@ abstract class _AddSupplementObject implements AddSupplementObject {
   @override
   PickerFile? get image => throw _privateConstructorUsedError;
   @override
-  String get title => throw _privateConstructorUsedError;
-  @override
   String get price => throw _privateConstructorUsedError;
+  @override
+  String get title => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AddSupplementObjectCopyWith<_AddSupplementObject> get copyWith =>

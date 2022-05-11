@@ -43,7 +43,6 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
@@ -70,7 +69,6 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
@@ -91,21 +89,20 @@ class _AppServiceClient implements AppServiceClient {
 
   @override
   Future<SupplementResponse> addSupplement(
-      {image, required title, required color, required price}) async {
+      {required color, image, required price, required title}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-
+    _data.fields.add(MapEntry('color', color));
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromBytes(image.byte,
               filename: "image.${image.extensions}")));
     }
-    _data.fields.add(MapEntry('title', title));
-    _data.fields.add(MapEntry('color', color));
     _data.fields.add(MapEntry('price', price));
+    _data.fields.add(MapEntry('title', title));
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<SupplementResponse>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)

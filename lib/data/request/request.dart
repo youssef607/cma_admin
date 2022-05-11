@@ -48,10 +48,10 @@ class AddCategoryRequest {
 }
 
 class AddSupplementRequest {
-  PickerFile? image;
-  String title;
   String color;
+  PickerFile? image;
   String price;
+  String title;
 
-  AddSupplementRequest(this.image, this.title, this.color, this.price);
+  AddSupplementRequest(this.color, this.image, this.price, this.title);
 }

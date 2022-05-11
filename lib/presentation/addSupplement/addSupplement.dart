@@ -29,7 +29,6 @@ class _AddSupplementViewState extends State<AddSupplementView> {
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _titleTextEditingController = TextEditingController();
-  TextEditingController _priceTextEditingController = TextEditingController();
 
   @override
   void initState() {
@@ -43,11 +42,6 @@ class _AddSupplementViewState extends State<AddSupplementView> {
     _titleTextEditingController.addListener(() {
       _viewModel.setTitle(_titleTextEditingController.text);
     });
-
-    _priceTextEditingController.addListener(() {
-      _viewModel.setPrice(_priceTextEditingController.text);
-    });
-
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream
         .listen((isSuccessAddCategory) {
       Navigator.of(context).pop();
@@ -63,7 +57,7 @@ class _AddSupplementViewState extends State<AddSupplementView> {
           return Center(
             child: snapshot.data?.getScreenWidget(context, _getContentWidget(),
                     () {
-                  _viewModel.register();
+                  _viewModel.addSupplement();
                 }) ??
                 _getContentWidget(),
           );
@@ -94,7 +88,7 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                       children: [
                         Container(
                             child: Text(
-                          AppStrings.createAccount,
+                          AppStrings.createSupplement,
                           style: getBoldStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s24),
@@ -151,8 +145,11 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                                 stream: _viewModel.outputErrorPrice,
                                 builder: (context, snapshot) {
                                   return TextFormField(
+                                      onChanged: (value) {
+                                        _viewModel.setPrice(value);
+                                      },
                                       keyboardType: TextInputType.text,
-                                      controller: _priceTextEditingController,
+                                      // controller: _priceTextEditingController,
                                       decoration: InputDecoration(
                                           hintText: AppStrings.price,
                                           errorText: snapshot.data));
@@ -199,10 +196,10 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                                   child: ElevatedButton(
                                       onPressed: (snapshot.data ?? false)
                                           ? () {
-                                              _viewModel.register();
+                                              _viewModel.addSupplement();
                                             }
                                           : null,
-                                      child: Text(AppStrings.addCategory)),
+                                      child: Text(AppStrings.addSupplemet)),
                                 );
                               },
                             )),

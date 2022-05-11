@@ -41,10 +41,10 @@ abstract class AppServiceClient {
   @POST("/supplement/save")
   @MultiPart()
   Future<SupplementResponse> addSupplement({
-    @Part() PickerFile? image,
-    @Part() required String title,
     @Part() required String color,
+    @Part() PickerFile? image,
     @Part() required String price,
+    @Part() required String title,
   });
 }
 

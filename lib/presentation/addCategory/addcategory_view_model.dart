@@ -37,7 +37,7 @@ class AddCategoryViewModel extends BaseViewModel
   }
 
   @override
-  register() async {
+  addCategory() async {
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _addCategoryUseCase.execute(AddCategoryUseCaseInput(
@@ -126,10 +126,6 @@ class AddCategoryViewModel extends BaseViewModel
       _isAllInputsValidStreamController.stream.map((_) => _validateAllInputs());
 
   // -- private methods
-  bool _isColorValid(Color color) {
-    return color.value > 0;
-  }
-
   bool _isLabelValid(String label) {
     return label.length > 0;
   }
@@ -145,7 +141,7 @@ class AddCategoryViewModel extends BaseViewModel
 }
 
 abstract class AddCategoryViewModelInput {
-  register();
+  addCategory();
 
   setColor(Color color);
 
