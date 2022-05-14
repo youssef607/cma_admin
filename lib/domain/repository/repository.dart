@@ -10,4 +10,7 @@ abstract class Repository {
       AddCategoryRequest addCategoryRequest);
   Future<Either<Failure, Supplement>> addSupplement(
       AddSupplementRequest addSupplementRequest);
+  Future<Either<Failure, Product>> addProduct(
+      AddProductRequest addProductRequest);
+  Future<Either<Failure, List<Category>>> getCategory();
 }

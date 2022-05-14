@@ -4,10 +4,13 @@ import 'package:cma_admin/data/network/dio_factory.dart';
 import 'package:cma_admin/data/repository/repository_imp.dart';
 import 'package:cma_admin/domain/repository/repository.dart';
 import 'package:cma_admin/domain/usecase/addcategory_usecase.dart';
+import 'package:cma_admin/domain/usecase/addproduct_usecase.dart';
 import 'package:cma_admin/domain/usecase/addsupplement_usecase.dart';
 import 'package:cma_admin/domain/usecase/adduser_usecase.dart';
+import 'package:cma_admin/domain/usecase/category_usecase.dart';
 import 'package:cma_admin/domain/usecase/signIn_usecase.dart';
 import 'package:cma_admin/presentation/addCategory/addcategory_view_model.dart';
+import 'package:cma_admin/presentation/addProduct/addProduct_view_model.dart';
 import 'package:cma_admin/presentation/addSupplement/addSupplement_view_model.dart';
 import 'package:cma_admin/presentation/addUser/user_view_model.dart';
 import 'package:cma_admin/presentation/signIn/signIn_view_model.dart';
@@ -84,6 +87,18 @@ initAddSupplementModule() {
   }
 }
 
+initAddProductModule() {
+  if (!GetIt.I.isRegistered<AddProductUseCase>()) {
+    instance.registerFactory<AddProductUseCase>(
+        () => AddProductUseCase(instance()));
+    instance
+        .registerFactory<CategoryUseCase>(() => CategoryUseCase(instance()));
+
+    instance.registerFactory<AddProductViewModel>(
+        () => AddProductViewModel(instance(), instance()));
+  }
+}
+
 resetModules() {
   instance.reset(dispose: false);
   initAppModule();
@@ -91,4 +106,5 @@ resetModules() {
   initAddUserModule();
   initAddCategoryModule();
   initAddSupplementModule();
+  initAddProductModule();
 }

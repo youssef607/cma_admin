@@ -113,6 +113,55 @@ class _AppServiceClient implements AppServiceClient {
     return value;
   }
 
+  @override
+  Future<ProductResponse> addProduct(
+      {required categoryId,
+      required color,
+      image,
+      required price,
+      required title}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    _data.fields.add(MapEntry('categoryId', categoryId));
+    _data.fields.add(MapEntry('color', color));
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
+    }
+    _data.fields.add(MapEntry('price', price));
+    _data.fields.add(MapEntry('title', title));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ProductResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/product/save',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ProductResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<List<CategoryResponse>> getCategory() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<CategoryResponse>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/category/all',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    var value = _result.data!
+        .map(
+            (dynamic i) => CategoryResponse.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

@@ -38,3 +38,14 @@ class AddSupplementObject with _$AddSupplementObject {
     String title,
   ) = _AddSupplementObject;
 }
+
+@freezed
+class AddProductObject with _$AddProductObject {
+  factory AddProductObject(
+    String categoryId,
+    String color,
+    PickerFile? image,
+    String price,
+    String title,
+  ) = _AddProductObject;
+}

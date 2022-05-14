@@ -1,11 +1,7 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:cma_admin/app/constant.dart';
 import 'package:cma_admin/data/responses/responses.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:retrofit/http.dart';
 
 part 'app_api.g.dart';
@@ -46,6 +42,19 @@ abstract class AppServiceClient {
     @Part() required String price,
     @Part() required String title,
   });
+
+  @POST("/product/save")
+  @MultiPart()
+  Future<ProductResponse> addProduct({
+    @Part() required String categoryId,
+    @Part() required String color,
+    @Part() PickerFile? image,
+    @Part() required String price,
+    @Part() required String title,
+  });
+
+  @GET('/category/all')
+  Future<List<CategoryResponse>> getCategory();
 }
 
 

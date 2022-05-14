@@ -55,3 +55,14 @@ class AddSupplementRequest {
 
   AddSupplementRequest(this.color, this.image, this.price, this.title);
 }
+
+class AddProductRequest {
+  String categoryId;
+  String color;
+  PickerFile? image;
+  String price;
+  String title;
+
+  AddProductRequest(
+      this.categoryId, this.color, this.image, this.price, this.title);
+}

@@ -1,4 +1,5 @@
 import 'package:cma_admin/app/di.dart';
+import 'package:cma_admin/presentation/addProduct/addProduct_View.dart';
 import 'package:cma_admin/presentation/addSupplement/addSupplement.dart';
 import 'package:cma_admin/presentation/addUser/user.dart';
 import 'package:cma_admin/presentation/addCategory/addcategory.dart';
@@ -16,6 +17,7 @@ class Routes {
   static const String addUserRoute = "/addUser";
   static const String addCategoryRoute = "/addCategory";
   static const String addSupplementRoute = "/addSupplement";
+  static const String addProductRoute = "/addProduct";
   static const String splashRoute = "/splash";
   static const String testRoute = "/test";
 }
@@ -26,6 +28,10 @@ class RouteGenerator {
       case Routes.loginRoute:
         initSignInModule();
         return CupertinoPageRoute(builder: (_) => SignInView());
+
+      case Routes.addProductRoute:
+        initAddProductModule();
+        return CupertinoPageRoute(builder: (_) => AddProductView());
 
       case Routes.addCategoryRoute:
         initAddCategoryModule();

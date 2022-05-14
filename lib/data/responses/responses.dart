@@ -103,3 +103,34 @@ class SupplementResponse extends BaseResponse {
 // to json
   Map<String, dynamic> toJson() => _$SupplementResponseToJson(this);
 }
+
+@JsonSerializable()
+class ProductResponse extends BaseResponse {
+  @JsonKey(name: "color")
+  String? color;
+
+  @JsonKey(name: "image")
+  String? image;
+
+  @JsonKey(name: "title")
+  String? title;
+
+  @JsonKey(name: "price")
+  double? price;
+
+  @JsonKey(name: "category")
+  CategoryResponse? category;
+
+  @JsonKey(name: "supplements")
+  List<SupplementResponse>? supplements;
+
+  ProductResponse(this.color, this.image, this.title, this.price, this.category,
+      this.supplements);
+
+  // from json
+  factory ProductResponse.fromJson(Map<String, dynamic> json) =>
+      _$ProductResponseFromJson(json);
+
+  // to json
+  Map<String, dynamic> toJson() => _$ProductResponseToJson(this);
+}

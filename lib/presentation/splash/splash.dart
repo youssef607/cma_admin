@@ -27,12 +27,12 @@ class _SplashViewState extends State<SplashView> {
             {
               _appPreferences.getUserRole().then((role) {
                 if (role == Constant.OWNER) {
-                  Navigator.pushNamedAndRemoveUntil(context,
-                      Routes.addSupplementRoute, ModalRoute.withName('/'),
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, Routes.addProductRoute, ModalRoute.withName('/'),
                       arguments: 0);
                 } else if ((role == Constant.MANAGER)) {
-                  Navigator.pushNamedAndRemoveUntil(context,
-                      Routes.addSupplementRoute, ModalRoute.withName('/'),
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, Routes.addProductRoute, ModalRoute.withName('/'),
                       arguments: 0);
                 }
               })

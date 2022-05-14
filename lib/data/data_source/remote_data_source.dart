@@ -6,8 +6,10 @@ abstract class RemoteDataSource {
   Future<SignInResponse> signIn(String userName, String password);
   Future<SignInResponse> addUser(AddUserRequest addUserRequest);
   Future<CategoryResponse> addCategory(AddCategoryRequest addCategoryRequest);
+  Future<ProductResponse> addProduct(AddProductRequest addProductRequest);
   Future<SupplementResponse> AddSupplement(
       AddSupplementRequest addSupplementRequest);
+  Future<List<CategoryResponse>> getCategory();
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -49,5 +51,21 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
       price: addSupplementRequest.price,
       title: addSupplementRequest.title,
     );
+  }
+
+  @override
+  Future<ProductResponse> addProduct(
+      AddProductRequest addProductRequest) async {
+    return await _appServiceClient.addProduct(
+        categoryId: addProductRequest.categoryId,
+        color: addProductRequest.color,
+        image: addProductRequest.image,
+        price: addProductRequest.price,
+        title: addProductRequest.title);
+  }
+
+  @override
+  Future<List<CategoryResponse>> getCategory() async {
+    return await _appServiceClient.getCategory();
   }
 }

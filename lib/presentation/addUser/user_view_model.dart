@@ -134,11 +134,6 @@ class AddUserViewModel extends BaseViewModel
   }
 
   @override
-  setVisiblePassword(bool visible) {
-    return !visible;
-  }
-
-  @override
   Sink get inputName => _nameStreamController.sink;
 
   @override

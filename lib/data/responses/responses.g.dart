@@ -101,3 +101,38 @@ Map<String, dynamic> _$SupplementResponseToJson(SupplementResponse instance) =>
       'price': instance.price,
       'title': instance.title,
     };
+
+ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) {
+  return ProductResponse(
+    json['color'] as String?,
+    json['image'] as String?,
+    json['title'] as String?,
+    (json['price'] as num?)?.toDouble(),
+    json['category'] == null
+        ? null
+        : CategoryResponse.fromJson(json['category'] as Map<String, dynamic>),
+    (json['supplements'] as List<dynamic>?)
+        ?.map((e) => SupplementResponse.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  )
+    ..id = json['id'] as int?
+    ..createdAt = json['createdAt'] as String?
+    ..deletedAt = json['deletedAt'] as String?
+    ..modifiedAt = json['modifiedAt'] as String?
+    ..active = json['active'] as bool?;
+}
+
+Map<String, dynamic> _$ProductResponseToJson(ProductResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'createdAt': instance.createdAt,
+      'deletedAt': instance.deletedAt,
+      'modifiedAt': instance.modifiedAt,
+      'active': instance.active,
+      'color': instance.color,
+      'image': instance.image,
+      'title': instance.title,
+      'price': instance.price,
+      'category': instance.category,
+      'supplements': instance.supplements,
+    };

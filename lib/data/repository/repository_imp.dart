@@ -59,4 +59,28 @@ class RepositoryImpl extends Repository {
       return Left(ErrorHandler.handle(error).failure);
     }
   }
+
+  @override
+  Future<Either<Failure, Product>> addProduct(
+      AddProductRequest addProductRequest) async {
+    try {
+      final response = await _remoteDataSource.addProduct(addProductRequest);
+
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Category>>> getCategory() async {
+    try {
+      // its safe to call API
+      final response = await _remoteDataSource.getCategory();
+
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
 }

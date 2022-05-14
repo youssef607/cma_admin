@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/presentation/addCategory/addcategory_view_model.dart';
-import 'package:cma_admin/presentation/addSupplement/addSupplement_view_model.dart';
+import 'package:cma_admin/presentation/addProduct/addProduct_view_model.dart';
 import 'package:cma_admin/presentation/common/widgets/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
@@ -12,20 +11,21 @@ import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.d
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
-class AddSupplementView extends StatefulWidget {
-  const AddSupplementView({Key? key}) : super(key: key);
+class AddProductView extends StatefulWidget {
+  const AddProductView({Key? key}) : super(key: key);
 
   @override
-  _AddSupplementViewState createState() => _AddSupplementViewState();
+  _AddProductViewViewState createState() => _AddProductViewViewState();
 }
 
-class _AddSupplementViewState extends State<AddSupplementView> {
-  AddSupplementViewModel _viewModel = instance<AddSupplementViewModel>();
+class _AddProductViewViewState extends State<AddProductView> {
+  AddProductViewModel _viewModel = instance<AddProductViewModel>();
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _titleTextEditingController = TextEditingController();
@@ -42,8 +42,9 @@ class _AddSupplementViewState extends State<AddSupplementView> {
     _titleTextEditingController.addListener(() {
       _viewModel.setTitle(_titleTextEditingController.text);
     });
+
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream
-        .listen((isSuccessAddCategory) {
+        .listen((isSuccessAddProduct) {
       Navigator.of(context).pop();
     });
   }
@@ -57,7 +58,7 @@ class _AddSupplementViewState extends State<AddSupplementView> {
           return Center(
             child: snapshot.data?.getScreenWidget(context, _getContentWidget(),
                     () {
-                  _viewModel.addSupplement();
+                  _viewModel.addProduct();
                 }) ??
                 _getContentWidget(),
           );
@@ -88,7 +89,7 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                       children: [
                         Container(
                             child: Text(
-                          AppStrings.createSupplement,
+                          AppStrings.createCategory,
                           style: getBoldStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s24),
@@ -126,7 +127,7 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                                       keyboardType: TextInputType.text,
                                       controller: _titleTextEditingController,
                                       decoration: InputDecoration(
-                                          hintText: AppStrings.title,
+                                          hintText: AppStrings.label,
                                           errorText: snapshot.data));
                                 },
                               ),
@@ -145,14 +146,51 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                                 stream: _viewModel.outputErrorPrice,
                                 builder: (context, snapshot) {
                                   return TextFormField(
+                                      keyboardType: TextInputType.text,
                                       onChanged: (value) {
                                         _viewModel.setPrice(value);
                                       },
-                                      keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
                                           hintText: AppStrings.price,
                                           errorText: snapshot.data));
                                 },
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: AppSize.s12),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: AppPadding.p28, right: AppPadding.p28),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RequiredLabel(text: AppStrings.addCategory),
+                              StreamBuilder<List<Category>?>(
+                                stream: _viewModel.outputCategories,
+                                builder: (context, snapshot) {
+                                  List<Category>? categories = snapshot.data;
+
+                                  return categories != null
+                                      ? DropdownSearch<Category>(
+                                          mode: Mode.MENU,
+                                          items: categories
+                                              .map((category) => category)
+                                              .toList(),
+                                          itemAsString: (Category? category) =>
+                                              category!.label,
+                                          dropdownSearchDecoration:
+                                              InputDecoration(
+                                            hintText: AppStrings.addCategory,
+                                          ),
+                                          onChanged: (category) {
+                                            _viewModel.setCategoryId(
+                                                category!.id.toString());
+                                          },
+                                        )
+                                      : DropdownSearch<Category>();
+                                },
+                                // return Text(categories![0].label);
                               ),
                             ],
                           ),
@@ -195,10 +233,10 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                                   child: ElevatedButton(
                                       onPressed: (snapshot.data ?? false)
                                           ? () {
-                                              _viewModel.addSupplement();
+                                              _viewModel.addProduct();
                                             }
                                           : null,
-                                      child: Text(AppStrings.addSupplemet)),
+                                      child: Text(AppStrings.addCategory)),
                                 );
                               },
                             )),

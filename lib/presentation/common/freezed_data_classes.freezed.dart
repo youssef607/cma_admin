@@ -741,3 +741,223 @@ abstract class _AddSupplementObject implements AddSupplementObject {
   _$AddSupplementObjectCopyWith<_AddSupplementObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$AddProductObjectTearOff {
+  const _$AddProductObjectTearOff();
+
+  _AddProductObject call(String categoryId, String color, PickerFile? image,
+      String price, String title) {
+    return _AddProductObject(
+      categoryId,
+      color,
+      image,
+      price,
+      title,
+    );
+  }
+}
+
+/// @nodoc
+const $AddProductObject = _$AddProductObjectTearOff();
+
+/// @nodoc
+mixin _$AddProductObject {
+  String get categoryId => throw _privateConstructorUsedError;
+  String get color => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AddProductObjectCopyWith<AddProductObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AddProductObjectCopyWith<$Res> {
+  factory $AddProductObjectCopyWith(
+          AddProductObject value, $Res Function(AddProductObject) then) =
+      _$AddProductObjectCopyWithImpl<$Res>;
+  $Res call(
+      {String categoryId,
+      String color,
+      PickerFile? image,
+      String price,
+      String title});
+}
+
+/// @nodoc
+class _$AddProductObjectCopyWithImpl<$Res>
+    implements $AddProductObjectCopyWith<$Res> {
+  _$AddProductObjectCopyWithImpl(this._value, this._then);
+
+  final AddProductObject _value;
+  // ignore: unused_field
+  final $Res Function(AddProductObject) _then;
+
+  @override
+  $Res call({
+    Object? categoryId = freezed,
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? price = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_value.copyWith(
+      categoryId: categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$AddProductObjectCopyWith<$Res>
+    implements $AddProductObjectCopyWith<$Res> {
+  factory _$AddProductObjectCopyWith(
+          _AddProductObject value, $Res Function(_AddProductObject) then) =
+      __$AddProductObjectCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String categoryId,
+      String color,
+      PickerFile? image,
+      String price,
+      String title});
+}
+
+/// @nodoc
+class __$AddProductObjectCopyWithImpl<$Res>
+    extends _$AddProductObjectCopyWithImpl<$Res>
+    implements _$AddProductObjectCopyWith<$Res> {
+  __$AddProductObjectCopyWithImpl(
+      _AddProductObject _value, $Res Function(_AddProductObject) _then)
+      : super(_value, (v) => _then(v as _AddProductObject));
+
+  @override
+  _AddProductObject get _value => super._value as _AddProductObject;
+
+  @override
+  $Res call({
+    Object? categoryId = freezed,
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? price = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_AddProductObject(
+      categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddProductObject implements _AddProductObject {
+  _$_AddProductObject(
+      this.categoryId, this.color, this.image, this.price, this.title);
+
+  @override
+  final String categoryId;
+  @override
+  final String color;
+  @override
+  final PickerFile? image;
+  @override
+  final String price;
+  @override
+  final String title;
+
+  @override
+  String toString() {
+    return 'AddProductObject(categoryId: $categoryId, color: $color, image: $image, price: $price, title: $title)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _AddProductObject &&
+            (identical(other.categoryId, categoryId) ||
+                const DeepCollectionEquality()
+                    .equals(other.categoryId, categoryId)) &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)) &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.price, price) ||
+                const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(categoryId) ^
+      const DeepCollectionEquality().hash(color) ^
+      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(price) ^
+      const DeepCollectionEquality().hash(title);
+
+  @JsonKey(ignore: true)
+  @override
+  _$AddProductObjectCopyWith<_AddProductObject> get copyWith =>
+      __$AddProductObjectCopyWithImpl<_AddProductObject>(this, _$identity);
+}
+
+abstract class _AddProductObject implements AddProductObject {
+  factory _AddProductObject(String categoryId, String color, PickerFile? image,
+      String price, String title) = _$_AddProductObject;
+
+  @override
+  String get categoryId => throw _privateConstructorUsedError;
+  @override
+  String get color => throw _privateConstructorUsedError;
+  @override
+  PickerFile? get image => throw _privateConstructorUsedError;
+  @override
+  String get price => throw _privateConstructorUsedError;
+  @override
+  String get title => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$AddProductObjectCopyWith<_AddProductObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
