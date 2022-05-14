@@ -13,7 +13,7 @@ class AddSupplementViewModel extends BaseViewModel
     with AddSupplementViewModelInput, AddSupplementViewModelOutput {
   StreamController _colorStreamController = StreamController<Color>.broadcast();
   StreamController _priceStreamController =
-      StreamController<double>.broadcast();
+      StreamController<String>.broadcast();
 
   StreamController _titleStreamController =
       StreamController<String>.broadcast();
@@ -162,7 +162,7 @@ class AddSupplementViewModel extends BaseViewModel
 
   bool _validateAllInputs() {
     return addSupplementViewObject.title.isNotEmpty &&
-        addSupplementViewObject.price.toString().isNotEmpty &&
+        addSupplementViewObject.price.isNotEmpty &&
         addSupplementViewObject.image!.byte.isNotEmpty;
   }
 

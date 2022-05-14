@@ -67,149 +67,144 @@ class _AddSupplementViewState extends State<AddSupplementView> {
   }
 
   Widget _getContentWidget() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: AppPadding.p8, vertical: AppPadding.p8),
-      child: Container(
-          width: AppSize.s500,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(width: 1),
-          ),
-          padding: EdgeInsets.symmetric(vertical: AppPadding.p30),
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        Container(
+    return Container(
+        width: AppSize.s500,
+        padding: EdgeInsets.symmetric(vertical: AppPadding.p30),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: AppPadding.p10),
+                        child: Container(
                             child: Text(
                           AppStrings.createSupplement,
                           style: getBoldStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s24),
                         )),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: AppPadding.p28, right: AppPadding.p28),
-                          child: GestureDetector(
-                            onTap: () {
-                              _startFilePicker();
-                            },
-                            child: DottedBorder(
-                              borderType: BorderType.RRect,
-                              radius: Radius.circular(12),
-                              child: Container(
-                                child: _getMediaWidget(),
-                                height: AppSize.s200,
-                                width: MediaQuery.of(context).size.width * 0.5,
-                              ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: AppPadding.p28, right: AppPadding.p28),
+                        child: GestureDetector(
+                          onTap: () {
+                            _startFilePicker();
+                          },
+                          child: DottedBorder(
+                            borderType: BorderType.RRect,
+                            radius: Radius.circular(AppSize.s8),
+                            child: Container(
+                              child: _getMediaWidget(),
+                              height: AppSize.s200,
+                              width: MediaQuery.of(context).size.width * 0.5,
                             ),
                           ),
                         ),
-                        SizedBox(height: AppSize.s12),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: AppPadding.p28, right: AppPadding.p28),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RequiredLabel(text: AppStrings.title),
-                              StreamBuilder<String?>(
-                                stream: _viewModel.outputErrorTitle,
-                                builder: (context, snapshot) {
-                                  return TextFormField(
-                                      keyboardType: TextInputType.text,
-                                      controller: _titleTextEditingController,
-                                      decoration: InputDecoration(
-                                          hintText: AppStrings.title,
-                                          errorText: snapshot.data));
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: AppSize.s12),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: AppPadding.p28, right: AppPadding.p28),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RequiredLabel(text: AppStrings.price),
-                              StreamBuilder<String?>(
-                                stream: _viewModel.outputErrorPrice,
-                                builder: (context, snapshot) {
-                                  return TextFormField(
-                                      onChanged: (value) {
-                                        _viewModel.setPrice(value);
-                                      },
-                                      keyboardType: TextInputType.text,
-                                      decoration: InputDecoration(
-                                          hintText: AppStrings.price,
-                                          errorText: snapshot.data));
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: AppSize.s12),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: AppPadding.p28, right: AppPadding.p28),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RequiredLabel(text: AppStrings.color),
-                              StreamBuilder<Color?>(
-                                stream: _viewModel.outputPickerColor,
-                                builder: (context, snapshot) {
-                                  Color color =
-                                      snapshot.data ?? ColorManager.grey;
-                                  return ColorPicker(
-                                    colorPickerWidth: AppSize.s100,
-                                    pickerColor: color,
-                                    onColorChanged: (value) {
-                                      _viewModel.setColor(value);
-                                    },
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: AppSize.s28),
-                        Padding(
-                            padding: EdgeInsets.only(
-                                left: AppPadding.p28, right: AppPadding.p28),
-                            child: StreamBuilder<bool>(
-                              stream: _viewModel.outputIsAllInputsValid,
+                      ),
+                      SizedBox(height: AppSize.s12),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: AppPadding.p28, right: AppPadding.p28),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RequiredLabel(text: AppStrings.title),
+                            StreamBuilder<String?>(
+                              stream: _viewModel.outputErrorTitle,
                               builder: (context, snapshot) {
-                                return SizedBox(
-                                  width: double.infinity,
-                                  height: AppSize.s40,
-                                  child: ElevatedButton(
-                                      onPressed: (snapshot.data ?? false)
-                                          ? () {
-                                              _viewModel.addSupplement();
-                                            }
-                                          : null,
-                                      child: Text(AppStrings.addSupplemet)),
+                                return TextFormField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _titleTextEditingController,
+                                    decoration: InputDecoration(
+                                        hintText: AppStrings.title,
+                                        errorText: snapshot.data));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: AppSize.s12),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: AppPadding.p28, right: AppPadding.p28),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RequiredLabel(text: AppStrings.price),
+                            StreamBuilder<String?>(
+                              stream: _viewModel.outputErrorPrice,
+                              builder: (context, snapshot) {
+                                return TextFormField(
+                                    onChanged: (value) {
+                                      _viewModel.setPrice(value);
+                                    },
+                                    keyboardType: TextInputType.text,
+                                    decoration: InputDecoration(
+                                        hintText: AppStrings.price,
+                                        errorText: snapshot.data));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: AppSize.s12),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: AppPadding.p28, right: AppPadding.p28),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RequiredLabel(text: AppStrings.color),
+                            StreamBuilder<Color?>(
+                              stream: _viewModel.outputPickerColor,
+                              builder: (context, snapshot) {
+                                Color color =
+                                    snapshot.data ?? ColorManager.grey;
+                                return ColorPicker(
+                                  colorPickerWidth: AppSize.s100,
+                                  pickerColor: color,
+                                  onColorChanged: (value) {
+                                    _viewModel.setColor(value);
+                                  },
                                 );
                               },
-                            )),
-                      ],
-                    ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: AppSize.s28),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              left: AppPadding.p28, right: AppPadding.p28),
+                          child: StreamBuilder<bool>(
+                            stream: _viewModel.outputIsAllInputsValid,
+                            builder: (context, snapshot) {
+                              return SizedBox(
+                                width: double.infinity,
+                                height: AppSize.s40,
+                                child: ElevatedButton(
+                                    onPressed: (snapshot.data ?? false)
+                                        ? () {
+                                            _viewModel.addSupplement();
+                                          }
+                                        : null,
+                                    child: Text(AppStrings.addSupplemet)),
+                              );
+                            },
+                          )),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          )),
-    );
+          ),
+        ));
   }
 
   Widget _getMediaWidget() {

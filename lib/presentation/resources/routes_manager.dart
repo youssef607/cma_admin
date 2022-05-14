@@ -7,7 +7,6 @@ import 'package:cma_admin/presentation/home/homeview.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/signIn/signIn.dart';
 import 'package:cma_admin/presentation/splash/splash.dart';
-import 'package:cma_admin/presentation/test.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +18,6 @@ class Routes {
   static const String addSupplementRoute = "/addSupplement";
   static const String addProductRoute = "/addProduct";
   static const String splashRoute = "/splash";
-  static const String testRoute = "/test";
 }
 
 class RouteGenerator {
@@ -46,8 +44,6 @@ class RouteGenerator {
         return CupertinoPageRoute(builder: (_) => HomeView());
       case Routes.splashRoute:
         return CupertinoPageRoute(builder: (_) => SplashView());
-      case Routes.testRoute:
-        return CupertinoPageRoute(builder: (_) => test());
       default:
         return unDefinedRoute();
     }
