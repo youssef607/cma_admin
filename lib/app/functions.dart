@@ -10,7 +10,15 @@ bool isEmailValid(String email) {
 dateFormat(String date) {
   DateTime tempDate = DateFormat("yyyy-MM-ddThh:mm").parse(date);
   var inputDate = DateTime.parse(tempDate.toString());
-  var outputFormat = DateFormat('dd/MM/yyyy HH:mm');
+  var outputFormat = DateFormat('dd MMMM yyyy HH:mm');
+  var outputDate = outputFormat.format(inputDate);
+  return outputDate.toString();
+}
+
+dateFormat2(String date) {
+  DateTime tempDate = DateFormat("yyyy-MM-dd").parse(date);
+  var inputDate = DateTime.parse(tempDate.toString());
+  var outputFormat = DateFormat('dd MMMM yyyy');
   var outputDate = outputFormat.format(inputDate);
   return outputDate.toString();
 }
@@ -20,9 +28,9 @@ dateToStringFormat(DateTime? dateTime) {
 }
 
 
-bool isMobile(BuildContext context) => MediaQuery.of(context).size.width < 650;
+bool isMobile(BuildContext context) => MediaQuery.of(context).size.width < 700;
 bool isTab(BuildContext context) =>
     MediaQuery.of(context).size.width < 1300 &&
-    MediaQuery.of(context).size.width >= 650;
+    MediaQuery.of(context).size.width >= 700;
 bool isDesktop(BuildContext context) =>
     MediaQuery.of(context).size.width >= 1300;

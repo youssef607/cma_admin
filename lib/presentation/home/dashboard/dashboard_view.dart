@@ -16,8 +16,10 @@ import 'package:cma_admin/presentation/home/dashboard/components/custom_pie_char
 import 'package:cma_admin/presentation/home/dashboard/components/data_range_button.dart';
 import 'package:cma_admin/presentation/home/dashboard/dashboard_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
+import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/icon_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
+import 'package:cma_admin/presentation/resources/styles_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -33,11 +35,11 @@ class _DashboardViewState extends State<DashboardView> {
   DashboardViewModel _viewModel = instance<DashboardViewModel>();
 
   List<String> columns = [
-    "Id",
+    "Status",
+    "N°",
     "CreatedAt",
     "Items Count",
-    "Amount (DH)",
-    "Status"
+    "Amount",
   ];
   int touchedIndex = -1;
   _bind() {
@@ -60,15 +62,18 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<FlowState>(
-        stream: _viewModel.outputState,
-        builder: (context, snapshot) {
-          return snapshot.data
-                  ?.getScreenWidget(context, _getcontentScreenWidget(), () {
-                _bind();
-              }) ??
-              Container();
-        });
+    return Container(
+      color: ColorManager.white,
+      child: StreamBuilder<FlowState>(
+          stream: _viewModel.outputState,
+          builder: (context, snapshot) {
+            return snapshot.data
+                    ?.getScreenWidget(context, _getcontentScreenWidget(), () {
+                  _bind();
+                }) ??
+                Container();
+          }),
+    );
   }
 
   Widget _getcontentScreenWidget() {
@@ -84,11 +89,13 @@ class _DashboardViewState extends State<DashboardView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: AppSize.s14),
-                  DateRangeButton(_viewModel),
+                  _getHeaders(),
                   SizedBox(height: AppSize.s14),
                   _getStatiqueGrid(homeData.statique),
                   SizedBox(height: AppSize.s14),
                   _getChartsSection(homeData),
+                  SizedBox(height: AppSize.s18),
+                  _getSection(),
                   SizedBox(height: AppSize.s14),
                   _getOrdersDataTable(homeData.orders!)
                 ],
@@ -98,6 +105,26 @@ class _DashboardViewState extends State<DashboardView> {
             return Container();
           }
         });
+  }
+
+  Widget _getHeaders() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppPadding.p30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(AppStrings.dashboard,style: getBoldStyle(color: ColorManager.black, fontSize: FontSize.s28)),
+          DateRangeButton(_viewModel),
+        ],
+      ),
+    );
+  }
+
+  Widget _getSection(){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal:AppPadding.p30),
+      child: Text(AppStrings.allOrders,style: getBoldStyle(color: ColorManager.black,fontSize: FontSize.s17)),
+    );
   }
 
   Widget _getChartsSection(HomeData homeData) {
@@ -120,15 +147,14 @@ class _DashboardViewState extends State<DashboardView> {
 
   Widget _getOrdersDataTable(List<OrderModel> orders) {
     return CustomDataTable(
-        columns:
-            columns.map((column) => DataColumn(label: Text(column))).toList(),
+        columns:columns.map((column) => DataColumn(label: Text(column))).toList(),
         rows: orders
             .map((order) => DataRow(cells: [
-                  DataCell(Text(order.id.toString())),
-                  DataCell(Text(order.createdAt)),
-                  DataCell(Text(order.itemsNumber.toString())),
-                  DataCell(Text(order.totalOrderPrice.toString())),
                   DataCell(OrderStatus(status: order.status.toString())),
+                  DataCell(Text(order.id.toString())),
+                  DataCell(Text(dateFormat(order.createdAt))),
+                  DataCell(Text(order.itemsNumber.toString())),
+                  DataCell(Text("${order.totalOrderPrice.toString()} ${AppStrings.dh}")),
                 ]))
             .toList());
   }
@@ -139,32 +165,32 @@ class _DashboardViewState extends State<DashboardView> {
         padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
         child: ResponsiveGrid(
             widthPourcentage: isMobile(context)
-                ? 0.3
+                ? 0.5
                 : isTab(context)
-                    ? 0.22
+                    ? 0.3
                     : 0.19,
             children: [
               DataStatistiqueItem(
-                label: AppStrings.inProgress,
+                label: AppStrings.inProgressOrders,
                 count: statistic.numOfInProgressOrders.toString(),
                 color: ColorManager.orange,
                 icon: IconManger.inprogress,
               ),
               DataStatistiqueItem(
-                label: AppStrings.orderDone,
+                label: AppStrings.completedOrders,
                 count: statistic.numOfDoneOrders.toString(),
                 color: ColorManager.green,
                 icon: IconManger.done,
               ),
               DataStatistiqueItem(
-                label: AppStrings.total,
+                label: AppStrings.totalOrders,
                 count: statistic.numOfOrders.toString(),
                 color: ColorManager.red,
                 icon: IconManger.total,
               ),
               DataStatistiqueItem(
                 label: AppStrings.amount,
-                count: "${statistic.amount} DH",
+                count: "${statistic.amount} ${AppStrings.dh}",
                 color: ColorManager.blue,
                 icon: AntIcons.euro,
               ),

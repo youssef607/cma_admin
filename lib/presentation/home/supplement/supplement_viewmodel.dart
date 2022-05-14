@@ -7,6 +7,7 @@ import 'package:cma_admin/domain/usecase/supplement_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SupplementViewModel extends BaseViewModel with SupplementViewModelInput,SupplementViewModelOutput{
@@ -33,7 +34,7 @@ class SupplementViewModel extends BaseViewModel with SupplementViewModelInput,Su
   }
   
   @override
-  activeToggle(Supplement supplement,List<Supplement> supplements) async{
+  activeToggle(BuildContext context,Supplement supplement,List<Supplement> supplements) async{
     inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _useCase.activeToggle(supplement.id)).fold(
       (failure) {
@@ -60,7 +61,7 @@ class SupplementViewModel extends BaseViewModel with SupplementViewModelInput,Su
 }
 
 abstract class SupplementViewModelInput {
-  activeToggle(Supplement supplement,List<Supplement> supplements);
+  activeToggle(BuildContext context,Supplement supplement,List<Supplement> supplements);
   Sink get inputSupplements;
 }
 

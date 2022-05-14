@@ -50,7 +50,7 @@ extension ProductResponseExtension on ProductResponse? {
   Product toDomain() {
     return Product(
       this?.id?.orZero() ?? ZERO,
-      this?.createdAt?.orEmpty() ?? EMPTY,
+      dateFormat(this?.createdAt?.orEmpty() ?? EMPTY),
       this?.deletedAt?.orEmpty() ?? EMPTY,
       this?.modifiedAt?.orEmpty() ?? EMPTY,
       this?.active.orFalse() ?? FALSE,
@@ -68,7 +68,7 @@ extension SupplementResponseExtension on SupplementResponse? {
   Supplement toDomain() {
     return Supplement(
       this?.id?.orZero() ?? ZERO,
-      this?.createdAt?.orEmpty() ?? EMPTY,
+      dateFormat(this?.createdAt?.orEmpty() ?? EMPTY),
       this?.deletedAt?.orEmpty() ?? EMPTY,
       this?.modifiedAt?.orEmpty() ?? EMPTY,
       this?.active.orFalse() ?? FALSE,
@@ -128,7 +128,7 @@ extension CategoryCountResponseExtension on CategoryCountResponse? {
   CategoryCount toDomain() {
     return CategoryCount(
         this?.id?.orZero() ?? ZERO,
-        this?.color?.orEmpty() ?? EMPTY,
+        HexColor.fromHex(this?.color?.orEmpty() ?? "F9F9F9"),
         this?.label.orEmpty() ?? EMPTY,
         this?.itemsCount?.orZero() ?? ZERO,);
   }

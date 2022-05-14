@@ -54,15 +54,18 @@ class _SupplementViewState extends State<SupplementView> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<FlowState>(
-        stream: _viewModel.outputState,
-        builder: (context, snapshot) {
-          return snapshot.data
-                  ?.getScreenWidget(context, _getcontentScreenWidget(), () {
-                _bind();
-              }) ??
-              Container();
-        });
+    return Container(
+      color: ColorManager.white,
+      child: StreamBuilder<FlowState>(
+          stream: _viewModel.outputState,
+          builder: (context, snapshot) {
+            return snapshot.data
+                    ?.getScreenWidget(context, _getcontentScreenWidget(), () {
+                  _bind();
+                }) ??
+                Container();
+          }),
+    );
   }
 
   Widget _getcontentScreenWidget() {
@@ -122,7 +125,7 @@ class _SupplementViewState extends State<SupplementView> {
                         DataCell(ColorColumn(supplement.color)),
                         DataCell(Switch(
                             value: supplement.active, onChanged: (value) {
-                              _viewModel.activeToggle(supplement, supplements);
+                              _viewModel.activeToggle(context,supplement, supplements);
                             })),
                         DataCell(Row(
                           children: [

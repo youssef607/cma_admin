@@ -42,9 +42,9 @@ class HomeViewState extends State<HomeView> {
           Expanded(
               child: Scaffold(
                   key: _scaffoldKey,
-                  appBar: AppBar(
-                    title: Text(titles.elementAt(currentIndex)),
-                    backgroundColor: ColorManager.white,
+                  appBar: !isMobile(context)?null:AppBar(
+                    backgroundColor: Colors.white,
+                    elevation: 0,
                     iconTheme: IconThemeData(color: ColorManager.black),
                   ),
                   drawer: !isMobile(context) ? null : _getnavSideNavigator(),

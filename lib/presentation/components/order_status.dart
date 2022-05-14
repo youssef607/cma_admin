@@ -12,18 +12,15 @@ class OrderStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: AppSize.s35,
-      width: AppSize.s35,
-      decoration: BoxDecoration(
-        color: status == DONE
+    Color color =  status == DONE
             ? ColorManager.green.withOpacity(0.8)
-            : ColorManager.orange.withOpacity(0.8),
-        borderRadius: BorderRadius.circular(AppSize.s4),
-      ),
+            : ColorManager.orange.withOpacity(0.8);
+    return CircleAvatar(
+      radius: 18,
+      backgroundColor: color.withOpacity(0.1),
       child: Center(
         child: Icon(status == DONE ? IconManger.done : IconManger.inprogress,
-            color: ColorManager.white,size: AppSize.s18,),
+            color: color,size: AppSize.s18,),
       ),
     );
   }

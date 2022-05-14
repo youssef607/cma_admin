@@ -1,3 +1,4 @@
+import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/presentation/home/dashboard/dashboard_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
@@ -18,8 +19,10 @@ class DateRangeButton extends StatelessWidget {
         builder: (context, snapshot) {
           DateRange? dateRange = snapshot.data;
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: AppPadding.p30),
-            width: AppSize.s330,
+            padding: EdgeInsets.all(AppPadding.p8),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppSize.s6),
+                border: Border.all(color: ColorManager.grey100)),
             child: InkWell(
                 onTap: () {
                   showDialog(
@@ -43,7 +46,8 @@ class DateRangeButton extends StatelessWidget {
                               showActionButtons: true,
                               selectionMode: DateRangePickerSelectionMode.range,
                               initialSelectedRange: PickerDateRange(
-                                  DateTime.now().subtract(const Duration(days: 7)),
+                                  DateTime.now()
+                                      .subtract(const Duration(days: 7)),
                                   DateTime.now()),
                             ),
                           ),
@@ -54,13 +58,11 @@ class DateRangeButton extends StatelessWidget {
                     ? Container()
                     : Row(
                         children: [
-                          Icon(IconManger.date),
-                          SizedBox(width: AppSize.s4),
                           Text(
-                              "${dateRange.startDate}  -  ${dateRange.endDate}",
-                              style: getMediumStyle(
+                              "${dateFormat2(dateRange.startDate)} - ${dateFormat2(dateRange.endDate)}",
+                              style: getSemiBoldStyle(
                                   color: ColorManager.black,
-                                  fontSize: FontSize.s18)),
+                                  fontSize: FontSize.s14)),
                           Icon(IconManger.dropDown)
                         ],
                       )),

@@ -7,6 +7,7 @@ import 'package:cma_admin/domain/usecase/product_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProductViewModel extends BaseViewModel with ProductViewModelInput,ProductViewModelOutput{
@@ -33,7 +34,7 @@ class ProductViewModel extends BaseViewModel with ProductViewModelInput,ProductV
   }
   
   @override
-  activeToggle(Product product,List<Product> products) async{
+  activeToggle(BuildContext context,Product product,List<Product> products) async{
     inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _useCase.activeToggle(product.id)).fold(
       (failure) {
@@ -43,6 +44,7 @@ class ProductViewModel extends BaseViewModel with ProductViewModelInput,ProductV
         product.active = isActive;
         inputProducts.add(products);
         inputState.add(ContentState());
+        Navigator.of(context).pop();
       });
   }
 
@@ -60,7 +62,7 @@ class ProductViewModel extends BaseViewModel with ProductViewModelInput,ProductV
 }
 
 abstract class ProductViewModelInput {
-  activeToggle(Product product,List<Product> products);
+  activeToggle(BuildContext context,Product product,List<Product> products);
   Sink get inputProducts;
 }
 

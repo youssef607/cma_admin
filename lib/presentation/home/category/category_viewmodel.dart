@@ -7,6 +7,7 @@ import 'package:cma_admin/domain/usecase/category_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CategoryViewModel extends BaseViewModel with CategoryViewModelInput,CategoryViewModelOutput{
@@ -34,7 +35,7 @@ class CategoryViewModel extends BaseViewModel with CategoryViewModelInput,Catego
 
 
   @override
-  activeToggle(Category category,List<Category> categories) async{
+  activeToggle(BuildContext context,Category category,List<Category> categories) async{
     inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _useCase.activeToggle(category.id)).fold(
       (failure) {
@@ -44,6 +45,7 @@ class CategoryViewModel extends BaseViewModel with CategoryViewModelInput,Catego
         category.active = isActive;
         inputCategories.add(categories);
         inputState.add(ContentState());
+        Navigator.of(context).pop();
       });
   }
 
@@ -62,7 +64,7 @@ class CategoryViewModel extends BaseViewModel with CategoryViewModelInput,Catego
 }
 
 abstract class CategoryViewModelInput {
-  activeToggle(Category category,List<Category> categories);
+  activeToggle(BuildContext context,Category category,List<Category> categories);
   Sink get inputCategories;
 }
 

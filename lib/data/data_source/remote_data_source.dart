@@ -8,6 +8,10 @@ abstract class RemoteDataSource {
   Future<List<SupplementResponse>> getAllSupplement();
   Future<bool> activeToggle(String type,String id);
   Future<HomeResponse> home(String date1,String date2);
+  Future<List<ProductResponse>> getProductsByCategory(String id);
+  Future<List<SupplementResponse>> getSupplemensByProduct(String id);
+  Future<List<SupplementResponse>> getSupplementsForAdd(String id);
+  Future<ProductResponse> addSupplementsToProduct(String productId,String suppsId);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -45,4 +49,25 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   Future<HomeResponse> home(String date1, String date2) {
     return _appServiceClient.home(date1, date2);
   }
+
+  @override
+  Future<List<ProductResponse>> getProductsByCategory(String id) {
+    return _appServiceClient.getProductsByCategory(id);
+  }
+
+  @override
+  Future<List<SupplementResponse>> getSupplemensByProduct(String id) {
+    return _appServiceClient.getSupplementsByProduct(id);
+  }
+
+  @override
+  Future<ProductResponse> addSupplementsToProduct(String productId, String suppsId) {
+    return _appServiceClient.addSupplementsToProduct(productId, suppsId);
+  }
+
+  @override
+  Future<List<SupplementResponse>> getSupplementsForAdd(String id) {
+    return _appServiceClient.getSupplementsForAdd(id);
+  }
+
 }

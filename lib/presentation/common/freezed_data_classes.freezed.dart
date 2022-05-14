@@ -410,3 +410,142 @@ abstract class _RegisterObject implements RegisterObject {
   _$RegisterObjectCopyWith<_RegisterObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$AddSupplementsToProductObjectTearOff {
+  const _$AddSupplementsToProductObjectTearOff();
+
+  _AddSupplementsToProductObject call(List<int> selectedSupplements) {
+    return _AddSupplementsToProductObject(
+      selectedSupplements,
+    );
+  }
+}
+
+/// @nodoc
+const $AddSupplementsToProductObject = _$AddSupplementsToProductObjectTearOff();
+
+/// @nodoc
+mixin _$AddSupplementsToProductObject {
+  List<int> get selectedSupplements => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AddSupplementsToProductObjectCopyWith<AddSupplementsToProductObject>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AddSupplementsToProductObjectCopyWith<$Res> {
+  factory $AddSupplementsToProductObjectCopyWith(
+          AddSupplementsToProductObject value,
+          $Res Function(AddSupplementsToProductObject) then) =
+      _$AddSupplementsToProductObjectCopyWithImpl<$Res>;
+  $Res call({List<int> selectedSupplements});
+}
+
+/// @nodoc
+class _$AddSupplementsToProductObjectCopyWithImpl<$Res>
+    implements $AddSupplementsToProductObjectCopyWith<$Res> {
+  _$AddSupplementsToProductObjectCopyWithImpl(this._value, this._then);
+
+  final AddSupplementsToProductObject _value;
+  // ignore: unused_field
+  final $Res Function(AddSupplementsToProductObject) _then;
+
+  @override
+  $Res call({
+    Object? selectedSupplements = freezed,
+  }) {
+    return _then(_value.copyWith(
+      selectedSupplements: selectedSupplements == freezed
+          ? _value.selectedSupplements
+          : selectedSupplements // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$AddSupplementsToProductObjectCopyWith<$Res>
+    implements $AddSupplementsToProductObjectCopyWith<$Res> {
+  factory _$AddSupplementsToProductObjectCopyWith(
+          _AddSupplementsToProductObject value,
+          $Res Function(_AddSupplementsToProductObject) then) =
+      __$AddSupplementsToProductObjectCopyWithImpl<$Res>;
+  @override
+  $Res call({List<int> selectedSupplements});
+}
+
+/// @nodoc
+class __$AddSupplementsToProductObjectCopyWithImpl<$Res>
+    extends _$AddSupplementsToProductObjectCopyWithImpl<$Res>
+    implements _$AddSupplementsToProductObjectCopyWith<$Res> {
+  __$AddSupplementsToProductObjectCopyWithImpl(
+      _AddSupplementsToProductObject _value,
+      $Res Function(_AddSupplementsToProductObject) _then)
+      : super(_value, (v) => _then(v as _AddSupplementsToProductObject));
+
+  @override
+  _AddSupplementsToProductObject get _value =>
+      super._value as _AddSupplementsToProductObject;
+
+  @override
+  $Res call({
+    Object? selectedSupplements = freezed,
+  }) {
+    return _then(_AddSupplementsToProductObject(
+      selectedSupplements == freezed
+          ? _value.selectedSupplements
+          : selectedSupplements // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddSupplementsToProductObject
+    implements _AddSupplementsToProductObject {
+  _$_AddSupplementsToProductObject(this.selectedSupplements);
+
+  @override
+  final List<int> selectedSupplements;
+
+  @override
+  String toString() {
+    return 'AddSupplementsToProductObject(selectedSupplements: $selectedSupplements)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _AddSupplementsToProductObject &&
+            (identical(other.selectedSupplements, selectedSupplements) ||
+                const DeepCollectionEquality()
+                    .equals(other.selectedSupplements, selectedSupplements)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(selectedSupplements);
+
+  @JsonKey(ignore: true)
+  @override
+  _$AddSupplementsToProductObjectCopyWith<_AddSupplementsToProductObject>
+      get copyWith => __$AddSupplementsToProductObjectCopyWithImpl<
+          _AddSupplementsToProductObject>(this, _$identity);
+}
+
+abstract class _AddSupplementsToProductObject
+    implements AddSupplementsToProductObject {
+  factory _AddSupplementsToProductObject(List<int> selectedSupplements) =
+      _$_AddSupplementsToProductObject;
+
+  @override
+  List<int> get selectedSupplements => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$AddSupplementsToProductObjectCopyWith<_AddSupplementsToProductObject>
+      get copyWith => throw _privateConstructorUsedError;
+}

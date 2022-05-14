@@ -175,7 +175,7 @@ class Waiter {
 
 class CategoryCount {
   int id;
-  String color;
+  Color color;
   String label;
   int itemsCount;
   CategoryCount(this.id,this.color,this.label,this.itemsCount);

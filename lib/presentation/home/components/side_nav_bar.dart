@@ -51,7 +51,7 @@ class SideNavBar extends StatelessWidget {
 
   SideNavigationBarTheme _getSideNavTheme() {
     return SideNavigationBarTheme(
-        backgroundColor: Colors.indigo[600],
+        backgroundColor: ColorManager.primary,
         dividerTheme: SideNavigationBarDividerTheme(
             showFooterDivider: false,
             showHeaderDivider: false,

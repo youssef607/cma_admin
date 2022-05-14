@@ -2,8 +2,6 @@ import 'package:cma_admin/data/data_source/remote_data_source.dart';
 import 'package:cma_admin/data/mapper/mapper.dart';
 import 'package:cma_admin/data/network/error_handler.dart';
 import 'package:cma_admin/data/network/failure.dart';
-import 'package:cma_admin/data/network/network_info.dart';
-import 'package:cma_admin/data/responses/responses.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/repository/repository.dart';
 import 'package:dartz/dartz.dart';
@@ -62,7 +60,7 @@ class RepositoryImpl extends Repository {
   @override
   Future<Either<Failure, bool>> activeToggle(String type, String id) async {
     try {
-      final response = await _remoteDataSource.activeToggle(type,id);
+      final response = await _remoteDataSource.activeToggle(type, id);
 
       return Right(response);
     } catch (error) {
@@ -71,9 +69,50 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, HomeData>> home(String date1, String date2) async{
+  Future<Either<Failure, HomeData>> home(String date1, String date2) async {
     try {
       final response = await _remoteDataSource.home(date1, date2);
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Product>>> getProductsByCategory(
+      String id) async {
+    try {
+      final response = await _remoteDataSource.getProductsByCategory(id);
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Supplement>>> getSupplementsByProduct(String id) async {
+    try {
+      final response = await _remoteDataSource.getSupplemensByProduct(id);
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, Product>> addSupplementsToProduct(String productId,String suppsId) async {
+    try {
+      final response = await _remoteDataSource.addSupplementsToProduct(productId, suppsId);
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Supplement>>> getSupplementsForAdd(String id) async {
+    try {
+      final response = await _remoteDataSource.getSupplementsForAdd(id);
       return Right(response.toDomain());
     } catch (error) {
       return Left(ErrorHandler.handle(error).failure);

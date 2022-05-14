@@ -1,5 +1,6 @@
 class AppStrings {
   static const String noRouteFound = "No Route Found";
+  static const String appName = "CMA-ADMIN";
   static const String skip = "Skip";
   static const String username = "Username";
   static const String mobileNumber = "Mobile Number";
@@ -31,15 +32,49 @@ class AppStrings {
   static const String stores = "Stores";
   static const String dh = "DH";
   static const String barman = "Barman";
+
+  //Dashbord
+  static const String dashboard = "Dashboard";
+  static const String allOrders = "All Orders";
+  static const String chartLineTitle = "Number of Orders";
+  static const String pieChartTitle = "The quantity used for each category";
+
+  //Navigation
+  static const String category = "Category";
   static const String products = "Products";
+  static const String supplements = "supplements";
 
   // home
   static const String completed = "Completed";
-  static const String inProgress = "InProgress";
+  static const String completedOrders = "Completed Orders";
+  static const String inProgressOrders = "In Progress Orders";
+  static const String inProgress = "inProgress";
   static const String total = "Total";
+  static const String totalOrders = "Total Orders";
   static const String amount = "Amount";
   static const String orderN = "Order N° ";
   static const String orders = "Orders";
+
+  // category 
+  static const String addCategory = "Add Category";
+  static const String categoryInfo = "Category Info";
+  static const String num = "N°";
+  static const String label = "Label";
+  static const String status = "Status";
+  static const String createdAt = "Created At";
+  static const String color = "Color";
+
+  // product 
+  static const String addProduct = "Add Product";
+  static const String productInfo = "Product Info";
+  static const String noSupplementFound = "No Supplements Found";
+  static const String price = "Price";
+
+  // supplement
+  static const String addSupplement = "Add Supplement";
+  static const String noProductsFound = "No Products Found";
+  static const String addSupplementsToProduct = "Add Supplements To Product";
+  
 
   //orders details
   static const String orderDetails = "Order details";
@@ -51,8 +86,7 @@ class AppStrings {
   static const String unauthorizedError = "unauthorized error, try again later";
   static const String notFoundError = "not found error, try again later";
   static const String conflictError = "conflict error, try again later";
-  static const String internalServerError =
-      "internal server error, try again later";
+  static const String internalServerError = "internal server error, try again later";
   static const String unknownError = "unknown error, try again later";
   static const String timeoutError = "timeout error, try again later";
   static const String defaultError = "default error, try again later";
@@ -68,4 +102,10 @@ class AppStrings {
   
   static const String active = "Active";
   static const String notActive = "Not Active";
+  static const String exportExcel = "Export Excel";
+  static const String update = "Update";
+  static const String save = "Save";
+  static const String view = "View";
+  static const String activate = "Activate";
+  static const String deactivate = "Deactivate";
 }

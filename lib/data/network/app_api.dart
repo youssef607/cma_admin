@@ -1,5 +1,6 @@
 import 'package:cma_admin/app/constant.dart';
 import 'package:cma_admin/data/responses/responses.dart';
+import 'package:cma_admin/domain/model/model.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 part 'app_api.g.dart';
@@ -29,4 +30,17 @@ abstract class AppServiceClient {
 
   @GET('/admin/home/{date1}/{date2}')
   Future<HomeResponse> home(@Path() String date1,@Path() String date2);
+
+  @GET('/product/byCategory/{id}')
+  Future<List<ProductResponse>> getProductsByCategory(@Path() String id);
+  
+  @GET('/supplement/byProduct/{id}')
+  Future<List<SupplementResponse>> getSupplementsByProduct(@Path() String id);
+  
+  @GET('/supplement/supplementsToAdd/{id}')
+  Future<List<SupplementResponse>> getSupplementsForAdd(@Path() String id);
+  
+  @POST('/product/{productId}/supplements/{suppsId}')
+  Future<ProductResponse> addSupplementsToProduct(@Path() String productId,@Path() String suppsId);
+
 }

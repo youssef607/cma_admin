@@ -31,6 +31,8 @@ dependencies:
   dio: ^4.0.0
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter  
   flutter_svg: ^1.0.3
   get_it: ^7.2.0
   lottie: ^1.2.1
@@ -56,6 +58,9 @@ dependencies:
   syncfusion_flutter_charts: ^20.1.52
   currency_icons: ^0.3.0
   syncfusion_flutter_datepicker: ^20.1.52
+  image_picker_web: ^2.1.1
+  mime_type: ^1.0.0
+  file_picker: ^4.5.1
 
 
 dev_dependencies:

@@ -17,3 +17,9 @@ class RegisterObject with _$RegisterObject {
       String password,
       String profilePicture) = _RegisterObject;
 }
+
+@freezed
+class AddSupplementsToProductObject with _$AddSupplementsToProductObject {
+  factory AddSupplementsToProductObject(
+      List<int> selectedSupplements) = _AddSupplementsToProductObject;
+}

@@ -8,13 +8,14 @@ class CustomDataTable extends StatelessWidget {
   final EdgeInsets padding;
   final List<DataRow> rows;
   final List<DataColumn> columns;
+  final Color? headerColor;
   const CustomDataTable(
       {Key? key,
       required this.rows,
       required this.columns,
+      this.headerColor,
       EdgeInsets? padding})
-      : padding =
-            padding ?? const EdgeInsets.symmetric(horizontal: AppPadding.p30),
+      : padding = padding ?? const EdgeInsets.symmetric(horizontal: AppPadding.p30),
         super(key: key);
 
   @override
@@ -28,15 +29,14 @@ class CustomDataTable extends StatelessWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(minWidth: constraint.maxWidth),
               child: IntrinsicWidth(
-                child: Card(
-                  child: DataTable(
-                      headingTextStyle: getSemiBoldStyle(
-                          color: ColorManager.black, fontSize: FontSize.s14),
-                      dataTextStyle: getMediumStyle(
-                          color: ColorManager.black, fontSize: FontSize.s12),
-                      columns: columns,
-                      rows: rows),
-                ),
+                child: DataTable(         
+                  headingRowColor: MaterialStateColor.resolveWith((states) => headerColor??ColorManager.white),
+                  dividerThickness: 0.2,
+                  dataRowHeight: AppSize.s50,
+                  headingTextStyle: getMediumStyle(color: ColorManager.lightGrey, fontSize: FontSize.s12),
+                  dataTextStyle: getSemiBoldStyle(color: ColorManager.black, fontSize: FontSize.s12),
+                  columns: columns,
+                  rows: rows),
               ),
             ));
       }),

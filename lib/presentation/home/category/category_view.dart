@@ -8,11 +8,13 @@ import 'package:cma_admin/presentation/components/color_column.dart';
 import 'package:cma_admin/presentation/components/custom_data_table.dart';
 import 'package:cma_admin/presentation/components/data_statistique_item.dart';
 import 'package:cma_admin/presentation/components/image_column.dart';
+import 'package:cma_admin/presentation/components/popup_menu_column.dart';
 import 'package:cma_admin/presentation/components/responsive_grid.dart';
 import 'package:cma_admin/presentation/home/category/category_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/icon_manager.dart';
+import 'package:cma_admin/presentation/resources/routes_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/styles_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
@@ -29,7 +31,7 @@ class CategoryView extends StatefulWidget {
 class _CategoryViewState extends State<CategoryView> {
   CategoryViewModel _viewModel = instance<CategoryViewModel>();
   List<String> columns = [
-    "Id",
+    "N°",
     "image",
     "Label",
     "CreatedAt",
@@ -56,15 +58,19 @@ class _CategoryViewState extends State<CategoryView> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<FlowState>(
-        stream: _viewModel.outputState,
-        builder: (context, snapshot) {
-          return snapshot.data
-                  ?.getScreenWidget(context, _getcontentScreenWidget(), () {
-                _bind();
-              }) ??
-              Container();
-        });
+    return Container(
+      color: ColorManager.white,
+      height: double.infinity,
+      child: StreamBuilder<FlowState>(
+          stream: _viewModel.outputState,
+          builder: (context, snapshot) {
+            return snapshot.data
+                    ?.getScreenWidget(context, _getcontentScreenWidget(), () {
+                  _bind();
+                }) ??
+                Container();
+          }),
+    );
   }
 
   Widget _getcontentScreenWidget() {
@@ -83,79 +89,87 @@ class _CategoryViewState extends State<CategoryView> {
   Widget _getDataTable(List<Category> categories) {
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: AppSize.s20),
+          _getHeaders(categories),
           SizedBox(height: AppSize.s20),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
             child: _getStatiqueGrid(categories),
           ),
           SizedBox(height: AppSize.s20),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppPadding.p30),
-            child: Row(
-              children: [
-                SizedBox(width: AppSize.s2),
-                ActionButton(
-                    title: "Add Category",
-                    onTap: () {},
-                    color: ColorManager.primary),
-                SizedBox(width: AppSize.s10),
-                ActionButton(
-                    title: "Export Excel",
-                    onTap: () {
-                      exportCategoriesToExcel(categories);
-                    },
-                    color: ColorManager.gold),
-              ],
-            ),
-          ),
-          SizedBox(height: AppSize.s10),
           CustomDataTable(
               columns: columns.map((column) => DataColumn(label: Text(column))).toList(),
-              rows: categories
-                  .map((category) => DataRow(cells: [
+              rows: categories.map((category) => DataRow(cells: [
                         DataCell(Text(category.id.toString())),
                         DataCell(ImageColumn(category.image)),
                         DataCell(Text(category.label)),
                         DataCell(Text(category.createdAt)),
                         DataCell(ColorColumn(category.color)),
                         DataCell(Switch(
-                            value: category.active, onChanged: (value) {
-                              _viewModel.activeToggle(category, categories);
+                            value: category.active,
+                            onChanged: (value) {_viewModel.activeToggle(context,category, categories);})),
+                        DataCell(PopUpMenuColumn(
+                            update: () {},
+                            view: () {
+                              Navigator.of(context).pushNamed(Routes.categoryDetailsRoute,arguments: category) .then((value) => _bind());
                             })),
-                        DataCell(Row(
-                          children: [
-                            ActionButton(
-                                title: "Update",
-                                onTap: () {},
-                                color: ColorManager.green),
-                          ],
-                        ))
-                      ]))
-                  .toList())
+                      ])).toList())
+        ],
+      ),
+    );
+  }
+
+  Widget _getHeaders(List<Category> categories) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppPadding.p30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(AppStrings.category,style: getBoldStyle(color: ColorManager.black, fontSize: FontSize.s28)),
+          Row(
+            children: [
+              ActionButton(
+                  title: AppStrings.addCategory,
+                  onTap: () {},
+                  color: ColorManager.primary),
+              SizedBox(width: AppSize.s10),
+              ActionButton(
+                  title: AppStrings.exportExcel,
+                  onTap: () {
+                    exportCategoriesToExcel(categories);
+                  },
+                  color: ColorManager.gold),
+            ],
+          )
         ],
       ),
     );
   }
 
   Widget _getStatiqueGrid(List<Category> categories) {
-    int isActiveCount =
-        categories.where((category) => category.active == true).toList().length;
-    int isNotActiveCount = categories
-        .where((category) => category.active == false)
-        .toList()
-        .length;
+    int isActiveCount = categories.where((category) => category.active == true).toList().length;
+    int isNotActiveCount = categories.where((category) => category.active == false).toList().length;
     return ResponsiveGrid(
-      widthPourcentage: isMobile(context)?0.3:0.25,
-      children: [
-      DataStatistiqueItem(
-          label: AppStrings.active, count: isActiveCount.toString(), color: ColorManager.green, icon: IconManger.active),
-      DataStatistiqueItem(
-          label: AppStrings.notActive,
-          count: isNotActiveCount.toString(),
-          color: ColorManager.red, icon: IconManger.notActive,),
-      DataStatistiqueItem(
-          label: AppStrings.total, count: categories.length.toString(), color: ColorManager.orange, icon: IconManger.total),
-    ]);
+        widthPourcentage: isMobile(context) ? 0.3 : 0.25,
+        children: [
+          DataStatistiqueItem(
+              label: AppStrings.active,
+              count: isActiveCount.toString(),
+              color: ColorManager.green,
+              icon: IconManger.active),
+          DataStatistiqueItem(
+            label: AppStrings.notActive,
+            count: isNotActiveCount.toString(),
+            color: ColorManager.red,
+            icon: IconManger.notActive,
+          ),
+          DataStatistiqueItem(
+              label: AppStrings.total,
+              count: categories.length.toString(),
+              color: ColorManager.orange,
+              icon: IconManger.total),
+        ]);
   }
 }
