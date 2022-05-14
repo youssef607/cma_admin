@@ -25,6 +25,7 @@ UserResponse _$UserResponseFromJson(Map<String, dynamic> json) {
   return UserResponse(
     json['image'] as String?,
     json['name'] as String?,
+    json['password'] as String?,
     json['role'] as String?,
     json['userName'] as String?,
   )
@@ -44,6 +45,7 @@ Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
       'active': instance.active,
       'image': instance.image,
       'name': instance.name,
+      'password': instance.password,
       'role': instance.role,
       'userName': instance.userName,
     };

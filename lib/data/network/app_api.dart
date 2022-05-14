@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cma_admin/app/constant.dart';
 import 'package:cma_admin/data/responses/responses.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
+
 part 'app_api.g.dart';
 
 @RestApi(baseUrl: Constant.baseUrl)
@@ -42,5 +45,42 @@ abstract class AppServiceClient {
   
   @POST('/product/{productId}/supplements/{suppsId}')
   Future<ProductResponse> addSupplementsToProduct(@Path() String productId,@Path() String suppsId);
+
+  @POST("/auth/signUp/{role}")
+  @MultiPart()
+  Future<SignInResponse> addUser({
+    @Part() File? image,
+    @Part() required String name,
+    @Part() required String password,
+    @Path() required String role,
+    @Part() required String username,
+  });
+
+  @POST("/category/save")
+  @MultiPart()
+  Future<CategoryResponse> addCategory({
+    @Part() File? image,
+    @Part() required String label,
+    @Part() required String color,
+  });
+
+  @POST("/supplement/save")
+  @MultiPart()
+  Future<SupplementResponse> addSupplement({
+    @Part() required String color,
+    @Part() File? image,
+    @Part() required String price,
+    @Part() required String title,
+  });
+
+  @POST("/product/save")
+  @MultiPart()
+  Future<ProductResponse> addProduct({
+    @Part() required String categoryId,
+    @Part() required String color,
+    @Part() File? image,
+    @Part() required String price,
+    @Part() required String title,
+  });
 
 }

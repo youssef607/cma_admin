@@ -162,160 +162,146 @@ abstract class _LoginObject implements LoginObject {
 }
 
 /// @nodoc
-class _$RegisterObjectTearOff {
-  const _$RegisterObjectTearOff();
+class _$AddUserObjectTearOff {
+  const _$AddUserObjectTearOff();
 
-  _RegisterObject call(String countryMobileCode, String mobileNumber,
-      String userName, String email, String password, String profilePicture) {
-    return _RegisterObject(
-      countryMobileCode,
-      mobileNumber,
-      userName,
-      email,
+  _AddUserObject call(PickerFile? image, String name, String role,
+      String password, String username) {
+    return _AddUserObject(
+      image,
+      name,
+      role,
       password,
-      profilePicture,
+      username,
     );
   }
 }
 
 /// @nodoc
-const $RegisterObject = _$RegisterObjectTearOff();
+const $AddUserObject = _$AddUserObjectTearOff();
 
 /// @nodoc
-mixin _$RegisterObject {
-  String get countryMobileCode => throw _privateConstructorUsedError;
-  String get mobileNumber => throw _privateConstructorUsedError;
-  String get userName => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
+mixin _$AddUserObject {
+  PickerFile? get image => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get role => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
-  String get profilePicture => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $RegisterObjectCopyWith<RegisterObject> get copyWith =>
+  $AddUserObjectCopyWith<AddUserObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RegisterObjectCopyWith<$Res> {
-  factory $RegisterObjectCopyWith(
-          RegisterObject value, $Res Function(RegisterObject) then) =
-      _$RegisterObjectCopyWithImpl<$Res>;
+abstract class $AddUserObjectCopyWith<$Res> {
+  factory $AddUserObjectCopyWith(
+          AddUserObject value, $Res Function(AddUserObject) then) =
+      _$AddUserObjectCopyWithImpl<$Res>;
   $Res call(
-      {String countryMobileCode,
-      String mobileNumber,
-      String userName,
-      String email,
+      {PickerFile? image,
+      String name,
+      String role,
       String password,
-      String profilePicture});
+      String username});
 }
 
 /// @nodoc
-class _$RegisterObjectCopyWithImpl<$Res>
-    implements $RegisterObjectCopyWith<$Res> {
-  _$RegisterObjectCopyWithImpl(this._value, this._then);
+class _$AddUserObjectCopyWithImpl<$Res>
+    implements $AddUserObjectCopyWith<$Res> {
+  _$AddUserObjectCopyWithImpl(this._value, this._then);
 
-  final RegisterObject _value;
+  final AddUserObject _value;
   // ignore: unused_field
-  final $Res Function(RegisterObject) _then;
+  final $Res Function(AddUserObject) _then;
 
   @override
   $Res call({
-    Object? countryMobileCode = freezed,
-    Object? mobileNumber = freezed,
-    Object? userName = freezed,
-    Object? email = freezed,
+    Object? image = freezed,
+    Object? name = freezed,
+    Object? role = freezed,
     Object? password = freezed,
-    Object? profilePicture = freezed,
+    Object? username = freezed,
   }) {
     return _then(_value.copyWith(
-      countryMobileCode: countryMobileCode == freezed
-          ? _value.countryMobileCode
-          : countryMobileCode // ignore: cast_nullable_to_non_nullable
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      mobileNumber: mobileNumber == freezed
-          ? _value.mobileNumber
-          : mobileNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      userName: userName == freezed
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: email == freezed
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
               as String,
       password: password == freezed
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      profilePicture: profilePicture == freezed
-          ? _value.profilePicture
-          : profilePicture // ignore: cast_nullable_to_non_nullable
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$RegisterObjectCopyWith<$Res>
-    implements $RegisterObjectCopyWith<$Res> {
-  factory _$RegisterObjectCopyWith(
-          _RegisterObject value, $Res Function(_RegisterObject) then) =
-      __$RegisterObjectCopyWithImpl<$Res>;
+abstract class _$AddUserObjectCopyWith<$Res>
+    implements $AddUserObjectCopyWith<$Res> {
+  factory _$AddUserObjectCopyWith(
+          _AddUserObject value, $Res Function(_AddUserObject) then) =
+      __$AddUserObjectCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String countryMobileCode,
-      String mobileNumber,
-      String userName,
-      String email,
+      {PickerFile? image,
+      String name,
+      String role,
       String password,
-      String profilePicture});
+      String username});
 }
 
 /// @nodoc
-class __$RegisterObjectCopyWithImpl<$Res>
-    extends _$RegisterObjectCopyWithImpl<$Res>
-    implements _$RegisterObjectCopyWith<$Res> {
-  __$RegisterObjectCopyWithImpl(
-      _RegisterObject _value, $Res Function(_RegisterObject) _then)
-      : super(_value, (v) => _then(v as _RegisterObject));
+class __$AddUserObjectCopyWithImpl<$Res>
+    extends _$AddUserObjectCopyWithImpl<$Res>
+    implements _$AddUserObjectCopyWith<$Res> {
+  __$AddUserObjectCopyWithImpl(
+      _AddUserObject _value, $Res Function(_AddUserObject) _then)
+      : super(_value, (v) => _then(v as _AddUserObject));
 
   @override
-  _RegisterObject get _value => super._value as _RegisterObject;
+  _AddUserObject get _value => super._value as _AddUserObject;
 
   @override
   $Res call({
-    Object? countryMobileCode = freezed,
-    Object? mobileNumber = freezed,
-    Object? userName = freezed,
-    Object? email = freezed,
+    Object? image = freezed,
+    Object? name = freezed,
+    Object? role = freezed,
     Object? password = freezed,
-    Object? profilePicture = freezed,
+    Object? username = freezed,
   }) {
-    return _then(_RegisterObject(
-      countryMobileCode == freezed
-          ? _value.countryMobileCode
-          : countryMobileCode // ignore: cast_nullable_to_non_nullable
+    return _then(_AddUserObject(
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      mobileNumber == freezed
-          ? _value.mobileNumber
-          : mobileNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      userName == freezed
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email == freezed
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
+      role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
               as String,
       password == freezed
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      profilePicture == freezed
-          ? _value.profilePicture
-          : profilePicture // ignore: cast_nullable_to_non_nullable
+      username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -323,91 +309,656 @@ class __$RegisterObjectCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RegisterObject implements _RegisterObject {
-  _$_RegisterObject(this.countryMobileCode, this.mobileNumber, this.userName,
-      this.email, this.password, this.profilePicture);
+class _$_AddUserObject implements _AddUserObject {
+  _$_AddUserObject(
+      this.image, this.name, this.role, this.password, this.username);
 
   @override
-  final String countryMobileCode;
+  final PickerFile? image;
   @override
-  final String mobileNumber;
+  final String name;
   @override
-  final String userName;
-  @override
-  final String email;
+  final String role;
   @override
   final String password;
   @override
-  final String profilePicture;
+  final String username;
 
   @override
   String toString() {
-    return 'RegisterObject(countryMobileCode: $countryMobileCode, mobileNumber: $mobileNumber, userName: $userName, email: $email, password: $password, profilePicture: $profilePicture)';
+    return 'AddUserObject(image: $image, name: $name, role: $role, password: $password, username: $username)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _RegisterObject &&
-            (identical(other.countryMobileCode, countryMobileCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.countryMobileCode, countryMobileCode)) &&
-            (identical(other.mobileNumber, mobileNumber) ||
-                const DeepCollectionEquality()
-                    .equals(other.mobileNumber, mobileNumber)) &&
-            (identical(other.userName, userName) ||
-                const DeepCollectionEquality()
-                    .equals(other.userName, userName)) &&
-            (identical(other.email, email) ||
-                const DeepCollectionEquality().equals(other.email, email)) &&
+        (other is _AddUserObject &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.role, role) ||
+                const DeepCollectionEquality().equals(other.role, role)) &&
             (identical(other.password, password) ||
                 const DeepCollectionEquality()
                     .equals(other.password, password)) &&
-            (identical(other.profilePicture, profilePicture) ||
+            (identical(other.username, username) ||
                 const DeepCollectionEquality()
-                    .equals(other.profilePicture, profilePicture)));
+                    .equals(other.username, username)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(countryMobileCode) ^
-      const DeepCollectionEquality().hash(mobileNumber) ^
-      const DeepCollectionEquality().hash(userName) ^
-      const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(role) ^
       const DeepCollectionEquality().hash(password) ^
-      const DeepCollectionEquality().hash(profilePicture);
+      const DeepCollectionEquality().hash(username);
 
   @JsonKey(ignore: true)
   @override
-  _$RegisterObjectCopyWith<_RegisterObject> get copyWith =>
-      __$RegisterObjectCopyWithImpl<_RegisterObject>(this, _$identity);
+  _$AddUserObjectCopyWith<_AddUserObject> get copyWith =>
+      __$AddUserObjectCopyWithImpl<_AddUserObject>(this, _$identity);
 }
 
-abstract class _RegisterObject implements RegisterObject {
-  factory _RegisterObject(
-      String countryMobileCode,
-      String mobileNumber,
-      String userName,
-      String email,
-      String password,
-      String profilePicture) = _$_RegisterObject;
+abstract class _AddUserObject implements AddUserObject {
+  factory _AddUserObject(PickerFile? image, String name, String role,
+      String password, String username) = _$_AddUserObject;
 
   @override
-  String get countryMobileCode => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
   @override
-  String get mobileNumber => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   @override
-  String get userName => throw _privateConstructorUsedError;
-  @override
-  String get email => throw _privateConstructorUsedError;
+  String get role => throw _privateConstructorUsedError;
   @override
   String get password => throw _privateConstructorUsedError;
   @override
-  String get profilePicture => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$RegisterObjectCopyWith<_RegisterObject> get copyWith =>
+  _$AddUserObjectCopyWith<_AddUserObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$AddCategoryObjectTearOff {
+  const _$AddCategoryObjectTearOff();
+
+  _AddCategoryObject call(String color, PickerFile? image, String label) {
+    return _AddCategoryObject(
+      color,
+      image,
+      label,
+    );
+  }
+}
+
+/// @nodoc
+const $AddCategoryObject = _$AddCategoryObjectTearOff();
+
+/// @nodoc
+mixin _$AddCategoryObject {
+  String get color => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
+  String get label => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AddCategoryObjectCopyWith<AddCategoryObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AddCategoryObjectCopyWith<$Res> {
+  factory $AddCategoryObjectCopyWith(
+          AddCategoryObject value, $Res Function(AddCategoryObject) then) =
+      _$AddCategoryObjectCopyWithImpl<$Res>;
+  $Res call({String color, PickerFile? image, String label});
+}
+
+/// @nodoc
+class _$AddCategoryObjectCopyWithImpl<$Res>
+    implements $AddCategoryObjectCopyWith<$Res> {
+  _$AddCategoryObjectCopyWithImpl(this._value, this._then);
+
+  final AddCategoryObject _value;
+  // ignore: unused_field
+  final $Res Function(AddCategoryObject) _then;
+
+  @override
+  $Res call({
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? label = freezed,
+  }) {
+    return _then(_value.copyWith(
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      label: label == freezed
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$AddCategoryObjectCopyWith<$Res>
+    implements $AddCategoryObjectCopyWith<$Res> {
+  factory _$AddCategoryObjectCopyWith(
+          _AddCategoryObject value, $Res Function(_AddCategoryObject) then) =
+      __$AddCategoryObjectCopyWithImpl<$Res>;
+  @override
+  $Res call({String color, PickerFile? image, String label});
+}
+
+/// @nodoc
+class __$AddCategoryObjectCopyWithImpl<$Res>
+    extends _$AddCategoryObjectCopyWithImpl<$Res>
+    implements _$AddCategoryObjectCopyWith<$Res> {
+  __$AddCategoryObjectCopyWithImpl(
+      _AddCategoryObject _value, $Res Function(_AddCategoryObject) _then)
+      : super(_value, (v) => _then(v as _AddCategoryObject));
+
+  @override
+  _AddCategoryObject get _value => super._value as _AddCategoryObject;
+
+  @override
+  $Res call({
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? label = freezed,
+  }) {
+    return _then(_AddCategoryObject(
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      label == freezed
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddCategoryObject implements _AddCategoryObject {
+  _$_AddCategoryObject(this.color, this.image, this.label);
+
+  @override
+  final String color;
+  @override
+  final PickerFile? image;
+  @override
+  final String label;
+
+  @override
+  String toString() {
+    return 'AddCategoryObject(color: $color, image: $image, label: $label)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _AddCategoryObject &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)) &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.label, label) ||
+                const DeepCollectionEquality().equals(other.label, label)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(color) ^
+      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(label);
+
+  @JsonKey(ignore: true)
+  @override
+  _$AddCategoryObjectCopyWith<_AddCategoryObject> get copyWith =>
+      __$AddCategoryObjectCopyWithImpl<_AddCategoryObject>(this, _$identity);
+}
+
+abstract class _AddCategoryObject implements AddCategoryObject {
+  factory _AddCategoryObject(String color, PickerFile? image, String label) =
+      _$_AddCategoryObject;
+
+  @override
+  String get color => throw _privateConstructorUsedError;
+  @override
+  PickerFile? get image => throw _privateConstructorUsedError;
+  @override
+  String get label => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$AddCategoryObjectCopyWith<_AddCategoryObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$AddSupplementObjectTearOff {
+  const _$AddSupplementObjectTearOff();
+
+  _AddSupplementObject call(
+      String color, PickerFile? image, String price, String title) {
+    return _AddSupplementObject(
+      color,
+      image,
+      price,
+      title,
+    );
+  }
+}
+
+/// @nodoc
+const $AddSupplementObject = _$AddSupplementObjectTearOff();
+
+/// @nodoc
+mixin _$AddSupplementObject {
+  String get color => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AddSupplementObjectCopyWith<AddSupplementObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AddSupplementObjectCopyWith<$Res> {
+  factory $AddSupplementObjectCopyWith(
+          AddSupplementObject value, $Res Function(AddSupplementObject) then) =
+      _$AddSupplementObjectCopyWithImpl<$Res>;
+  $Res call({String color, PickerFile? image, String price, String title});
+}
+
+/// @nodoc
+class _$AddSupplementObjectCopyWithImpl<$Res>
+    implements $AddSupplementObjectCopyWith<$Res> {
+  _$AddSupplementObjectCopyWithImpl(this._value, this._then);
+
+  final AddSupplementObject _value;
+  // ignore: unused_field
+  final $Res Function(AddSupplementObject) _then;
+
+  @override
+  $Res call({
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? price = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_value.copyWith(
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$AddSupplementObjectCopyWith<$Res>
+    implements $AddSupplementObjectCopyWith<$Res> {
+  factory _$AddSupplementObjectCopyWith(_AddSupplementObject value,
+          $Res Function(_AddSupplementObject) then) =
+      __$AddSupplementObjectCopyWithImpl<$Res>;
+  @override
+  $Res call({String color, PickerFile? image, String price, String title});
+}
+
+/// @nodoc
+class __$AddSupplementObjectCopyWithImpl<$Res>
+    extends _$AddSupplementObjectCopyWithImpl<$Res>
+    implements _$AddSupplementObjectCopyWith<$Res> {
+  __$AddSupplementObjectCopyWithImpl(
+      _AddSupplementObject _value, $Res Function(_AddSupplementObject) _then)
+      : super(_value, (v) => _then(v as _AddSupplementObject));
+
+  @override
+  _AddSupplementObject get _value => super._value as _AddSupplementObject;
+
+  @override
+  $Res call({
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? price = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_AddSupplementObject(
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddSupplementObject implements _AddSupplementObject {
+  _$_AddSupplementObject(this.color, this.image, this.price, this.title);
+
+  @override
+  final String color;
+  @override
+  final PickerFile? image;
+  @override
+  final String price;
+  @override
+  final String title;
+
+  @override
+  String toString() {
+    return 'AddSupplementObject(color: $color, image: $image, price: $price, title: $title)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _AddSupplementObject &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)) &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.price, price) ||
+                const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(color) ^
+      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(price) ^
+      const DeepCollectionEquality().hash(title);
+
+  @JsonKey(ignore: true)
+  @override
+  _$AddSupplementObjectCopyWith<_AddSupplementObject> get copyWith =>
+      __$AddSupplementObjectCopyWithImpl<_AddSupplementObject>(
+          this, _$identity);
+}
+
+abstract class _AddSupplementObject implements AddSupplementObject {
+  factory _AddSupplementObject(
+          String color, PickerFile? image, String price, String title) =
+      _$_AddSupplementObject;
+
+  @override
+  String get color => throw _privateConstructorUsedError;
+  @override
+  PickerFile? get image => throw _privateConstructorUsedError;
+  @override
+  String get price => throw _privateConstructorUsedError;
+  @override
+  String get title => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$AddSupplementObjectCopyWith<_AddSupplementObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$AddProductObjectTearOff {
+  const _$AddProductObjectTearOff();
+
+  _AddProductObject call(String categoryId, String color, PickerFile? image,
+      String price, String title) {
+    return _AddProductObject(
+      categoryId,
+      color,
+      image,
+      price,
+      title,
+    );
+  }
+}
+
+/// @nodoc
+const $AddProductObject = _$AddProductObjectTearOff();
+
+/// @nodoc
+mixin _$AddProductObject {
+  String get categoryId => throw _privateConstructorUsedError;
+  String get color => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AddProductObjectCopyWith<AddProductObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AddProductObjectCopyWith<$Res> {
+  factory $AddProductObjectCopyWith(
+          AddProductObject value, $Res Function(AddProductObject) then) =
+      _$AddProductObjectCopyWithImpl<$Res>;
+  $Res call(
+      {String categoryId,
+      String color,
+      PickerFile? image,
+      String price,
+      String title});
+}
+
+/// @nodoc
+class _$AddProductObjectCopyWithImpl<$Res>
+    implements $AddProductObjectCopyWith<$Res> {
+  _$AddProductObjectCopyWithImpl(this._value, this._then);
+
+  final AddProductObject _value;
+  // ignore: unused_field
+  final $Res Function(AddProductObject) _then;
+
+  @override
+  $Res call({
+    Object? categoryId = freezed,
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? price = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_value.copyWith(
+      categoryId: categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$AddProductObjectCopyWith<$Res>
+    implements $AddProductObjectCopyWith<$Res> {
+  factory _$AddProductObjectCopyWith(
+          _AddProductObject value, $Res Function(_AddProductObject) then) =
+      __$AddProductObjectCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String categoryId,
+      String color,
+      PickerFile? image,
+      String price,
+      String title});
+}
+
+/// @nodoc
+class __$AddProductObjectCopyWithImpl<$Res>
+    extends _$AddProductObjectCopyWithImpl<$Res>
+    implements _$AddProductObjectCopyWith<$Res> {
+  __$AddProductObjectCopyWithImpl(
+      _AddProductObject _value, $Res Function(_AddProductObject) _then)
+      : super(_value, (v) => _then(v as _AddProductObject));
+
+  @override
+  _AddProductObject get _value => super._value as _AddProductObject;
+
+  @override
+  $Res call({
+    Object? categoryId = freezed,
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? price = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_AddProductObject(
+      categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddProductObject implements _AddProductObject {
+  _$_AddProductObject(
+      this.categoryId, this.color, this.image, this.price, this.title);
+
+  @override
+  final String categoryId;
+  @override
+  final String color;
+  @override
+  final PickerFile? image;
+  @override
+  final String price;
+  @override
+  final String title;
+
+  @override
+  String toString() {
+    return 'AddProductObject(categoryId: $categoryId, color: $color, image: $image, price: $price, title: $title)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _AddProductObject &&
+            (identical(other.categoryId, categoryId) ||
+                const DeepCollectionEquality()
+                    .equals(other.categoryId, categoryId)) &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)) &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.price, price) ||
+                const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(categoryId) ^
+      const DeepCollectionEquality().hash(color) ^
+      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(price) ^
+      const DeepCollectionEquality().hash(title);
+
+  @JsonKey(ignore: true)
+  @override
+  _$AddProductObjectCopyWith<_AddProductObject> get copyWith =>
+      __$AddProductObjectCopyWithImpl<_AddProductObject>(this, _$identity);
+}
+
+abstract class _AddProductObject implements AddProductObject {
+  factory _AddProductObject(String categoryId, String color, PickerFile? image,
+      String price, String title) = _$_AddProductObject;
+
+  @override
+  String get categoryId => throw _privateConstructorUsedError;
+  @override
+  String get color => throw _privateConstructorUsedError;
+  @override
+  PickerFile? get image => throw _privateConstructorUsedError;
+  @override
+  String get price => throw _privateConstructorUsedError;
+  @override
+  String get title => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$AddProductObjectCopyWith<_AddProductObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

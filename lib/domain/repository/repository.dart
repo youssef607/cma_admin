@@ -1,10 +1,15 @@
 import 'package:cma_admin/data/network/failure.dart';
+<<<<<<< HEAD
 import 'package:cma_admin/data/responses/responses.dart';
+=======
+import 'package:cma_admin/data/request/request.dart';
+>>>>>>> origin/add-product
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class Repository {
   Future<Either<Failure, SignInData>> signIn(String userName, String password);
+<<<<<<< HEAD
   Future<Either<Failure, List<Category>>> getAllCategory();
   Future<Either<Failure, List<Product>>> getAllProduct();
   Future<Either<Failure, List<Supplement>>> getAllSupplement();
@@ -15,4 +20,14 @@ abstract class Repository {
   Future<Either<Failure,List<Supplement>>> getSupplementsForAdd(String id);
   Future<Either<Failure,Product>> addSupplementsToProduct(String productId,String suppsId);
 
+=======
+  Future<Either<Failure, SignInData>> addUser(AddUserRequest addUserRequest);
+  Future<Either<Failure, Category>> addCategory(
+      AddCategoryRequest addCategoryRequest);
+  Future<Either<Failure, Supplement>> addSupplement(
+      AddSupplementRequest addSupplementRequest);
+  Future<Either<Failure, Product>> addProduct(
+      AddProductRequest addProductRequest);
+  Future<Either<Failure, List<Category>>> getCategory();
+>>>>>>> origin/add-product
 }

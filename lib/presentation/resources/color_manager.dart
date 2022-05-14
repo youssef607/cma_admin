@@ -16,6 +16,7 @@ class ColorManager {
   static Color grey2 = HexColor.fromHex("#797979");
   static Color white = HexColor.fromHex("#FFFFFF");
   static Color error = HexColor.fromHex("#e61f34");
+  static Color errorLight = HexColor.fromHex("#ff0000");
   static Color primaryLight = HexColor.fromHex("#68B2A0");
   static Color secondry = HexColor.fromHex("#CDE0C9");
   static Color secondryLight = HexColor.fromHex("#E0ECDE");

@@ -1,3 +1,8 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:cma_admin/domain/model/model.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'request.g.dart';
 
@@ -20,4 +25,44 @@ class UserRequest {
 
   // to json
   Map<String, dynamic> toJson() => _$UserRequestToJson(this);
+}
+
+class AddUserRequest {
+  PickerFile? image;
+  String name;
+  String password;
+
+  String role;
+  String username;
+
+  AddUserRequest(
+      this.image, this.name, this.password, this.role, this.username);
+}
+
+class AddCategoryRequest {
+  PickerFile? image;
+  String label;
+  String color;
+
+  AddCategoryRequest(this.image, this.label, this.color);
+}
+
+class AddSupplementRequest {
+  String color;
+  PickerFile? image;
+  String price;
+  String title;
+
+  AddSupplementRequest(this.color, this.image, this.price, this.title);
+}
+
+class AddProductRequest {
+  String categoryId;
+  String color;
+  PickerFile? image;
+  String price;
+  String title;
+
+  AddProductRequest(
+      this.categoryId, this.color, this.image, this.price, this.title);
 }

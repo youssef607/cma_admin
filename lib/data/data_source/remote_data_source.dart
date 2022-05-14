@@ -1,8 +1,10 @@
 import 'package:cma_admin/data/network/app_api.dart';
+import 'package:cma_admin/data/request/request.dart';
 import 'package:cma_admin/data/responses/responses.dart';
 
 abstract class RemoteDataSource {
   Future<SignInResponse> signIn(String userName, String password);
+<<<<<<< HEAD
   Future<List<CategoryResponse>> getAllCategory();
   Future<List<ProductResponse>> getAllProduct();
   Future<List<SupplementResponse>> getAllSupplement();
@@ -12,6 +14,14 @@ abstract class RemoteDataSource {
   Future<List<SupplementResponse>> getSupplemensByProduct(String id);
   Future<List<SupplementResponse>> getSupplementsForAdd(String id);
   Future<ProductResponse> addSupplementsToProduct(String productId,String suppsId);
+=======
+  Future<SignInResponse> addUser(AddUserRequest addUserRequest);
+  Future<CategoryResponse> addCategory(AddCategoryRequest addCategoryRequest);
+  Future<ProductResponse> addProduct(AddProductRequest addProductRequest);
+  Future<SupplementResponse> AddSupplement(
+      AddSupplementRequest addSupplementRequest);
+  Future<List<CategoryResponse>> getCategory();
+>>>>>>> origin/add-product
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -26,6 +36,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
+<<<<<<< HEAD
   Future<List<CategoryResponse>> getAllCategory() {
     return _appServiceClient.getAllCategory();
   }
@@ -70,4 +81,50 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
     return _appServiceClient.getSupplementsForAdd(id);
   }
 
+=======
+  Future<SignInResponse> addUser(AddUserRequest addUserRequest) async {
+    return await _appServiceClient.addUser(
+        image: addUserRequest.image,
+        name: addUserRequest.name,
+        password: addUserRequest.password,
+        role: addUserRequest.role,
+        username: addUserRequest.username);
+  }
+
+  @override
+  Future<CategoryResponse> addCategory(
+      AddCategoryRequest addCategoryRequest) async {
+    return await _appServiceClient.addCategory(
+        color: addCategoryRequest.color,
+        image: addCategoryRequest.image,
+        label: addCategoryRequest.label);
+  }
+
+  @override
+  Future<SupplementResponse> AddSupplement(
+      AddSupplementRequest addSupplementRequest) async {
+    return await _appServiceClient.addSupplement(
+      color: addSupplementRequest.color,
+      image: addSupplementRequest.image,
+      price: addSupplementRequest.price,
+      title: addSupplementRequest.title,
+    );
+  }
+
+  @override
+  Future<ProductResponse> addProduct(
+      AddProductRequest addProductRequest) async {
+    return await _appServiceClient.addProduct(
+        categoryId: addProductRequest.categoryId,
+        color: addProductRequest.color,
+        image: addProductRequest.image,
+        price: addProductRequest.price,
+        title: addProductRequest.title);
+  }
+
+  @override
+  Future<List<CategoryResponse>> getCategory() async {
+    return await _appServiceClient.getCategory();
+  }
+>>>>>>> origin/add-product
 }

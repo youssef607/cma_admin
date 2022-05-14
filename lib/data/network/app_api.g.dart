@@ -183,6 +183,118 @@ class _AppServiceClient implements AppServiceClient {
     return value;
   }
 
+  @override
+  Future<SignInResponse> addUser(
+      {image,
+      required name,
+      required password,
+      required role,
+      required username}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromFileSync(image.path,
+              filename: image.path.split(Platform.pathSeparator).last)));
+    }
+    _data.fields.add(MapEntry('name', name));
+    _data.fields.add(MapEntry('password', password));
+    _data.fields.add(MapEntry('username', username));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SignInResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/auth/signUp/$role',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SignInResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<CategoryResponse> addCategory(
+      {image, required label, required color}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromFileSync(image.path,
+              filename: image.path.split(Platform.pathSeparator).last)));
+    }
+    _data.fields.add(MapEntry('label', label));
+    _data.fields.add(MapEntry('color', color));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CategoryResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/category/save',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CategoryResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<SupplementResponse> addSupplement(
+      {required color, image, required price, required title}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    _data.fields.add(MapEntry('color', color));
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromFileSync(image.path,
+              filename: image.path.split(Platform.pathSeparator).last)));
+    }
+    _data.fields.add(MapEntry('price', price));
+    _data.fields.add(MapEntry('title', title));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SupplementResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/supplement/save',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SupplementResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ProductResponse> addProduct(
+      {required categoryId,
+      required color,
+      image,
+      required price,
+      required title}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    _data.fields.add(MapEntry('categoryId', categoryId));
+    _data.fields.add(MapEntry('color', color));
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromFileSync(image.path,
+              filename: image.path.split(Platform.pathSeparator).last)));
+    }
+    _data.fields.add(MapEntry('price', price));
+    _data.fields.add(MapEntry('title', title));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ProductResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/product/save',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ProductResponse.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

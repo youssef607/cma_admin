@@ -1,3 +1,5 @@
+import 'package:cma_admin/domain/model/model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'freezed_data_classes.freezed.dart';
@@ -8,14 +10,44 @@ class LoginObject with _$LoginObject {
 }
 
 @freezed
-class RegisterObject with _$RegisterObject {
-  factory RegisterObject(
-      String countryMobileCode,
-      String mobileNumber,
-      String userName,
-      String email,
-      String password,
-      String profilePicture) = _RegisterObject;
+class AddUserObject with _$AddUserObject {
+  factory AddUserObject(
+    PickerFile? image,
+    String name,
+    String role,
+    String password,
+    String username,
+  ) = _AddUserObject;
+}
+
+@freezed
+class AddCategoryObject with _$AddCategoryObject {
+  factory AddCategoryObject(
+    String color,
+    PickerFile? image,
+    String label,
+  ) = _AddCategoryObject;
+}
+
+@freezed
+class AddSupplementObject with _$AddSupplementObject {
+  factory AddSupplementObject(
+    String color,
+    PickerFile? image,
+    String price,
+    String title,
+  ) = _AddSupplementObject;
+}
+
+@freezed
+class AddProductObject with _$AddProductObject {
+  factory AddProductObject(
+    String categoryId,
+    String color,
+    PickerFile? image,
+    String price,
+    String title,
+  ) = _AddProductObject;
 }
 
 @freezed

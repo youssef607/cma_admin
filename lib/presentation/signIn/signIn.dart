@@ -50,11 +50,11 @@ class _SignInViewState extends State<SignInView> {
         resetModules();
         if (dataa.user?.role == Constant.OWNER) {
           Navigator.pushNamedAndRemoveUntil(
-              context, Routes.homeRoute, ModalRoute.withName('/'),
+              context, Routes.addUserRoute, ModalRoute.withName('/'),
               arguments: 0);
         } else if ((dataa.user?.role == Constant.MANAGER)) {
           Navigator.pushNamedAndRemoveUntil(
-              context, Routes.homeRoute, ModalRoute.withName('/'),
+              context, Routes.addUserRoute, ModalRoute.withName('/'),
               arguments: 0);
         }
       });
@@ -76,7 +76,6 @@ class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: ColorManager.white,
       body: StreamBuilder<FlowState>(
         stream: _viewModel.outputState,
         builder: (context, snapshot) {

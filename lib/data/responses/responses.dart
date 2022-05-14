@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter/cupertino.dart';
 
 part 'responses.g.dart';
 
@@ -44,13 +45,16 @@ class UserResponse extends BaseResponse {
   @JsonKey(name: "name")
   String? name;
 
+  @JsonKey(name: "password")
+  String? password;
+
   @JsonKey(name: "role")
   String? role;
 
   @JsonKey(name: "userName")
   String? userName;
 
-  UserResponse(this.image, this.name, this.role, this.userName);
+  UserResponse(this.image, this.name, this.password, this.role, this.userName);
 
   // from json
   factory UserResponse.fromJson(Map<String, dynamic> json) =>

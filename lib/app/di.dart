@@ -1,9 +1,9 @@
 import 'package:cma_admin/data/data_source/remote_data_source.dart';
 import 'package:cma_admin/data/network/app_api.dart';
 import 'package:cma_admin/data/network/dio_factory.dart';
-import 'package:cma_admin/data/network/network_info.dart';
 import 'package:cma_admin/data/repository/repository_imp.dart';
 import 'package:cma_admin/domain/repository/repository.dart';
+<<<<<<< HEAD
 import 'package:cma_admin/domain/usecase/add_supps_to_product_usecase.dart';
 import 'package:cma_admin/domain/usecase/category_details_usecase.dart';
 import 'package:cma_admin/domain/usecase/category_usecase.dart';
@@ -19,6 +19,18 @@ import 'package:cma_admin/presentation/home/dashboard/dashboard_viewmodel.dart';
 import 'package:cma_admin/presentation/home/product/product_viewmodel.dart';
 import 'package:cma_admin/presentation/home/supplement/supplement_viewmodel.dart';
 import 'package:cma_admin/presentation/product_details/product_details_viewmodel.dart';
+=======
+import 'package:cma_admin/domain/usecase/addcategory_usecase.dart';
+import 'package:cma_admin/domain/usecase/addproduct_usecase.dart';
+import 'package:cma_admin/domain/usecase/addsupplement_usecase.dart';
+import 'package:cma_admin/domain/usecase/adduser_usecase.dart';
+import 'package:cma_admin/domain/usecase/category_usecase.dart';
+import 'package:cma_admin/domain/usecase/signIn_usecase.dart';
+import 'package:cma_admin/presentation/addCategory/addcategory_view_model.dart';
+import 'package:cma_admin/presentation/addProduct/addProduct_view_model.dart';
+import 'package:cma_admin/presentation/addSupplement/addSupplement_view_model.dart';
+import 'package:cma_admin/presentation/addUser/user_view_model.dart';
+>>>>>>> origin/add-product
 import 'package:cma_admin/presentation/signIn/signIn_view_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,6 +77,7 @@ initSignInModule() {
   }
 }
 
+<<<<<<< HEAD
 initCategoryModule() {
   if (!GetIt.I.isRegistered<CategoryUseCase>()) {
     instance.registerFactory<CategoryUseCase>(() => CategoryUseCase(instance()));
@@ -114,10 +127,53 @@ initAddSupplementsToProductModule() {
     instance.registerFactory<AddSupplementsToProductViewModel>(() => AddSupplementsToProductViewModel(instance()));
   }
 }
+=======
+initAddUserModule() {
+  if (!GetIt.I.isRegistered<AddUserUseCase>()) {
+    instance.registerFactory<AddUserUseCase>(() => AddUserUseCase(instance()));
+    instance
+        .registerFactory<AddUserViewModel>(() => AddUserViewModel(instance()));
+  }
+}
+
+initAddCategoryModule() {
+  if (!GetIt.I.isRegistered<AddCategoryUseCase>()) {
+    instance.registerFactory<AddCategoryUseCase>(
+        () => AddCategoryUseCase(instance()));
+
+    instance.registerFactory<AddCategoryViewModel>(
+        () => AddCategoryViewModel(instance()));
+  }
+}
+
+initAddSupplementModule() {
+  if (!GetIt.I.isRegistered<AddSupplementUseCase>()) {
+    instance.registerFactory<AddSupplementUseCase>(
+        () => AddSupplementUseCase(instance()));
+
+    instance.registerFactory<AddSupplementViewModel>(
+        () => AddSupplementViewModel(instance()));
+  }
+}
+
+initAddProductModule() {
+  if (!GetIt.I.isRegistered<AddProductUseCase>()) {
+    instance.registerFactory<AddProductUseCase>(
+        () => AddProductUseCase(instance()));
+    instance
+        .registerFactory<CategoryUseCase>(() => CategoryUseCase(instance()));
+
+    instance.registerFactory<AddProductViewModel>(
+        () => AddProductViewModel(instance(), instance()));
+  }
+}
+
+>>>>>>> origin/add-product
 resetModules() {
   instance.reset(dispose: false);
   initAppModule();
   initSignInModule();
+<<<<<<< HEAD
   initCategoryModule();
   initProductsModule();
   initSupplementsModule();
@@ -125,4 +181,10 @@ resetModules() {
   initCategoryDetailsModule();
   initProductDetailsModule();
   initAddSupplementsToProductModule();
+=======
+  initAddUserModule();
+  initAddCategoryModule();
+  initAddSupplementModule();
+  initAddProductModule();
+>>>>>>> origin/add-product
 }

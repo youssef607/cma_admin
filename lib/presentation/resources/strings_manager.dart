@@ -3,10 +3,12 @@ class AppStrings {
   static const String appName = "CMA-ADMIN";
   static const String skip = "Skip";
   static const String username = "Username";
+  static const String name = "name";
+  static const String role = "role";
   static const String mobileNumber = "Mobile Number";
   static const String usernameError = "Username is wrong";
   static const String passwordError = "password is wrong";
-  static const String password = "Password :";
+  static const String password = "Password";
   static const String login = "Login";
   static const String forgetPassword = "Forget password";
   static const String registerText = "Not a member ? Sign up";
@@ -25,6 +27,8 @@ class AppStrings {
   static const String register = "Register";
   static const String haveAccount = "Already have an account? Login";
   static const String home = "Home";
+  static const String title = "title";
+  static const String price = "price";
   static const String notifications = "Notifications";
   static const String search = "Search";
   static const String settings = "Settings";
@@ -99,6 +103,7 @@ class AppStrings {
   //Sign IN
   static const String welcomeAdmin = "Welcom Admin ";
   static const String loginInYour = "Login In your account ";
+<<<<<<< HEAD
   
   static const String active = "Active";
   static const String notActive = "Not Active";
@@ -108,4 +113,19 @@ class AppStrings {
   static const String view = "View";
   static const String activate = "Activate";
   static const String deactivate = "Deactivate";
+=======
+  static const String createAccount = "Create account ";
+  static const String browsImage = "brows your image here";
+
+  //category
+  static const String color = "color";
+  static const String label = "label";
+  static const String addCategory = "Add Category";
+  static const String createCategory = "Create Category";
+
+  //Add supplement
+
+  static const String createSupplement = "Create Supplement";
+  static const String addSupplemet = "Add Supplement";
+>>>>>>> origin/add-product
 }
