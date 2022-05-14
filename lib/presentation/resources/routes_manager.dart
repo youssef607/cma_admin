@@ -1,14 +1,11 @@
 import 'package:cma_admin/app/di.dart';
-<<<<<<< HEAD
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/add_supps_to_product/add_supps_to_product_view.dart';
 import 'package:cma_admin/presentation/category_details/category_details_view.dart';
-=======
 import 'package:cma_admin/presentation/addProduct/addProduct_View.dart';
 import 'package:cma_admin/presentation/addSupplement/addSupplement.dart';
 import 'package:cma_admin/presentation/addUser/user.dart';
 import 'package:cma_admin/presentation/addCategory/addcategory.dart';
->>>>>>> origin/add-product
 import 'package:cma_admin/presentation/home/homeview.dart';
 import 'package:cma_admin/presentation/product_details/product_details_view.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
@@ -25,13 +22,10 @@ class Routes {
   static const String addSupplementRoute = "/addSupplement";
   static const String addProductRoute = "/addProduct";
   static const String splashRoute = "/splash";
-<<<<<<< HEAD
   static const String categoryDetailsRoute = "/category/details";
   static const String productDetailsRoute = "/product/details";
   static const String addSupplemntsToProductRoute = "/product/addSupplemnt";
   static const String testRoute = "/test";
-=======
->>>>>>> origin/add-product
 }
 
 class RouteGenerator {
@@ -39,10 +33,6 @@ class RouteGenerator {
     switch (routeSettings.name) {
       case Routes.loginRoute:
         initSignInModule();
-<<<<<<< HEAD
-        return CupertinoPageRoute(
-            builder: (_) => SignInView(), settings: routeSettings);
-=======
         return CupertinoPageRoute(builder: (_) => SignInView());
 
       case Routes.addProductRoute:
@@ -58,7 +48,6 @@ class RouteGenerator {
       case Routes.addUserRoute:
         initAddUserModule();
         return CupertinoPageRoute(builder: (_) => AddUserView());
->>>>>>> origin/add-product
       case Routes.homeRoute:
         initDashboardModule();
         initCategoryModule();
@@ -83,15 +72,7 @@ class RouteGenerator {
           builder: (_) => AddSupplementsToProductView(args),
         );
       case Routes.splashRoute:
-<<<<<<< HEAD
-        return CupertinoPageRoute(
-            builder: (_) => SplashView(), settings: routeSettings);
-      case Routes.testRoute:
-        return CupertinoPageRoute(
-            builder: (_) => test(), settings: routeSettings);
-=======
         return CupertinoPageRoute(builder: (_) => SplashView());
->>>>>>> origin/add-product
       default:
         return unDefinedRoute();
     }

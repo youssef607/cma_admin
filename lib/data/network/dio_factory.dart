@@ -41,11 +41,7 @@ class DioFactory {
           requestHeader: true,
           requestBody: true,
           responseHeader: true,
-<<<<<<< HEAD
           responseBody: false));
-=======
-          responseBody: true));
->>>>>>> origin/add-product
     }
 
     return dio;

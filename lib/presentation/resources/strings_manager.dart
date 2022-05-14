@@ -28,7 +28,6 @@ class AppStrings {
   static const String haveAccount = "Already have an account? Login";
   static const String home = "Home";
   static const String title = "title";
-  static const String price = "price";
   static const String notifications = "Notifications";
   static const String search = "Search";
   static const String settings = "Settings";
@@ -38,15 +37,17 @@ class AppStrings {
   static const String barman = "Barman";
 
   //Dashbord
-  static const String dashboard = "Dashboard";
   static const String allOrders = "All Orders";
   static const String chartLineTitle = "Number of Orders";
   static const String pieChartTitle = "The quantity used for each category";
 
   //Navigation
+  static const String dashboard = "Dashboard";
   static const String category = "Category";
   static const String products = "Products";
-  static const String supplements = "supplements";
+  static const String supplements = "Supplements";
+  static const String users = "Users";
+  static const String logout = "Logout";
 
   // home
   static const String completed = "Completed";
@@ -103,7 +104,6 @@ class AppStrings {
   //Sign IN
   static const String welcomeAdmin = "Welcom Admin ";
   static const String loginInYour = "Login In your account ";
-<<<<<<< HEAD
   
   static const String active = "Active";
   static const String notActive = "Not Active";
@@ -113,19 +113,14 @@ class AppStrings {
   static const String view = "View";
   static const String activate = "Activate";
   static const String deactivate = "Deactivate";
-=======
   static const String createAccount = "Create account ";
   static const String browsImage = "brows your image here";
 
   //category
-  static const String color = "color";
-  static const String label = "label";
-  static const String addCategory = "Add Category";
   static const String createCategory = "Create Category";
 
   //Add supplement
 
   static const String createSupplement = "Create Supplement";
   static const String addSupplemet = "Add Supplement";
->>>>>>> origin/add-product
 }

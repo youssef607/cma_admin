@@ -50,11 +50,11 @@ class _SignInViewState extends State<SignInView> {
         resetModules();
         if (dataa.user?.role == Constant.OWNER) {
           Navigator.pushNamedAndRemoveUntil(
-              context, Routes.addUserRoute, ModalRoute.withName('/'),
+              context, Routes.homeRoute, ModalRoute.withName('/'),
               arguments: 0);
         } else if ((dataa.user?.role == Constant.MANAGER)) {
           Navigator.pushNamedAndRemoveUntil(
-              context, Routes.addUserRoute, ModalRoute.withName('/'),
+              context, Routes.homeRoute, ModalRoute.withName('/'),
               arguments: 0);
         }
       });

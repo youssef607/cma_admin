@@ -4,7 +4,6 @@ import 'package:cma_admin/data/responses/responses.dart';
 
 abstract class RemoteDataSource {
   Future<SignInResponse> signIn(String userName, String password);
-<<<<<<< HEAD
   Future<List<CategoryResponse>> getAllCategory();
   Future<List<ProductResponse>> getAllProduct();
   Future<List<SupplementResponse>> getAllSupplement();
@@ -14,14 +13,10 @@ abstract class RemoteDataSource {
   Future<List<SupplementResponse>> getSupplemensByProduct(String id);
   Future<List<SupplementResponse>> getSupplementsForAdd(String id);
   Future<ProductResponse> addSupplementsToProduct(String productId,String suppsId);
-=======
   Future<SignInResponse> addUser(AddUserRequest addUserRequest);
   Future<CategoryResponse> addCategory(AddCategoryRequest addCategoryRequest);
   Future<ProductResponse> addProduct(AddProductRequest addProductRequest);
-  Future<SupplementResponse> AddSupplement(
-      AddSupplementRequest addSupplementRequest);
-  Future<List<CategoryResponse>> getCategory();
->>>>>>> origin/add-product
+  Future<SupplementResponse> addSupplement(AddSupplementRequest addSupplementRequest);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -36,7 +31,6 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-<<<<<<< HEAD
   Future<List<CategoryResponse>> getAllCategory() {
     return _appServiceClient.getAllCategory();
   }
@@ -81,7 +75,6 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
     return _appServiceClient.getSupplementsForAdd(id);
   }
 
-=======
   Future<SignInResponse> addUser(AddUserRequest addUserRequest) async {
     return await _appServiceClient.addUser(
         image: addUserRequest.image,
@@ -101,7 +94,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<SupplementResponse> AddSupplement(
+  Future<SupplementResponse> addSupplement(
       AddSupplementRequest addSupplementRequest) async {
     return await _appServiceClient.addSupplement(
       color: addSupplementRequest.color,
@@ -122,9 +115,4 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
         title: addProductRequest.title);
   }
 
-  @override
-  Future<List<CategoryResponse>> getCategory() async {
-    return await _appServiceClient.getCategory();
-  }
->>>>>>> origin/add-product
 }

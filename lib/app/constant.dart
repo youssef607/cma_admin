@@ -4,10 +4,5 @@ class Constant {
   static const String OWNER = "OWNER";
   static const String MANAGER = "MANAGER";
   static const String WAITER = "WAITER";
-<<<<<<< HEAD
-  static const String OWNER = "OWNER";
-  static const String MANAGER = "MANAGER";
-=======
   static const String BARMAN = "BARMAN";
->>>>>>> origin/add-product
 }

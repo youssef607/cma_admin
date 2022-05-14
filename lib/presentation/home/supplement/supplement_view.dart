@@ -12,6 +12,7 @@ import 'package:cma_admin/presentation/components/responsive_grid.dart';
 import 'package:cma_admin/presentation/home/supplement/supplement_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/icon_manager.dart';
+import 'package:cma_admin/presentation/resources/routes_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +99,9 @@ class _SupplementViewState extends State<SupplementView> {
                 SizedBox(width: AppSize.s2),
                 ActionButton(
                     title: "Add Supplement",
-                    onTap: () {},
+                    onTap: () {
+                    Navigator.of(context).pushNamed(Routes.addSupplementRoute).then((_) => _bind());
+                    },
                     color: ColorManager.primary),
                 SizedBox(width: AppSize.s10),
                 ActionButton(

@@ -3,13 +3,8 @@ import 'package:cma_admin/app/extensions.dart';
 import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/data/responses/responses.dart';
 import 'package:cma_admin/domain/model/model.dart';
-<<<<<<< HEAD
-import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/presentation/resources/color_manager.dart';
-=======
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:flutter/cupertino.dart';
->>>>>>> origin/add-product
 
 const EMPTY = "";
 const ZERO = 0;
@@ -29,54 +24,6 @@ extension UserResponseExtension on UserResponse? {
         this?.name?.orEmpty() ?? EMPTY,
         this?.role?.orEmpty() ?? EMPTY,
         this?.userName?.orEmpty() ?? EMPTY);
-  }
-}
-
-extension CategoryResponseExtension on CategoryResponse? {
-  Category toDomain() {
-    return Category(
-        this?.id?.orZero() ?? ZERO,
-        this?.createdAt?.orEmpty() ?? EMPTY,
-        this?.deletedAt?.orEmpty() ?? EMPTY,
-        this?.modifiedAt?.orEmpty() ?? EMPTY,
-        this?.active.orFalse() ?? FALSE,
-        HexColor.fromHex("#${this?.color?.orEmpty() ?? EMPTY}"),
-        Constant.ImageUrl + (this?.image?.orEmpty() ?? EMPTY),
-        this?.label?.orEmpty() ?? EMPTY);
-  }
-}
-
-extension SupplementResponseExtension on SupplementResponse? {
-  Supplement toDomain() {
-    return Supplement(
-      this?.id?.orZero() ?? ZERO,
-      this?.createdAt?.orEmpty() ?? EMPTY,
-      this?.deletedAt?.orEmpty() ?? EMPTY,
-      this?.modifiedAt?.orEmpty() ?? EMPTY,
-      this?.active.orFalse() ?? FALSE,
-      HexColor.fromHex("#${this?.color?.orEmpty() ?? EMPTY}"),
-      Constant.ImageUrl + (this?.image?.orEmpty() ?? EMPTY),
-      this?.title?.orEmpty() ?? EMPTY,
-      this?.price?.orZeroD() ?? ZEROD,
-    );
-  }
-}
-
-extension ProductResponseExtension on ProductResponse? {
-  Product toDomain() {
-    return Product(
-      this?.id?.orZero() ?? ZERO,
-      this?.createdAt?.orEmpty() ?? EMPTY,
-      this?.deletedAt?.orEmpty() ?? EMPTY,
-      this?.modifiedAt?.orEmpty() ?? EMPTY,
-      this?.active.orFalse() ?? FALSE,
-      HexColor.fromHex("#${this?.color?.orEmpty() ?? EMPTY}"),
-      Constant.ImageUrl + (this?.image?.orEmpty() ?? EMPTY),
-      this?.title?.orEmpty() ?? EMPTY,
-      this?.price?.orZeroD() ?? ZEROD,
-      this?.category?.toDomain(),
-      this?.supplements?.toDomain(),
-    );
   }
 }
 
@@ -217,20 +164,6 @@ extension ListUserResponseExtension on List<UserResponse>? {
   }
 }
 
-<<<<<<< HEAD
-extension ListCategoryResponseExtension on List<CategoryResponse>? {
-  List<Category> toDomain() {
-    List<Category>? categories =
-        (this?.map((category) => category.toDomain()) ?? Iterable.empty())
-            .cast<Category>()
-            .toList();
-
-    return categories;
-  }
-}
-
-=======
->>>>>>> origin/add-product
 extension ListProductResponseExtension on List<ProductResponse>? {
   List<Product> toDomain() {
     List<Product>? products =
@@ -252,7 +185,6 @@ extension ListSupplementResponseExtension on List<SupplementResponse>? {
     return supplements;
   }
 }
-<<<<<<< HEAD
 
 extension ListOrderProductResponseExtension on List<OrderProdcutResponse>? {
   List<OrderProdcut> toDomain() {
@@ -299,5 +231,3 @@ extension ListCategoryCountResponseExtension on List<CategoryCountResponse>? {
     return categoryCount;
   }
 }
-=======
->>>>>>> origin/add-product

@@ -143,7 +143,9 @@ class _ProductViewState extends State<ProductView> {
             children: [
               ActionButton(
                   title: AppStrings.addProduct,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed(Routes.addProductRoute).then((_) => _bind());
+                  },
                   color: ColorManager.primary),
               SizedBox(width: AppSize.s10),
               ActionButton(

@@ -46,9 +46,6 @@ dependencies:
   shared_preferences: ^2.0.13
   dotted_border: ^2.0.0+2
   flutter_colorpicker: ^1.0.3
-
-
-  #Not Suppoerted 
   side_navigation: ^1.0.2
   ant_icons: ^2.0.0-nullsafety.0
   feather_icons: ^1.2.0
@@ -57,7 +54,6 @@ dependencies:
   adaptive_scrollbar: ^2.1.2
   responsive_grid: ^2.1.0
   excel: ^2.0.0-null-safety-3
-  fl_chart: ^0.50.1
   syncfusion_flutter_charts: ^20.1.52
   currency_icons: ^0.3.0
   syncfusion_flutter_datepicker: ^20.1.52

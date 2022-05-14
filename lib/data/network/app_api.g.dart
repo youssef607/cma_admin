@@ -197,8 +197,7 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromFileSync(image.path,
-              filename: image.path.split(Platform.pathSeparator).last)));
+          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('name', name));
     _data.fields.add(MapEntry('password', password));
@@ -223,8 +222,7 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromFileSync(image.path,
-              filename: image.path.split(Platform.pathSeparator).last)));
+          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('label', label));
     _data.fields.add(MapEntry('color', color));
@@ -249,8 +247,7 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromFileSync(image.path,
-              filename: image.path.split(Platform.pathSeparator).last)));
+          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('price', price));
     _data.fields.add(MapEntry('title', title));
@@ -280,8 +277,7 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromFileSync(image.path,
-              filename: image.path.split(Platform.pathSeparator).last)));
+          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('price', price));
     _data.fields.add(MapEntry('title', title));

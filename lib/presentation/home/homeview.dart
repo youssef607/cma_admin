@@ -6,6 +6,7 @@ import 'package:cma_admin/presentation/home/dashboard/dashboard_view.dart';
 import 'package:cma_admin/presentation/home/product/product_view.dart';
 import 'package:cma_admin/presentation/home/supplement/supplement_view.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
+import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -21,10 +22,10 @@ class HomeViewState extends State<HomeView> {
     CategoryView(),
     ProductView(),
     SupplementView(),
-    Center(child: Text("Users")),
-    Center(child: Text("Logout")),
+    Center(child: Text(AppStrings.users)),
+    Center(child: Text(AppStrings.logout)),
   ];
-  List<String> titles = ["Dashboard", "Category","Product","Supplement","Users", "Logout"];
+  List<String> titles = [AppStrings.dashboard,AppStrings.category,AppStrings.products,AppStrings.supplements,AppStrings.users,AppStrings.logout];
   int currentIndex = 0;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
