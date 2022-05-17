@@ -86,6 +86,24 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
+  Future<List<UserResponse>> getAllUser() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<SupplementResponse>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/user/all',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    var value = _result.data!
+        .map((dynamic i) =>
+            UserResponse.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
   Future<bool> activeTogle(type, id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -184,6 +202,19 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
+  Future<void> deleteSupplementFromProduct(productId, suppId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    await _dio.fetch<void>(_setStreamType<void>(
+        Options(method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '/product/$productId/supplement/$suppId',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return null;
+  }
+
+  @override
   Future<SignInResponse> addUser(
       {image,
       required name,
@@ -223,8 +254,7 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,
-              filename: "image.${image.extensions}")));
+           MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('label', label));
     _data.fields.add(MapEntry('color', color));
@@ -249,8 +279,7 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,
-              filename: "image.${image.extensions}")));
+           MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('price', price));
     _data.fields.add(MapEntry('title', title));
@@ -280,8 +309,7 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,
-              filename: "image.${image.extensions}")));
+           MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('price', price));
     _data.fields.add(MapEntry('title', title));

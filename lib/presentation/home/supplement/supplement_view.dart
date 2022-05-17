@@ -7,13 +7,17 @@ import 'package:cma_admin/presentation/components/action_button.dart';
 import 'package:cma_admin/presentation/components/color_column.dart';
 import 'package:cma_admin/presentation/components/custom_data_table.dart';
 import 'package:cma_admin/presentation/components/data_statistique_item.dart';
+import 'package:cma_admin/presentation/components/headar_text.dart';
 import 'package:cma_admin/presentation/components/image_column.dart';
+import 'package:cma_admin/presentation/components/popup_menu_column.dart';
 import 'package:cma_admin/presentation/components/responsive_grid.dart';
 import 'package:cma_admin/presentation/home/supplement/supplement_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
+import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/icon_manager.dart';
 import 'package:cma_admin/presentation/resources/routes_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
+import 'package:cma_admin/presentation/resources/styles_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -57,6 +61,7 @@ class _SupplementViewState extends State<SupplementView> {
   Widget build(BuildContext context) {
     return Container(
       color: ColorManager.white,
+      height: double.infinity,
       child: StreamBuilder<FlowState>(
           stream: _viewModel.outputState,
           builder: (context, snapshot) {
@@ -87,33 +92,13 @@ class _SupplementViewState extends State<SupplementView> {
       child: Column(
         children: [
           SizedBox(height: AppSize.s20),
+          _getHeaders(supplements),
+          SizedBox(height: AppSize.s20),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
             child: _getStatiqueGrid(supplements),
           ),
           SizedBox(height: AppSize.s20),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppPadding.p30),
-            child: Row(
-              children: [
-                SizedBox(width: AppSize.s2),
-                ActionButton(
-                    title: "Add Supplement",
-                    onTap: () {
-                    Navigator.of(context).pushNamed(Routes.addSupplementRoute).then((_) => _bind());
-                    },
-                    color: ColorManager.primary),
-                SizedBox(width: AppSize.s10),
-                ActionButton(
-                    title: "Export Excel",
-                    onTap: () {
-                      exportSupplementsToExcel(supplements);
-                    },
-                    color: ColorManager.gold),
-              ],
-            ),
-          ),
-          SizedBox(height: AppSize.s10),
           CustomDataTable(
               columns: columns
                   .map((column) => DataColumn(label: Text(column)))
@@ -130,16 +115,39 @@ class _SupplementViewState extends State<SupplementView> {
                             value: supplement.active, onChanged: (value) {
                               _viewModel.activeToggle(context,supplement, supplements);
                             })),
-                        DataCell(Row(
-                          children: [
-                            ActionButton(
-                                title: "Update",
-                                onTap: () {},
-                                color: ColorManager.green),
-                          ],
-                        ))
+                        DataCell(PopUpMenuColumn(
+                          update: (){}))
                       ]))
                   .toList())
+        ],
+      ),
+    );
+  }
+
+  Widget _getHeaders(List<Supplement> supplements) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppPadding.p30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          HeaderText(AppStrings.supplements),
+          Row(
+            children: [
+              ActionButton(
+                  title: AppStrings.addSupplement,
+                  onTap: () {
+                    Navigator.of(context).pushNamed(Routes.addProductRoute).then((_) => _bind());
+                  },
+                  color: ColorManager.primary),
+              SizedBox(width: AppSize.s10),
+              ActionButton(
+                  title: AppStrings.exportExcel,
+                  onTap: () {
+                    exportSupplementsToExcel(supplements);
+                  },
+                  color: ColorManager.gold),
+            ],
+          )
         ],
       ),
     );

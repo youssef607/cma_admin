@@ -11,12 +11,14 @@ import 'package:cma_admin/domain/usecase/product_details_usecase.dart';
 import 'package:cma_admin/domain/usecase/product_usecase.dart';
 import 'package:cma_admin/domain/usecase/signIn_usecase.dart';
 import 'package:cma_admin/domain/usecase/supplement_usecase.dart';
+import 'package:cma_admin/domain/usecase/user_usecase.dart';
 import 'package:cma_admin/presentation/add_supps_to_product/add_supps_to_product_viewmodel.dart';
 import 'package:cma_admin/presentation/category_details/category_details_viewmodel.dart';
 import 'package:cma_admin/presentation/home/category/category_viewmodel.dart';
 import 'package:cma_admin/presentation/home/dashboard/dashboard_viewmodel.dart';
 import 'package:cma_admin/presentation/home/product/product_viewmodel.dart';
 import 'package:cma_admin/presentation/home/supplement/supplement_viewmodel.dart';
+import 'package:cma_admin/presentation/home/users/users_viewmodel.dart';
 import 'package:cma_admin/presentation/product_details/product_details_viewmodel.dart';
 import 'package:cma_admin/domain/usecase/addcategory_usecase.dart';
 import 'package:cma_admin/domain/usecase/addproduct_usecase.dart';
@@ -95,6 +97,13 @@ initSupplementsModule() {
   }
 }
 
+initUsersModule() {
+  if (!GetIt.I.isRegistered<UserUseCase>()) {
+    instance.registerFactory<UserUseCase>(() => UserUseCase(instance()));
+    instance.registerFactory<UserViewModel>(() => UserViewModel(instance()));
+  }
+}
+
 
 initDashboardModule() {
   if (!GetIt.I.isRegistered<DashboardUseCase>()) {
@@ -167,6 +176,7 @@ resetModules() {
   initCategoryModule();
   initProductsModule();
   initSupplementsModule();
+  initUsersModule();
   initDashboardModule();
   initCategoryDetailsModule();
   initProductDetailsModule();

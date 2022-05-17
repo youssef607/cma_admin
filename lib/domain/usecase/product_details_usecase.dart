@@ -14,6 +14,10 @@ class ProductDetailsUseCase extends BaseUseCase<String,List<Supplement>> {
   Future<Either<Failure, List<Supplement>>> execute(String input) {
     return _repository.getSupplementsByProduct(input);
   }
+
+  Future<Either<Failure,void>> deleteSupplementFromProduct(int productId,int suppId){
+    return _repository.deleteSupplementFromProduct(productId.toString(), suppId.toString());
+  }
   
   Future<Either<Failure, bool>> activeToggle(int id) {
     return _repository.activeToggle(product, id.toString());

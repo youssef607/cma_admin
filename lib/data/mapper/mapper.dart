@@ -16,7 +16,7 @@ extension UserResponseExtension on UserResponse? {
   User toDomain() {
     return User(
         this?.id?.orZero() ?? ZERO,
-        this?.createdAt?.orEmpty() ?? EMPTY,
+        dateFormat2(this?.createdAt?.orEmpty() ?? EMPTY),
         this?.deletedAt?.orEmpty() ?? EMPTY,
         this?.modifiedAt?.orEmpty() ?? EMPTY,
         this?.active?.orFalse() ?? FALSE,

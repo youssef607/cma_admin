@@ -2,6 +2,7 @@ import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/category_details/category_details_viewmodel.dart';
+import 'package:cma_admin/presentation/components/custom_appbar.dart';
 import 'package:cma_admin/presentation/components/details_image.dart';
 import 'package:cma_admin/presentation/components/info_color.dart';
 import 'package:cma_admin/presentation/components/info_text.dart';
@@ -64,26 +65,16 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorManager.primary,
-        title: Row(
-          children: [
-            Container(
-                margin: EdgeInsets.only(bottom: AppMargin.m8),
-                child: Icon(
-                  IconManger.appIcon,
-                  color: ColorManager.white,
-                  size: AppSize.s30,
-                )),
-            Text(AppStrings.appName,style: getBoldStyle(color: ColorManager.white, fontSize: FontSize.s20)),
-          ],
-        ),
-      ),
+      appBar: customAppBar(),
       backgroundColor: ColorManager.white,
       body: StreamBuilder<FlowState>(
           stream: _viewModel.outputState,
           builder: (context, snapshot) {
-            return snapshot.data?.getScreenWidget(context, _getcontentScreenWidget(), () { _bind();}) ?? Container();
+            return snapshot.data
+                    ?.getScreenWidget(context, _getcontentScreenWidget(), () {
+                  _bind();
+                }) ??
+                Container();
           }),
     );
   }
@@ -112,11 +103,12 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
       children: [
         BorderedContainer(
           margin: EdgeInsets.symmetric(vertical: AppMargin.m14),
-          padding: EdgeInsets.all(isMobile(context)?AppPadding.p16:AppPadding.p35),
+          padding: EdgeInsets.all(
+              isMobile(context) ? AppPadding.p16 : AppPadding.p35),
           child: Row(
             children: [
               DetailsImage(category.image),
-              SizedBox(width: isMobile(context)?AppSize.s10:AppSize.s30),
+              SizedBox(width: isMobile(context) ? AppSize.s10 : AppSize.s30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -124,14 +116,17 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
                   SizedBox(height: AppSize.s16),
                   InfoText(text: AppStrings.label, value: category.label),
                   SizedBox(height: AppSize.s16),
-                  InfoText(text: AppStrings.createdAt, value: category.createdAt),
+                  InfoText(
+                      text: AppStrings.createdAt, value: category.createdAt),
                   SizedBox(height: AppSize.s16),
                   InfoText(
                       text: AppStrings.status,
                       value: category.active
                           ? AppStrings.active
                           : AppStrings.notActive,
-                      color: category.active ? ColorManager.green : ColorManager.red),
+                      color: category.active
+                          ? ColorManager.green
+                          : ColorManager.red),
                   SizedBox(height: AppSize.s16),
                   InfoColor(color: category.color),
                   SizedBox(height: AppSize.s26),
@@ -141,11 +136,15 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
             ],
           ),
         ),
-         Positioned(top: 0,left: AppSize.s50,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: AppPadding.p10),
-            color: ColorManager.white,
-            child: Text(AppStrings.categoryInfo,style: getBoldStyle( color: ColorManager.black, fontSize: FontSize.s20)))),
+        Positioned(
+            top: 0,
+            left: AppSize.s50,
+            child: Container(
+                padding: EdgeInsets.symmetric(horizontal: AppPadding.p10),
+                color: ColorManager.white,
+                child: Text(AppStrings.categoryInfo,
+                    style: getBoldStyle(
+                        color: ColorManager.black, fontSize: FontSize.s20)))),
       ],
     );
   }
@@ -153,12 +152,16 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
   Widget _getActionButton(Category category) {
     return Row(
       children: [
-        ActionButton( color: ColorManager.gold, title: AppStrings.update, onTap: () {}),
+        ActionButton(
+            color: ColorManager.gold, title: AppStrings.update, onTap: () {}),
         SizedBox(width: AppSize.s20),
         ActionButton(
             color: category.active ? ColorManager.red : ColorManager.green,
-            title:category.active ? AppStrings.deactivate : AppStrings.activate,
-            onTap: () {_viewModel.activeToggle(context,category);})
+            title:
+                category.active ? AppStrings.deactivate : AppStrings.activate,
+            onTap: () {
+              _viewModel.activeToggle(context, category);
+            })
       ],
     );
   }
@@ -175,33 +178,37 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
                 children: [
                   _getProductsHeader(),
                   SizedBox(height: AppSize.s12),
-                  products.isEmpty?
-                  NotfoundWidget(AppStrings.noProductsFound)
-                  :CustomDataTable(
-                      padding: EdgeInsets.zero,
-                      columns: columns
-                          .map((column) => DataColumn(label: Text(column)))
-                          .toList(),
-                      rows: products
-                          .map((product) => DataRow(cells: [
-                                DataCell(Text(product.id.toString())),
-                                DataCell(ImageColumn(product.image)),
-                                DataCell(Text(product.title)),
-                                DataCell(Text("${product.price} ${AppStrings.dh}")),
-                                DataCell(Text(product.createdAt)),
-                                DataCell(ColorColumn(product.color)),
-                                DataCell(Text("${product.category?.id}")),
-                                DataCell(Text(
-                                    product.active? AppStrings.active : AppStrings.notActive,
-                                    style: getSemiBoldStyle(
-                                        color: product.active
-                                            ? ColorManager.green
-                                            : ColorManager.red,
-                                        fontSize: FontSize.s12))),
-                                DataCell(PopUpMenuColumn(update: (){}, view: (){})),
-
-                              ]))
-                          .toList()),
+                  products.isEmpty
+                      ? NotfoundWidget(AppStrings.noProductsFound)
+                      : CustomDataTable(
+                          padding: EdgeInsets.zero,
+                          columns: columns
+                              .map((column) => DataColumn(label: Text(column)))
+                              .toList(),
+                          rows: products
+                              .map((product) => DataRow(cells: [
+                                    DataCell(Text(product.id.toString())),
+                                    DataCell(ImageColumn(product.image)),
+                                    DataCell(Text(product.title)),
+                                    DataCell(Text(
+                                        "${product.price} ${AppStrings.dh}")),
+                                    DataCell(Text(product.createdAt)),
+                                    DataCell(ColorColumn(product.color)),
+                                    DataCell(Text("${product.category?.id}")),
+                                    DataCell(Text(
+                                        product.active
+                                            ? AppStrings.active
+                                            : AppStrings.notActive,
+                                        style: getSemiBoldStyle(
+                                            color: product.active
+                                                ? ColorManager.green
+                                                : ColorManager.red,
+                                            fontSize: FontSize.s12))),
+                                    DataCell(PopUpMenuColumn(
+                                        update: () {},
+                                        view: () {})),
+                                  ]))
+                              .toList()),
                 ],
               ),
             );
@@ -211,13 +218,18 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
         });
   }
 
-  Widget _getProductsHeader(){
+  Widget _getProductsHeader() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(AppStrings.products,style: getBoldStyle( color: ColorManager.black, fontSize: FontSize.s20)),
-        ActionButton(onTap: (){}, title: AppStrings.addProduct, color: ColorManager.primary)
+        Text(AppStrings.products,
+            style: getBoldStyle(
+                color: ColorManager.black, fontSize: FontSize.s20)),
+        ActionButton(
+            onTap: () {},
+            title: AppStrings.addProduct,
+            color: ColorManager.primary)
       ],
     );
   }

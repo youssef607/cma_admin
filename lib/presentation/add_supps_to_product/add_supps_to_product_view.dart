@@ -3,6 +3,7 @@ import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/add_supps_to_product/add_supps_to_product_viewmodel.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/components/color_column.dart';
+import 'package:cma_admin/presentation/components/custom_appbar.dart';
 import 'package:cma_admin/presentation/components/custom_data_table.dart';
 import 'package:cma_admin/presentation/components/image_column.dart';
 import 'package:cma_admin/presentation/components/not_found_widget.dart';
@@ -58,22 +59,7 @@ class _AddSupplementsToProductViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorManager.primary,
-        title: Row(
-          children: [
-            Container(
-                margin: EdgeInsets.only(bottom: AppMargin.m8),
-                child: Icon(
-                  IconManger.appIcon,
-                  color: ColorManager.white,
-                  size: AppSize.s30,
-                )),
-            Text(AppStrings.appName,
-                style: getBoldStyle(
-                    color: ColorManager.white, fontSize: FontSize.s20)),
-          ],
-        ),
+      appBar: customAppBar(
         actions: [
           Padding(
             padding: EdgeInsets.symmetric(

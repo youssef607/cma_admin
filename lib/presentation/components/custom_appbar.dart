@@ -6,7 +6,7 @@ import 'package:cma_admin/presentation/resources/styles_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
-AppBar customAppBar() {
+AppBar customAppBar({List<Widget>? actions}) {
   return AppBar(
     backgroundColor: ColorManager.primary,
     title: Row(
@@ -18,10 +18,12 @@ AppBar customAppBar() {
               color: ColorManager.white,
               size: AppSize.s30,
             )),
+        SizedBox(width: AppPadding.p20),    
         Text(AppStrings.appName,
             style: getBoldStyle(
                 color: ColorManager.white, fontSize: FontSize.s20)),
       ],
     ),
+    actions: actions??[],
   );
 }

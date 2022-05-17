@@ -7,12 +7,14 @@ abstract class RemoteDataSource {
   Future<List<CategoryResponse>> getAllCategory();
   Future<List<ProductResponse>> getAllProduct();
   Future<List<SupplementResponse>> getAllSupplement();
+  Future<List<UserResponse>> getAllUser();
   Future<bool> activeToggle(String type,String id);
   Future<HomeResponse> home(String date1,String date2);
   Future<List<ProductResponse>> getProductsByCategory(String id);
   Future<List<SupplementResponse>> getSupplemensByProduct(String id);
   Future<List<SupplementResponse>> getSupplementsForAdd(String id);
   Future<ProductResponse> addSupplementsToProduct(String productId,String suppsId);
+  Future<void> deleteSupplementsToProduct(String productId,String suppId);
   Future<SignInResponse> addUser(AddUserRequest addUserRequest);
   Future<CategoryResponse> addCategory(AddCategoryRequest addCategoryRequest);
   Future<ProductResponse> addProduct(AddProductRequest addProductRequest);
@@ -44,7 +46,12 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   Future<List<SupplementResponse>> getAllSupplement() {
     return _appServiceClient.getAllSupplement();
   }
-
+  
+    @override
+  Future<List<UserResponse>> getAllUser() {
+    return _appServiceClient.getAllUser();
+  }
+  
   @override
   Future<bool> activeToggle(String type, String id) {
     return _appServiceClient.activeTogle(type, id);
@@ -115,4 +122,9 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
         title: addProductRequest.title);
   }
 
+  @override
+  Future<void> deleteSupplementsToProduct(String productId, String suppId) {
+    return _appServiceClient.deleteSupplementFromProduct(productId, suppId);
+  }
+  
 }

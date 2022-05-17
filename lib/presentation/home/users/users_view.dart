@@ -2,7 +2,6 @@ import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/app/excel.dart';
 import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/domain/usecase/product_usecase.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/components/action_button.dart';
 import 'package:cma_admin/presentation/components/color_column.dart';
@@ -12,33 +11,30 @@ import 'package:cma_admin/presentation/components/headar_text.dart';
 import 'package:cma_admin/presentation/components/image_column.dart';
 import 'package:cma_admin/presentation/components/popup_menu_column.dart';
 import 'package:cma_admin/presentation/components/responsive_grid.dart';
-import 'package:cma_admin/presentation/home/product/product_viewmodel.dart';
+import 'package:cma_admin/presentation/home/users/users_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
-import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/icon_manager.dart';
 import 'package:cma_admin/presentation/resources/routes_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
-import 'package:cma_admin/presentation/resources/styles_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
-class ProductView extends StatefulWidget {
-  const ProductView({Key? key}) : super(key: key);
+class UserView extends StatefulWidget {
+  const UserView({Key? key}) : super(key: key);
 
   @override
-  State<ProductView> createState() => _ProductViewState();
+  State<UserView> createState() => _UserViewState();
 }
 
-class _ProductViewState extends State<ProductView> {
-  ProductViewModel _viewModel = instance<ProductViewModel>();
+class _UserViewState extends State<UserView> {
+  UserViewModel _viewModel = instance<UserViewModel>();
   List<String> columns = [
-    "Id",
+    "N°",
     "image",
-    "Title",
-    "Price",
-    "Created At",
-    "Color",
-    "Category Id",
+    "Name",
+    "UserName",
+    "CreatedAt",
+    "Role",
     "Active",
     "Actions"
   ];
@@ -77,80 +73,72 @@ class _ProductViewState extends State<ProductView> {
   }
 
   Widget _getcontentScreenWidget() {
-    return StreamBuilder<List<Product>>(
-        stream: _viewModel.outputProducts,
+    return StreamBuilder<List<User>>(
+        stream: _viewModel.outputUsers,
         builder: (context, snapshot) {
-          List<Product>? products = snapshot.data;
-          if (products != null) {
-            return _getDataTable(products);
+          List<User>? users = snapshot.data;
+          if (users != null) {
+            return _getDataTable(users);
           } else {
             return Container();
           }
         });
   }
 
-  Widget _getDataTable(List<Product> products) {
+  Widget _getDataTable(List<User> users) {
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: AppSize.s20),
-          _getHeaders(products),
+          _getHeaders(users),
           SizedBox(height: AppSize.s20),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
-            child: _getStatiqueGrid(products),
+            child: _getStatiqueGrid(users),
           ),
           SizedBox(height: AppSize.s20),
           CustomDataTable(
-              columns: columns
-                  .map((column) => DataColumn(label: Text(column)))
-                  .toList(),
-              rows: products
-                  .map((product) => DataRow(cells: [
-                        DataCell(Text(product.id.toString())),
-                        DataCell(ImageColumn(product.image)),
-                        DataCell(Text(product.title)),
-                        DataCell(Text("${product.price} ${AppStrings.dh}")),
-                        DataCell(Text(product.createdAt)),
-                        DataCell(ColorColumn(product.color)),
-                        DataCell(Text("${product.category?.id}")),
+              columns: columns.map((column) => DataColumn(label: Text(column))).toList(),
+              rows: users.map((user) => DataRow(
+                  cells: [
+                        DataCell(Text(user.id.toString())),
+                        DataCell(ImageColumn(user.image)),
+                        DataCell(Text(user.name)),
+                        DataCell(Text(user.userName)),
+                        DataCell(Text(user.createdAt)),
+                        DataCell(Text(user.role)),
                         DataCell(Switch(
-                            value: product.active,
-                            onChanged: (value) {
-                              _viewModel.activeToggle(context,product, products);
-                            })),
+                            value: user.active,
+                            onChanged: (value) {_viewModel.activeToggle(context,user, users);})),
                         DataCell(PopUpMenuColumn(
                             update: () {},
-                            view: () {
-                              Navigator.of(context).pushNamed(Routes.productDetailsRoute,arguments: product) .then((value) => _bind());
-                            }))
-                      ]))
-                  .toList())
+                            )),
+                      ])).toList())
         ],
       ),
     );
   }
 
-  Widget _getHeaders(List<Product> products) {
+  Widget _getHeaders(List<User> users) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppPadding.p30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          HeaderText(AppStrings.products),
+          HeaderText(AppStrings.users),
           Row(
             children: [
               ActionButton(
-                  title: AppStrings.addProduct,
+                  title: AppStrings.addUser,
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.addProductRoute).then((_) => _bind());
+                    Navigator.of(context).pushNamed(Routes.addUserRoute).then((_) => _bind());
                   },
                   color: ColorManager.primary),
               SizedBox(width: AppSize.s10),
               ActionButton(
                   title: AppStrings.exportExcel,
                   onTap: () {
-                    exportProductsToExcel(products);
                   },
                   color: ColorManager.gold),
             ],
@@ -160,29 +148,28 @@ class _ProductViewState extends State<ProductView> {
     );
   }
 
-  Widget _getStatiqueGrid(List<Product> products) {
-    int isActiveCount =products.where((Product) => Product.active == true).toList().length;
-    int isNotActiveCount = products.where((Product) => Product.active == false).toList().length;
+  Widget _getStatiqueGrid(List<User> users) {
+    int isActiveCount = users.where((user) => user.active == true).toList().length;
+    int isNotActiveCount = users.where((user) => user.active == false).toList().length;
     return ResponsiveGrid(
         widthPourcentage: isMobile(context) ? 0.3 : 0.25,
         children: [
           DataStatistiqueItem(
-            label: AppStrings.active,
-            count: isActiveCount.toString(),
-            color: ColorManager.green,
-            icon: IconManger.active,
+              label: AppStrings.active,
+              count: isActiveCount.toString(),
+              color: ColorManager.green,
+              icon: IconManger.active),
+          DataStatistiqueItem(
+            label: AppStrings.notActive,
+            count: isNotActiveCount.toString(),
+            color: ColorManager.red,
+            icon: IconManger.notActive,
           ),
           DataStatistiqueItem(
-              label: AppStrings.notActive,
-              count: isNotActiveCount.toString(),
-              color: ColorManager.red,
-              icon: IconManger.notActive),
-          DataStatistiqueItem(
-            label: AppStrings.total,
-            count: products.length.toString(),
-            color: ColorManager.orange,
-            icon: IconManger.total,
-          ),
+              label: AppStrings.total,
+              count: users.length.toString(),
+              color: ColorManager.orange,
+              icon: IconManger.total),
         ]);
   }
 }

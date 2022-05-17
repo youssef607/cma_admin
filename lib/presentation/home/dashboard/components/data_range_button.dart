@@ -62,7 +62,7 @@ class DateRangeButton extends StatelessWidget {
                               "${dateFormat2(dateRange.startDate)} - ${dateFormat2(dateRange.endDate)}",
                               style: getSemiBoldStyle(
                                   color: ColorManager.black,
-                                  fontSize: FontSize.s14)),
+                                  fontSize: isMobile(context)?FontSize.s10:FontSize.s14)),
                           Icon(IconManger.dropDown)
                         ],
                       )),
