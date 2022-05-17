@@ -85,7 +85,7 @@ class _AddProductViewViewState extends State<AddProductView> {
                         padding: const EdgeInsets.only(bottom: AppPadding.p10),
                         child: Container(
                             child: Text(
-                          AppStrings.createCategory,
+                          AppStrings.createProduct,
                           style: getBoldStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s24),

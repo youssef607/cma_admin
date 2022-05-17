@@ -79,7 +79,7 @@ class AppStrings {
   static const String addSupplement = "Add Supplement";
   static const String noProductsFound = "No Products Found";
   static const String addSupplementsToProduct = "Add Supplements To Product";
-  
+
   // user
   static const String addUser = "Add User";
 
@@ -129,4 +129,7 @@ class AppStrings {
 
   static const String createSupplement = "Create Supplement";
   static const String addSupplemet = "Add Supplement";
+
+  //Add product
+  static const String createProduct = "Create Productt";
 }
