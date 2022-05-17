@@ -100,7 +100,10 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                           },
                           child: DottedBorder(
                             borderType: BorderType.RRect,
-                            radius: Radius.circular(AppSize.s8),
+                            radius: Radius.circular(AppSize.s4),
+                            dashPattern: [5, 5],
+                            color: ColorManager.grey,
+                            strokeWidth: AppSize.s2,
                             child: Container(
                               child: _getMediaWidget(),
                               height: AppSize.s200,

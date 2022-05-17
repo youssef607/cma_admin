@@ -100,7 +100,10 @@ class _AddProductViewViewState extends State<AddProductView> {
                           },
                           child: DottedBorder(
                             borderType: BorderType.RRect,
-                            radius: Radius.circular(12),
+                            radius: Radius.circular(AppSize.s4),
+                            dashPattern: [5, 5],
+                            color: ColorManager.grey,
+                            strokeWidth: AppSize.s2,
                             child: Container(
                               child: _getMediaWidget(),
                               height: AppSize.s200,
