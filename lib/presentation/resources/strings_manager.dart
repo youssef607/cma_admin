@@ -80,6 +80,8 @@ class AppStrings {
   static const String noProductsFound = "No Products Found";
   static const String addSupplementsToProduct = "Add Supplements To Product";
   
+  // user
+  static const String addUser = "Add User";
 
   //orders details
   static const String orderDetails = "Order details";
@@ -109,6 +111,7 @@ class AppStrings {
   static const String notActive = "Not Active";
   static const String exportExcel = "Export Excel";
   static const String update = "Update";
+  static const String delete = "Delete";
   static const String save = "Save";
   static const String view = "View";
   static const String activate = "Activate";

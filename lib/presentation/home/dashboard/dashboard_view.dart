@@ -3,17 +3,22 @@ import 'dart:math';
 
 import 'package:ant_icons/ant_icons.dart';
 import 'package:cma_admin/app/di.dart';
+import 'package:cma_admin/app/excel.dart';
 import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
+import 'package:cma_admin/presentation/components/action_button.dart';
 import 'package:cma_admin/presentation/components/custom_data_table.dart';
 import 'package:cma_admin/presentation/components/data_statistique_item.dart';
+import 'package:cma_admin/presentation/components/headar_text.dart';
 import 'package:cma_admin/presentation/components/order_status.dart';
+import 'package:cma_admin/presentation/components/popup_menu_column.dart';
 import 'package:cma_admin/presentation/components/responsive_grid.dart';
 import 'package:cma_admin/presentation/home/components/list_waiters.dart';
 import 'package:cma_admin/presentation/home/dashboard/components/custom_line_chart.dart';
 import 'package:cma_admin/presentation/home/dashboard/components/custom_pie_chart.dart';
 import 'package:cma_admin/presentation/home/dashboard/components/data_range_button.dart';
+import 'package:cma_admin/presentation/home/dashboard/components/details_widget.dart';
 import 'package:cma_admin/presentation/home/dashboard/dashboard_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
@@ -40,6 +45,7 @@ class _DashboardViewState extends State<DashboardView> {
     "CreatedAt",
     "Items Count",
     "Amount",
+    "Actions"
   ];
   int touchedIndex = -1;
   _bind() {
@@ -64,14 +70,11 @@ class _DashboardViewState extends State<DashboardView> {
   Widget build(BuildContext context) {
     return Container(
       color: ColorManager.white,
+      height: double.infinity,
       child: StreamBuilder<FlowState>(
           stream: _viewModel.outputState,
           builder: (context, snapshot) {
-            return snapshot.data
-                    ?.getScreenWidget(context, _getcontentScreenWidget(), () {
-                  _bind();
-                }) ??
-                Container();
+            return snapshot.data?.getScreenWidget(context, _getcontentScreenWidget(), () {_bind();})??Container();
           }),
     );
   }
@@ -95,7 +98,7 @@ class _DashboardViewState extends State<DashboardView> {
                   SizedBox(height: AppSize.s14),
                   _getChartsSection(homeData),
                   SizedBox(height: AppSize.s18),
-                  _getSection(),
+                  _getSection(homeData.orders!),
                   SizedBox(height: AppSize.s14),
                   _getOrdersDataTable(homeData.orders!)
                 ],
@@ -113,17 +116,33 @@ class _DashboardViewState extends State<DashboardView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(AppStrings.dashboard,style: getBoldStyle(color: ColorManager.black, fontSize: FontSize.s28)),
+          HeaderText(AppStrings.dashboard),
           DateRangeButton(_viewModel),
         ],
       ),
     );
   }
 
-  Widget _getSection(){
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:AppPadding.p30),
-      child: Text(AppStrings.allOrders,style: getBoldStyle(color: ColorManager.black,fontSize: FontSize.s17)),
+  Widget _getSection(List<OrderModel> orders) {
+    return StreamBuilder<DateRange>(
+      stream: _viewModel.outpuDateRange,
+      builder: (context, snapshot) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p30),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(AppStrings.allOrders,style:getBoldStyle(color: ColorManager.black, fontSize: FontSize.s17)),
+              ActionButton(
+                title: AppStrings.exportExcel,
+                onTap: () {
+                  exportOrdersToExcel(orders,"${snapshot.data!.startDate}<->${snapshot.data!.endDate}");
+                },
+                color: ColorManager.gold),
+            ],
+          ),
+        );
+      }
     );
   }
 
@@ -147,14 +166,17 @@ class _DashboardViewState extends State<DashboardView> {
 
   Widget _getOrdersDataTable(List<OrderModel> orders) {
     return CustomDataTable(
-        columns:columns.map((column) => DataColumn(label: Text(column))).toList(),
-        rows: orders
-            .map((order) => DataRow(cells: [
+        columns: columns.map((column) => DataColumn(label: Text(column))).toList(),
+        rows: orders.map((order) => DataRow(cells: [
                   DataCell(OrderStatus(status: order.status.toString())),
                   DataCell(Text(order.id.toString())),
                   DataCell(Text(dateFormat(order.createdAt))),
                   DataCell(Text(order.itemsNumber.toString())),
                   DataCell(Text("${order.totalOrderPrice.toString()} ${AppStrings.dh}")),
+                  DataCell(PopUpMenuColumn(
+                      view: () {
+                        showDetails(order);
+                      }))
                 ]))
             .toList());
   }
@@ -199,5 +221,13 @@ class _DashboardViewState extends State<DashboardView> {
     } else {
       return Container();
     }
+  }
+
+  showDetails(OrderModel order) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(child: DetailsOrderWidget(order));
+        });
   }
 }

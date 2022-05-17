@@ -53,3 +53,21 @@ exportSupplementsToExcel(List<Supplement> supplements) {
   }
   excel.save(fileName: "Supplements.xlsx");
 }
+
+
+exportOrdersToExcel(List<OrderModel> orders,String name) {
+  var excel = Excel.createExcel();
+  var sheetObject = excel[excel.getDefaultSheet() ?? EMPTY];
+  List<String> columns = [
+    "N°",
+    "CreatedAt",
+    "Items Count",
+    "Amount",
+    "Status",
+  ];
+  sheetObject.appendRow(columns);
+  for (var order in orders) {
+    sheetObject.appendRow([order.id,order.createdAt,order.itemsNumber,order.totalOrderPrice,order.status]);
+  }
+  excel.save(fileName: "orders${name}.xlsx");
+}

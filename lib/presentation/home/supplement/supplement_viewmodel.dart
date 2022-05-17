@@ -44,6 +44,7 @@ class SupplementViewModel extends BaseViewModel with SupplementViewModelInput,Su
         supplement.active = isActive;
         inputSupplements.add(supplements);
         inputState.add(ContentState());
+        Navigator.of(context).pop();
       });
   }  
 

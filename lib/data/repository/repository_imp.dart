@@ -57,6 +57,17 @@ class RepositoryImpl extends Repository {
   }
 
   @override
+  Future<Either<Failure, List<User>>> getAllUser() async {
+    try {
+      final response = await _remoteDataSource.getAllUser();
+
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+  
+  @override
   Future<Either<Failure, bool>> activeToggle(String type, String id) async {
     try {
       final response = await _remoteDataSource.activeToggle(type, id);
@@ -157,6 +168,17 @@ class RepositoryImpl extends Repository {
       final response = await _remoteDataSource.addUser(addUserRequest);
 
       return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteSupplementFromProduct(String productId, String suppId) async{
+    try {
+      final response = await _remoteDataSource.deleteSupplementsToProduct(productId, suppId);
+
+      return Right(response);
     } catch (error) {
       return Left(ErrorHandler.handle(error).failure);
     }

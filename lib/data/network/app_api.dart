@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cma_admin/app/constant.dart';
 import 'package:cma_admin/data/responses/responses.dart';
 import 'package:cma_admin/domain/model/model.dart';
@@ -26,6 +28,9 @@ abstract class AppServiceClient {
   @GET('/supplement/all')
   Future<List<SupplementResponse>> getAllSupplement();
 
+  @GET('/user/all')
+  Future<List<UserResponse>> getAllUser();
+
   @POST('/{type}/{id}/active')
   Future<bool> activeTogle(@Path() String type,@Path() String id);
 
@@ -43,6 +48,9 @@ abstract class AppServiceClient {
   
   @POST('/product/{productId}/supplements/{suppsId}')
   Future<ProductResponse> addSupplementsToProduct(@Path() String productId,@Path() String suppsId);
+  
+  @DELETE('/product/{productId}/supplement/{suppId}')
+  Future<void> deleteSupplementFromProduct(@Path() String productId,@Path() String suppId);
 
   @POST("/auth/signUp/{role}")
   @MultiPart()

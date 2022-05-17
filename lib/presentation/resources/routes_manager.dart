@@ -53,6 +53,7 @@ class RouteGenerator {
         initCategoryModule();
         initProductsModule();
         initSupplementsModule();
+        initUsersModule();
         return CupertinoPageRoute(
             builder: (_) => HomeView(), settings: routeSettings);
       case Routes.categoryDetailsRoute:

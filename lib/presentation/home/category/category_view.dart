@@ -7,6 +7,7 @@ import 'package:cma_admin/presentation/components/action_button.dart';
 import 'package:cma_admin/presentation/components/color_column.dart';
 import 'package:cma_admin/presentation/components/custom_data_table.dart';
 import 'package:cma_admin/presentation/components/data_statistique_item.dart';
+import 'package:cma_admin/presentation/components/headar_text.dart';
 import 'package:cma_admin/presentation/components/image_column.dart';
 import 'package:cma_admin/presentation/components/popup_menu_column.dart';
 import 'package:cma_admin/presentation/components/responsive_grid.dart';
@@ -127,7 +128,7 @@ class _CategoryViewState extends State<CategoryView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(AppStrings.category,style: getBoldStyle(color: ColorManager.black, fontSize: FontSize.s28)),
+          HeaderText(AppStrings.category),
           Row(
             children: [
               ActionButton(
