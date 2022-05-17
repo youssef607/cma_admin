@@ -81,7 +81,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: AppPadding.p40),
+                        padding: const EdgeInsets.only(bottom: AppPadding.p20),
                         child: Container(
                             child: Text(
                           AppStrings.createCategory,

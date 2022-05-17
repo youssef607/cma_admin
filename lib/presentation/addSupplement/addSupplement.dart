@@ -82,7 +82,7 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: AppPadding.p40),
+                        padding: const EdgeInsets.only(bottom: AppPadding.p20),
                         child: Container(
                             child: Text(
                           AppStrings.createSupplement,

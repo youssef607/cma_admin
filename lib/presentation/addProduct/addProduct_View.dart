@@ -82,7 +82,7 @@ class _AddProductViewViewState extends State<AddProductView> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: AppPadding.p10),
+                        padding: const EdgeInsets.only(bottom: AppPadding.p20),
                         child: Container(
                             child: Text(
                           AppStrings.createProduct,
