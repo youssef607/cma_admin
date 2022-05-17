@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/addProduct/addProduct_view_model.dart';
+import 'package:cma_admin/presentation/common/widgets/color_picker_dialogue.dart';
+import 'package:cma_admin/presentation/common/widgets/color_picker_label.dart';
 import 'package:cma_admin/presentation/common/widgets/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
@@ -12,7 +14,6 @@ import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -84,7 +85,7 @@ class _AddProductViewViewState extends State<AddProductView> {
                         padding: const EdgeInsets.only(bottom: AppPadding.p10),
                         child: Container(
                             child: Text(
-                          AppStrings.addProduct,
+                          AppStrings.createCategory,
                           style: getBoldStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s24),
@@ -115,7 +116,8 @@ class _AddProductViewViewState extends State<AddProductView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RequiredLabel(text: AppStrings.title),
+                            RequiredLabel(
+                                text: AppStrings.title, requiredText: "*"),
                             StreamBuilder<String?>(
                               stream: _viewModel.outputErrorTitle,
                               builder: (context, snapshot) {
@@ -137,7 +139,8 @@ class _AddProductViewViewState extends State<AddProductView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RequiredLabel(text: AppStrings.price),
+                            RequiredLabel(
+                                text: AppStrings.price, requiredText: "*"),
                             StreamBuilder<String?>(
                               stream: _viewModel.outputErrorPrice,
                               builder: (context, snapshot) {
@@ -161,7 +164,9 @@ class _AddProductViewViewState extends State<AddProductView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RequiredLabel(text: AppStrings.addCategory),
+                            RequiredLabel(
+                                text: AppStrings.addCategory,
+                                requiredText: "*"),
                             StreamBuilder<List<Category>?>(
                               stream: _viewModel.outputCategories,
                               builder: (context, snapshot) {
@@ -204,11 +209,15 @@ class _AddProductViewViewState extends State<AddProductView> {
                               builder: (context, snapshot) {
                                 Color color =
                                     snapshot.data ?? ColorManager.grey;
-                                return ColorPicker(
-                                  colorPickerWidth: AppSize.s100,
-                                  pickerColor: color,
-                                  onColorChanged: (value) {
-                                    _viewModel.setColor(value);
+                                return InkWell(
+                                  child: ColorPickerForm(
+                                    color: color,
+                                  ),
+                                  onTap: () {
+                                    showAlert(context, color, (value) {
+                                      _viewModel.setColor(value);
+                                      color = value;
+                                    });
                                   },
                                 );
                               },

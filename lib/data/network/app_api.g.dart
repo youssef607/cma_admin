@@ -8,7 +8,7 @@ part of 'app_api.dart';
 
 class _AppServiceClient implements AppServiceClient {
   _AppServiceClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://192.168.1.68:8080/api';
+    baseUrl ??= 'http://192.168.0.159:8080/api';
   }
 
   final Dio _dio;
@@ -197,7 +197,8 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('name', name));
     _data.fields.add(MapEntry('password', password));
@@ -222,7 +223,8 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('label', label));
     _data.fields.add(MapEntry('color', color));
@@ -247,7 +249,8 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('price', price));
     _data.fields.add(MapEntry('title', title));
@@ -277,7 +280,8 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('price', price));
     _data.fields.add(MapEntry('title', title));

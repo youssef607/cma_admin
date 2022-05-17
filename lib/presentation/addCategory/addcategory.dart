@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/addCategory/addcategory_view_model.dart';
+import 'package:cma_admin/presentation/common/widgets/color_picker_dialogue.dart';
+import 'package:cma_admin/presentation/common/widgets/color_picker_label.dart';
 import 'package:cma_admin/presentation/common/widgets/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
@@ -11,7 +13,6 @@ import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.d
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -80,7 +81,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: AppPadding.p10),
+                        padding: const EdgeInsets.only(bottom: AppPadding.p40),
                         child: Container(
                             child: Text(
                           AppStrings.createCategory,
@@ -98,7 +99,10 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                           },
                           child: DottedBorder(
                             borderType: BorderType.RRect,
-                            radius: Radius.circular(12),
+                            radius: Radius.circular(AppSize.s4),
+                            dashPattern: [5, 5],
+                            color: ColorManager.grey,
+                            strokeWidth: AppSize.s2,
                             child: Container(
                               child: _getMediaWidget(),
                               height: AppSize.s200,
@@ -114,7 +118,8 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RequiredLabel(text: AppStrings.label),
+                            RequiredLabel(
+                                text: AppStrings.label, requiredText: "*"),
                             StreamBuilder<String?>(
                               stream: _viewModel.outputErrorLabel,
                               builder: (context, snapshot) {
@@ -136,17 +141,23 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RequiredLabel(text: AppStrings.color),
+                            RequiredLabel(
+                              text: AppStrings.color,
+                            ),
                             StreamBuilder<Color?>(
                               stream: _viewModel.outputPickerColor,
                               builder: (context, snapshot) {
                                 Color color =
                                     snapshot.data ?? ColorManager.grey;
-                                return ColorPicker(
-                                  colorPickerWidth: AppSize.s100,
-                                  pickerColor: color,
-                                  onColorChanged: (value) {
-                                    _viewModel.setColor(value);
+                                return InkWell(
+                                  child: ColorPickerForm(
+                                    color: color,
+                                  ),
+                                  onTap: () {
+                                    showAlert(context, color, (value) {
+                                      _viewModel.setColor(value);
+                                      color = value;
+                                    });
                                   },
                                 );
                               },
@@ -184,25 +195,32 @@ class _AddCategoryViewState extends State<AddCategoryView> {
   }
 
   Widget _getMediaWidget() {
-    return Container(
-      child: StreamBuilder<PickerFile?>(
-        stream: _viewModel.outputProfilePicture,
-        builder: (context, snapshot) {
-          PickerFile? pickerFile = snapshot.data;
-          return pickerFile != null
-              ? _imagePickedByUser(pickerFile.byte)
-              : Column(
-                  children: [
-                    Expanded(
-                        flex: 2,
-                        child: Image.asset(
-                          ImageAssets.gallery,
-                          fit: BoxFit.cover,
-                        )),
-                    Expanded(flex: 1, child: Text(AppStrings.browsImage)),
-                  ],
-                );
-        },
+    return Padding(
+      padding: const EdgeInsets.all(AppPadding.p8),
+      child: Container(
+        child: StreamBuilder<PickerFile?>(
+          stream: _viewModel.outputProfilePicture,
+          builder: (context, snapshot) {
+            PickerFile? pickerFile = snapshot.data;
+            return pickerFile != null
+                ? _imagePickedByUser(pickerFile.byte)
+                : Column(
+                    children: [
+                      Expanded(
+                          flex: 3,
+                          child: Image.asset(
+                            ImageAssets.gallery,
+                            fit: BoxFit.cover,
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.all(AppPadding.p8),
+                        child: Expanded(
+                            flex: 1, child: Text(AppStrings.browsImage)),
+                      ),
+                    ],
+                  );
+          },
+        ),
       ),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:flutter/cupertino.dart';
 
 part 'responses.g.dart';
 
@@ -239,7 +238,7 @@ class WaiterResponse {
   @JsonKey(name: "ordersCount")
   int? ordersCount;
 
-  WaiterResponse(this.waiter,this.ordersCount);
+  WaiterResponse(this.waiter, this.ordersCount);
 
   // from json
   factory WaiterResponse.fromJson(Map<String, dynamic> json) =>
@@ -263,7 +262,7 @@ class CategoryCountResponse {
   @JsonKey(name: "itemsCount")
   int? itemsCount;
 
-  CategoryCountResponse(this.id,this.color,this.label,this.itemsCount);
+  CategoryCountResponse(this.id, this.color, this.label, this.itemsCount);
 
   // from json
   factory CategoryCountResponse.fromJson(Map<String, dynamic> json) =>
@@ -287,8 +286,7 @@ class HomeResponse {
   @JsonKey(name: "categoryCounts")
   List<CategoryCountResponse>? categoryCounts;
 
-
-  HomeResponse(this.statique, this.orders,this.waiters,this.categoryCounts);
+  HomeResponse(this.statique, this.orders, this.waiters, this.categoryCounts);
 
   // from json
   factory HomeResponse.fromJson(Map<String, dynamic> json) =>

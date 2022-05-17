@@ -8,6 +8,7 @@ import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
+import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:rxdart/rxdart.dart';
@@ -37,7 +38,8 @@ class AddProductViewModel extends BaseViewModel
   AddProductUseCase _addProductUseCase;
   CategoryUseCase _categoryUseCase;
 
-  var addroductViewObject = AddProductObject("", "", null, "", "");
+  var addroductViewObject = AddProductObject(
+      "", ColorManager.grey.value.toRadixString(16), null, "", "");
 
   AddProductViewModel(this._addProductUseCase, this._categoryUseCase);
 
@@ -189,7 +191,7 @@ class AddProductViewModel extends BaseViewModel
 
   @override
   Stream<String?> get outputErrorPrice => outputIsPriceValid
-      .map((isPriceValid) => isPriceValid ? null : "invalid Price");
+      .map((isPriceValid) => isPriceValid ? null : "price must be integer");
 
   @override
   Stream<PickerFile?> get outputProfilePicture =>
@@ -219,8 +221,7 @@ class AddProductViewModel extends BaseViewModel
   bool _validateAllInputs() {
     return addroductViewObject.title.isNotEmpty &&
         addroductViewObject.categoryId.toString().isNotEmpty &&
-        addroductViewObject.price.toString().isNotEmpty &&
-        addroductViewObject.image!.byte.isNotEmpty;
+        addroductViewObject.price.toString().isNotEmpty;
   }
 
   _validate() {

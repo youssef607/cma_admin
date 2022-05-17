@@ -60,7 +60,7 @@ class AppStrings {
   static const String orderN = "Order N° ";
   static const String orders = "Orders";
 
-  // category 
+  // category
   static const String addCategory = "Add Category";
   static const String categoryInfo = "Category Info";
   static const String num = "N°";
@@ -69,7 +69,7 @@ class AppStrings {
   static const String createdAt = "Created At";
   static const String color = "Color";
 
-  // product 
+  // product
   static const String addProduct = "Add Product";
   static const String productInfo = "Product Info";
   static const String noSupplementFound = "No Supplements Found";
@@ -79,7 +79,6 @@ class AppStrings {
   static const String addSupplement = "Add Supplement";
   static const String noProductsFound = "No Products Found";
   static const String addSupplementsToProduct = "Add Supplements To Product";
-  
 
   //orders details
   static const String orderDetails = "Order details";
@@ -91,7 +90,8 @@ class AppStrings {
   static const String unauthorizedError = "unauthorized error, try again later";
   static const String notFoundError = "not found error, try again later";
   static const String conflictError = "conflict error, try again later";
-  static const String internalServerError = "internal server error, try again later";
+  static const String internalServerError =
+      "internal server error, try again later";
   static const String unknownError = "unknown error, try again later";
   static const String timeoutError = "timeout error, try again later";
   static const String defaultError = "default error, try again later";
@@ -104,7 +104,7 @@ class AppStrings {
   //Sign IN
   static const String welcomeAdmin = "Welcom Admin ";
   static const String loginInYour = "Login In your account ";
-  
+
   static const String active = "Active";
   static const String notActive = "Not Active";
   static const String exportExcel = "Export Excel";
@@ -118,6 +118,8 @@ class AppStrings {
 
   //category
   static const String createCategory = "Create Category";
+  static const String pickColor = "Pick a color";
+  static const String goIt = "Got it";
 
   //Add supplement
 

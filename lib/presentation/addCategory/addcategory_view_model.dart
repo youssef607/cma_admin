@@ -5,6 +5,7 @@ import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
+import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -26,7 +27,8 @@ class AddCategoryViewModel extends BaseViewModel
 
   AddCategoryUseCase _addCategoryUseCase;
 
-  var addCategoryViewObject = AddCategoryObject("", null, "");
+  var addCategoryViewObject =
+      AddCategoryObject(ColorManager.grey.value.toRadixString(16), null, "");
 
   AddCategoryViewModel(this._addCategoryUseCase);
 
@@ -131,8 +133,7 @@ class AddCategoryViewModel extends BaseViewModel
   }
 
   bool _validateAllInputs() {
-    return addCategoryViewObject.label.isNotEmpty &&
-        addCategoryViewObject.image!.byte.isNotEmpty;
+    return addCategoryViewObject.label.isNotEmpty;
   }
 
   _validate() {

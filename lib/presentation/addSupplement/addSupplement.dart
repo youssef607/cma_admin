@@ -2,6 +2,8 @@ import 'dart:typed_data';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/addCategory/addcategory_view_model.dart';
 import 'package:cma_admin/presentation/addSupplement/addSupplement_view_model.dart';
+import 'package:cma_admin/presentation/common/widgets/color_picker_dialogue.dart';
+import 'package:cma_admin/presentation/common/widgets/color_picker_label.dart';
 import 'package:cma_admin/presentation/common/widgets/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
@@ -80,7 +82,7 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: AppPadding.p10),
+                        padding: const EdgeInsets.only(bottom: AppPadding.p40),
                         child: Container(
                             child: Text(
                           AppStrings.createSupplement,
@@ -114,7 +116,8 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RequiredLabel(text: AppStrings.title),
+                            RequiredLabel(
+                                text: AppStrings.title, requiredText: "*"),
                             StreamBuilder<String?>(
                               stream: _viewModel.outputErrorTitle,
                               builder: (context, snapshot) {
@@ -136,7 +139,10 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RequiredLabel(text: AppStrings.price),
+                            RequiredLabel(
+                              text: AppStrings.price,
+                              requiredText: "*",
+                            ),
                             StreamBuilder<String?>(
                               stream: _viewModel.outputErrorPrice,
                               builder: (context, snapshot) {
@@ -160,17 +166,23 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RequiredLabel(text: AppStrings.color),
+                            RequiredLabel(
+                              text: AppStrings.color,
+                            ),
                             StreamBuilder<Color?>(
                               stream: _viewModel.outputPickerColor,
                               builder: (context, snapshot) {
                                 Color color =
                                     snapshot.data ?? ColorManager.grey;
-                                return ColorPicker(
-                                  colorPickerWidth: AppSize.s100,
-                                  pickerColor: color,
-                                  onColorChanged: (value) {
-                                    _viewModel.setColor(value);
+                                return InkWell(
+                                  child: ColorPickerForm(
+                                    color: color,
+                                  ),
+                                  onTap: () {
+                                    showAlert(context, color, (value) {
+                                      _viewModel.setColor(value);
+                                      color = value;
+                                    });
                                   },
                                 );
                               },

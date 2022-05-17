@@ -6,6 +6,7 @@ import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
+import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -29,7 +30,8 @@ class AddSupplementViewModel extends BaseViewModel
 
   AddSupplementUseCase _addSupplementUseCase;
 
-  var addSupplementViewObject = AddSupplementObject("", null, "", "");
+  var addSupplementViewObject = AddSupplementObject(
+      ColorManager.grey.value.toRadixString(16), null, "", "");
 
   AddSupplementViewModel(this._addSupplementUseCase);
 
@@ -141,7 +143,7 @@ class AddSupplementViewModel extends BaseViewModel
 
   @override
   Stream<String?> get outputErrorPrice => outputIsPriceValid
-      .map((isPriceValid) => isPriceValid ? null : "invalid Price");
+      .map((isPriceValid) => isPriceValid ? null : "price must be integer");
 
   @override
   Stream<PickerFile?> get outputProfilePicture =>
@@ -162,8 +164,7 @@ class AddSupplementViewModel extends BaseViewModel
 
   bool _validateAllInputs() {
     return addSupplementViewObject.title.isNotEmpty &&
-        addSupplementViewObject.price.isNotEmpty &&
-        addSupplementViewObject.image!.byte.isNotEmpty;
+        addSupplementViewObject.price.isNotEmpty;
   }
 
   _validate() {
