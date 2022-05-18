@@ -130,17 +130,18 @@ class _UserViewState extends State<UserView> {
           Row(
             children: [
               ActionButton(
-                  title: AppStrings.addUser,
-                  onTap: () {
-                    Navigator.of(context).pushNamed(Routes.addUserRoute).then((_) => _bind());
-                  },
-                  color: ColorManager.primary),
+                title: AppStrings.addUser,
+                onTap: () {
+                  Navigator.of(context).pushNamed(Routes.addUserRoute).then((_) => _bind());
+                },
+                color: ColorManager.primary),
               SizedBox(width: AppSize.s10),
               ActionButton(
-                  title: AppStrings.exportExcel,
-                  onTap: () {
-                  },
-                  color: ColorManager.gold),
+                title: AppStrings.exportExcel,
+                onTap: () {
+                  
+                },
+                color: ColorManager.gold),
             ],
           )
         ],

@@ -136,7 +136,7 @@ class _SupplementViewState extends State<SupplementView> {
               ActionButton(
                   title: AppStrings.addSupplement,
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.addProductRoute).then((_) => _bind());
+                    Navigator.of(context).pushNamed(Routes.addSupplementRoute).then((_) => _bind());
                   },
                   color: ColorManager.primary),
               SizedBox(width: AppSize.s10),

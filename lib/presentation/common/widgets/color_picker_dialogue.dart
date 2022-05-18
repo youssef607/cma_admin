@@ -13,11 +13,12 @@ void showAlert(
             content: Builder(
               builder: (context) {
                 return Container(
-                  height: AppSize.s250,
+                  height: AppSize.s400,
                   child: Column(
                     children: [
                       ColorPicker(
                         enableAlpha: false,
+                        portraitOnly: true,
                         colorPickerWidth: AppSize.s200,
                         pickerColor: color,
                         onColorChanged: onchanged,
@@ -31,8 +32,7 @@ void showAlert(
                             child: SizedBox(
                                 width: double.infinity,
                                 height: AppSize.s40,
-                                child:
-                                    Center(child: Text(AppStrings.pickColor)))),
+                                child: Center(child: Text(AppStrings.pickColor)))),
                       ),
                     ],
                   ),
