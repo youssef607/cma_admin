@@ -117,7 +117,11 @@ class _SupplementViewState extends State<SupplementView> {
                               _viewModel.activeToggle(
                                   context, supplement, supplements);
                             })),
-                        DataCell(PopUpMenuColumn(update: () {}))
+                        DataCell(PopUpMenuColumn(
+                          delete: (){
+                            _viewModel.delete(context, supplement, supplements);
+                          },
+                          update: (){}))
                       ]))
                   .toList())
         ],

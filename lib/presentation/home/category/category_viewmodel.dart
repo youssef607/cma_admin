@@ -50,6 +50,26 @@ class CategoryViewModel extends BaseViewModel with CategoryViewModelInput,Catego
   }
 
   @override
+  delete(BuildContext context, Category category, List<Category> categories) async{
+    inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+    (await _useCase.deleteCategory(category.id)).fold(
+      (failure) {
+        inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE,failure.message));
+      }, 
+      (isDeleted) {
+        if (isDeleted) {
+          categories.remove(category);
+          inputCategories.add(categories);
+          inputState.add(ContentState());
+          Navigator.of(context).pop();
+        } else {
+          inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE,"Impossible to delete this category"));
+        }
+        
+      });
+  }
+
+  @override
   Sink get inputCategories => _categoriesStreamController.sink;
 
   @override
@@ -60,11 +80,14 @@ class CategoryViewModel extends BaseViewModel with CategoryViewModelInput,Catego
     _categoriesStreamController.close();
     super.dispose();
   }
+
+
   
 }
 
 abstract class CategoryViewModelInput {
   activeToggle(BuildContext context,Category category,List<Category> categories);
+  delete(BuildContext context,Category category,List<Category> categories);
   Sink get inputCategories;
 }
 

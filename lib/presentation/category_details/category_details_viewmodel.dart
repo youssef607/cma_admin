@@ -45,6 +45,25 @@ class CategoryDetailsViewModel extends BaseViewModel
   }
 
   @override
+  delete(BuildContext context,int id) async{
+    inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+    (await _useCase.deleteCategory(id)).fold(
+      (failure) {
+        inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE,failure.message));
+      }, 
+      (isDeleted) {
+        if (isDeleted) {
+          Navigator.of(context).pop();
+          inputState.add(ContentState());
+          Navigator.of(context).pop();
+        } else {
+          inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE,"Impossible to delete this category"));
+        }
+        
+      });
+  }
+
+  @override
   void dispose() {
     _productsStreamController.close();
     super.dispose();
@@ -59,6 +78,7 @@ class CategoryDetailsViewModel extends BaseViewModel
 }
 
 abstract class CategoryDetailsViewModelInput {
+  delete(BuildContext context,int id);
   activeToggle(BuildContext context,Category category);
   Sink get inputProducts;
 }

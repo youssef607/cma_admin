@@ -49,6 +49,26 @@ class ProductViewModel extends BaseViewModel with ProductViewModelInput,ProductV
   }
 
   @override
+  delete(BuildContext context, Product product, List<Product> products) async{
+    inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+    (await _useCase.delete(product.id)).fold(
+      (failure) {
+        inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE,failure.message));
+      }, 
+      (isDeleted) {
+        if (isDeleted) {
+          products.remove(product);
+          inputProducts.add(products);
+          inputState.add(ContentState());
+          Navigator.of(context).pop();
+        } else {
+          inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE,"Impossible to delete this product"));
+        }
+        
+      });
+  }
+
+  @override
   Sink get inputProducts => _productsStreamController.sink;
 
   @override
@@ -62,6 +82,7 @@ class ProductViewModel extends BaseViewModel with ProductViewModelInput,ProductV
 }
 
 abstract class ProductViewModelInput {
+  delete(BuildContext context,Product product,List<Product> products);
   activeToggle(BuildContext context,Product product,List<Product> products);
   Sink get inputProducts;
 }

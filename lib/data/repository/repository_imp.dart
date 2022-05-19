@@ -183,4 +183,14 @@ class RepositoryImpl extends Repository {
       return Left(ErrorHandler.handle(error).failure);
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> delete(String type,String id) async{
+    try {
+      final response = await _remoteDataSource.delete(type,id);
+      return Right(response);
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
 }

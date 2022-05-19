@@ -158,6 +158,10 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
         ActionButton(
             color: ColorManager.gold, title: AppStrings.update, onTap: () {}),
         SizedBox(width: AppSize.s20),
+        ActionButton(color: ColorManager.primary, title: AppStrings.delete, onTap: () {
+          _viewModel.delete(context, category.id);
+        }),
+        SizedBox(width: AppSize.s20),
         ActionButton(
             color: category.active ? ColorManager.red : ColorManager.green,
             title:

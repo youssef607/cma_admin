@@ -91,14 +91,13 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<SupplementResponse>>(
+        _setStreamType<List<UserResponse>>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/user/all',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
-        .map((dynamic i) =>
-            UserResponse.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => UserResponse.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }
@@ -228,8 +227,7 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,
-              filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('name', name));
     _data.fields.add(MapEntry('password', password));
@@ -254,7 +252,7 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-           MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('label', label));
     _data.fields.add(MapEntry('color', color));
@@ -279,7 +277,7 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-           MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('price', price));
     _data.fields.add(MapEntry('title', title));
@@ -309,7 +307,7 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-           MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('price', price));
     _data.fields.add(MapEntry('title', title));
@@ -320,6 +318,20 @@ class _AppServiceClient implements AppServiceClient {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ProductResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<bool> delete(type,id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<bool>(_setStreamType<bool>(
+        Options(method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '/$type/$id/delete',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!;
     return value;
   }
 
