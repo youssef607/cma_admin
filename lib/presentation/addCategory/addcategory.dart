@@ -1,9 +1,11 @@
 import 'dart:typed_data';
+import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/addCategory/addcategory_view_model.dart';
-import 'package:cma_admin/presentation/common/widgets/color_picker_dialogue.dart';
-import 'package:cma_admin/presentation/common/widgets/color_picker_label.dart';
-import 'package:cma_admin/presentation/common/widgets/requiredlabel.dart';
+import 'package:cma_admin/presentation/components/color_picker_dialogue.dart';
+import 'package:cma_admin/presentation/components/color_picker_label.dart';
+import 'package:cma_admin/presentation/components/custom_appbar.dart';
+import 'package:cma_admin/presentation/components/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/styles_manager.dart';
@@ -52,6 +54,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: customAppBar(),
       body: StreamBuilder<FlowState>(
         stream: _viewModel.outputState,
         builder: (context, snapshot) {
@@ -70,7 +73,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
   Widget _getContentWidget() {
     return Container(
         width: AppSize.s500,
-        padding: EdgeInsets.symmetric(vertical: AppPadding.p30),
+        padding: EdgeInsets.symmetric(vertical: AppPadding.p10),
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -181,7 +184,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                                             _viewModel.addCategory();
                                           }
                                         : null,
-                                    child: Text(AppStrings.addCategory)),
+                                    child: Text(AppStrings.create)),
                               );
                             },
                           )),

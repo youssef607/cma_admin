@@ -112,11 +112,12 @@ class _SupplementViewState extends State<SupplementView> {
                         DataCell(Text(supplement.createdAt)),
                         DataCell(ColorColumn(supplement.color)),
                         DataCell(Switch(
-                            value: supplement.active, onChanged: (value) {
-                              _viewModel.activeToggle(context,supplement, supplements);
+                            value: supplement.active,
+                            onChanged: (value) {
+                              _viewModel.activeToggle(
+                                  context, supplement, supplements);
                             })),
-                        DataCell(PopUpMenuColumn(
-                          update: (){}))
+                        DataCell(PopUpMenuColumn(update: () {}))
                       ]))
                   .toList())
         ],
@@ -163,20 +164,23 @@ class _SupplementViewState extends State<SupplementView> {
         .toList()
         .length;
     return ResponsiveGrid(
-      widthPourcentage: isMobile(context)?0.3:0.25,
-      children: [
-      DataStatistiqueItem(
-          label: AppStrings.active,
-          count: isActiveCount.toString(),
-          color: ColorManager.green, icon: IconManger.active),
-      DataStatistiqueItem(
-          label: AppStrings.notActive,
-          count: isNotActiveCount.toString(),
-          color: ColorManager.red, icon: IconManger.notActive),
-      DataStatistiqueItem(
-          label: AppStrings.total,
-          count: supplements.length.toString(),
-          color: ColorManager.orange, icon: IconManger.total),
-    ]);
+        widthPourcentage: isMobile(context) ? 0.3 : 0.25,
+        children: [
+          DataStatistiqueItem(
+              label: AppStrings.active,
+              count: isActiveCount.toString(),
+              color: ColorManager.green,
+              icon: IconManger.active),
+          DataStatistiqueItem(
+              label: AppStrings.notActive,
+              count: isNotActiveCount.toString(),
+              color: ColorManager.red,
+              icon: IconManger.notActive),
+          DataStatistiqueItem(
+              label: AppStrings.total,
+              count: supplements.length.toString(),
+              color: ColorManager.orange,
+              icon: IconManger.total),
+        ]);
   }
 }

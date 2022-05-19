@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/usecase/addsupplement_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
@@ -96,7 +97,7 @@ class AddSupplementViewModel extends BaseViewModel
     if (_isPriceValid(price)) {
       addSupplementViewObject = addSupplementViewObject.copyWith(price: price);
     } else {
-      addSupplementViewObject = addSupplementViewObject.copyWith(price: price);
+      addSupplementViewObject = addSupplementViewObject.copyWith(price: "");
     }
     _validate();
   }
@@ -159,7 +160,7 @@ class AddSupplementViewModel extends BaseViewModel
   }
 
   bool _isPriceValid(String price) {
-    return double.tryParse(price) != null;
+    return isNumeric(price);
   }
 
   bool _validateAllInputs() {

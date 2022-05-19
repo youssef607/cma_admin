@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/data/mapper/mapper.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/usecase/addproduct_usecase.dart';
@@ -47,7 +48,6 @@ class AddProductViewModel extends BaseViewModel
   @override
   void start() {
     inputState.add(ContentState());
-    loadCategory();
   }
 
   @override
@@ -123,7 +123,7 @@ class AddProductViewModel extends BaseViewModel
     if (_isPriceValid(price)) {
       addroductViewObject = addroductViewObject.copyWith(price: price);
     } else {
-      addroductViewObject = addroductViewObject.copyWith(price: price);
+      addroductViewObject = addroductViewObject.copyWith(price: "");
     }
     _validate();
   }
@@ -134,7 +134,7 @@ class AddProductViewModel extends BaseViewModel
     if (_isCategoryIdValid(id)) {
       addroductViewObject = addroductViewObject.copyWith(categoryId: id);
     } else {
-      addroductViewObject = addroductViewObject.copyWith(categoryId: id);
+      addroductViewObject = addroductViewObject.copyWith(categoryId: "");
     }
     _validate();
   }
@@ -211,11 +211,11 @@ class AddProductViewModel extends BaseViewModel
   }
 
   bool _isPriceValid(String price) {
-    return double.tryParse(price) != null;
+    return isNumeric(price);
   }
 
-  bool _isCategoryIdValid(String price) {
-    return price.isNotEmpty;
+  bool _isCategoryIdValid(String id) {
+    return id.isNotEmpty;
   }
 
   bool _validateAllInputs() {

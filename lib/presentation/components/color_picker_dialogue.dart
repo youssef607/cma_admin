@@ -12,8 +12,9 @@ void showAlert(
                 borderRadius: BorderRadius.all(Radius.circular(AppSize.s10))),
             content: Builder(
               builder: (context) {
-                return Container(
-                  height: AppSize.s400,
+                return SizedBox(
+                  width: AppSize.s280,
+                  height: AppSize.s480,
                   child: Column(
                     children: [
                       ColorPicker(

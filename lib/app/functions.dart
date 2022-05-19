@@ -7,6 +7,10 @@ bool isEmailValid(String email) {
       .hasMatch(email);
 }
 
+bool isNumeric(String num) {
+  return RegExp(r'^-?[0-9]+$').hasMatch(num);
+}
+
 dateFormat(String date) {
   DateTime tempDate = DateFormat("yyyy-MM-ddThh:mm").parse(date);
   var inputDate = DateTime.parse(tempDate.toString());
@@ -26,7 +30,6 @@ dateFormat2(String date) {
 dateToStringFormat(DateTime? dateTime) {
   return DateFormat('yyyy-MM-dd').format(dateTime!);
 }
-
 
 bool isMobile(BuildContext context) => MediaQuery.of(context).size.width < 700;
 bool isTab(BuildContext context) =>

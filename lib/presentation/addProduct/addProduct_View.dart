@@ -1,9 +1,10 @@
 import 'dart:typed_data';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/addProduct/addProduct_view_model.dart';
-import 'package:cma_admin/presentation/common/widgets/color_picker_dialogue.dart';
-import 'package:cma_admin/presentation/common/widgets/color_picker_label.dart';
-import 'package:cma_admin/presentation/common/widgets/requiredlabel.dart';
+import 'package:cma_admin/presentation/components/color_picker_dialogue.dart';
+import 'package:cma_admin/presentation/components/color_picker_label.dart';
+import 'package:cma_admin/presentation/components/custom_appbar.dart';
+import 'package:cma_admin/presentation/components/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/styles_manager.dart';
@@ -19,7 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
 class AddProductView extends StatefulWidget {
-  const AddProductView({Key? key}) : super(key: key);
+  final Category category;
+  const AddProductView(this.category, {Key? key}) : super(key: key);
 
   @override
   _AddProductViewViewState createState() => _AddProductViewViewState();
@@ -40,6 +42,9 @@ class _AddProductViewViewState extends State<AddProductView> {
   _bind() {
     _viewModel.start();
 
+    widget.category != null
+        ? _viewModel.setCategoryId(widget.category.id.toString())
+        : _viewModel.loadCategory();
     _titleTextEditingController.addListener(() {
       _viewModel.setTitle(_titleTextEditingController.text);
     });
@@ -53,6 +58,7 @@ class _AddProductViewViewState extends State<AddProductView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: customAppBar(),
       body: StreamBuilder<FlowState>(
         stream: _viewModel.outputState,
         builder: (context, snapshot) {
@@ -71,7 +77,7 @@ class _AddProductViewViewState extends State<AddProductView> {
   Widget _getContentWidget() {
     return Container(
         width: AppSize.s500,
-        padding: EdgeInsets.symmetric(vertical: AppPadding.p4),
+        padding: EdgeInsets.symmetric(vertical: AppPadding.p10),
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -148,7 +154,7 @@ class _AddProductViewViewState extends State<AddProductView> {
                               stream: _viewModel.outputErrorPrice,
                               builder: (context, snapshot) {
                                 return TextFormField(
-                                    keyboardType: TextInputType.text,
+                                    keyboardType: TextInputType.number,
                                     onChanged: (value) {
                                       _viewModel.setPrice(value);
                                     },
@@ -161,45 +167,51 @@ class _AddProductViewViewState extends State<AddProductView> {
                         ),
                       ),
                       SizedBox(height: AppSize.s12),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RequiredLabel(
-                                text: AppStrings.addCategory,
-                                requiredText: "*"),
-                            StreamBuilder<List<Category>?>(
-                              stream: _viewModel.outputCategories,
-                              builder: (context, snapshot) {
-                                List<Category>? categories = snapshot.data;
+                      widget.category == null
+                          ? Padding(
+                              padding: EdgeInsets.only(
+                                  left: AppPadding.p28, right: AppPadding.p28),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  RequiredLabel(
+                                      text: AppStrings.addCategory,
+                                      requiredText: "*"),
+                                  StreamBuilder<List<Category>?>(
+                                    stream: _viewModel.outputCategories,
+                                    builder: (context, snapshot) {
+                                      List<Category>? categories =
+                                          snapshot.data;
 
-                                return categories != null
-                                    ? DropdownSearch<Category>(
-                                        mode: Mode.MENU,
-                                        items: categories
-                                            .map((category) => category)
-                                            .toList(),
-                                        itemAsString: (Category? category) =>
-                                            category!.label,
-                                        dropdownSearchDecoration:
-                                            InputDecoration(
-                                          hintText: AppStrings.addCategory,
-                                        ),
-                                        onChanged: (category) {
-                                          _viewModel.setCategoryId(
-                                              category!.id.toString());
-                                        },
-                                      )
-                                    : DropdownSearch<Category>();
-                              },
-                              // return Text(categories![0].label);
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: AppSize.s12),
+                                      return categories != null
+                                          ? DropdownSearch<Category>(
+                                              mode: Mode.MENU,
+                                              items: categories
+                                                  .map((category) => category)
+                                                  .toList(),
+                                              itemAsString:
+                                                  (Category? category) =>
+                                                      category!.label,
+                                              dropdownSearchDecoration:
+                                                  InputDecoration(
+                                                hintText:
+                                                    AppStrings.addCategory,
+                                              ),
+                                              onChanged: (category) {
+                                                _viewModel.setCategoryId(
+                                                    category!.id.toString());
+                                              },
+                                            )
+                                          : DropdownSearch<Category>();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container(),
+                      widget.category == null
+                          ? SizedBox(height: AppSize.s12)
+                          : Container(),
                       Padding(
                         padding: EdgeInsets.only(
                             left: AppPadding.p28, right: AppPadding.p28),
@@ -244,7 +256,7 @@ class _AddProductViewViewState extends State<AddProductView> {
                                             _viewModel.addProduct();
                                           }
                                         : null,
-                                    child: Text(AppStrings.addCategory)),
+                                    child: Text(AppStrings.create)),
                               );
                             },
                           )),
@@ -258,25 +270,32 @@ class _AddProductViewViewState extends State<AddProductView> {
   }
 
   Widget _getMediaWidget() {
-    return Container(
-      child: StreamBuilder<PickerFile?>(
-        stream: _viewModel.outputProfilePicture,
-        builder: (context, snapshot) {
-          PickerFile? pickerFile = snapshot.data;
-          return pickerFile != null
-              ? _imagePickedByUser(pickerFile.byte)
-              : Column(
-                  children: [
-                    Expanded(
-                        flex: 2,
-                        child: Image.asset(
-                          ImageAssets.gallery,
-                          fit: BoxFit.cover,
-                        )),
-                    Expanded(flex: 1, child: Text(AppStrings.browsImage)),
-                  ],
-                );
-        },
+    return Padding(
+      padding: const EdgeInsets.all(AppPadding.p8),
+      child: Container(
+        child: StreamBuilder<PickerFile?>(
+          stream: _viewModel.outputProfilePicture,
+          builder: (context, snapshot) {
+            PickerFile? pickerFile = snapshot.data;
+            return pickerFile != null
+                ? _imagePickedByUser(pickerFile.byte)
+                : Column(
+                    children: [
+                      Expanded(
+                          flex: 3,
+                          child: Image.asset(
+                            ImageAssets.gallery,
+                            fit: BoxFit.cover,
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.all(AppPadding.p8),
+                        child: Expanded(
+                            flex: 1, child: Text(AppStrings.browsImage)),
+                      ),
+                    ],
+                  );
+          },
+        ),
       ),
     );
   }

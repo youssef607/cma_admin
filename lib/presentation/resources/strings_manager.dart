@@ -82,6 +82,7 @@ class AppStrings {
 
   // user
   static const String addUser = "Add User";
+  static const String createUser = "Create User";
 
   //orders details
   static const String orderDetails = "Order details";
@@ -131,5 +132,8 @@ class AppStrings {
   static const String addSupplemet = "Add Supplement";
 
   //Add product
-  static const String createProduct = "Create Productt";
+  static const String createProduct = "Create Product";
+
+  //Create
+  static const String create = "Create";
 }

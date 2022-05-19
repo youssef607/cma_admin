@@ -17,19 +17,25 @@ class ColorPickerForm extends StatelessWidget {
         height: AppSize.s45,
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Icon(
-            Icons.water_drop,
-            color: color,
+          Padding(
+            padding: const EdgeInsets.only(left: AppPadding.p4),
+            child: Icon(
+              Icons.water_drop,
+              color: color,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: AppPadding.p10),
             child: Text(color.value.toRadixString(16)),
           ),
           Flexible(fit: FlexFit.tight, child: SizedBox()),
-          Image.asset(
-            ImageAssets.color_picker,
-            fit: BoxFit.cover,
-            color: color,
+          Padding(
+            padding: const EdgeInsets.only(right: AppPadding.p4),
+            child: Image.asset(
+              ImageAssets.color_picker,
+              fit: BoxFit.cover,
+              color: color,
+            ),
           ),
         ]));
   }
