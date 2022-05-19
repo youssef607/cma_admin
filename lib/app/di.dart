@@ -29,7 +29,7 @@ import 'package:cma_admin/domain/usecase/signIn_usecase.dart';
 import 'package:cma_admin/presentation/addCategory/addcategory_view_model.dart';
 import 'package:cma_admin/presentation/addProduct/addProduct_view_model.dart';
 import 'package:cma_admin/presentation/addSupplement/addSupplement_view_model.dart';
-import 'package:cma_admin/presentation/addUser/user_view_model.dart';
+import 'package:cma_admin/presentation/addUser/addUser_view_model.dart';
 import 'package:cma_admin/presentation/signIn/signIn_view_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -78,22 +78,27 @@ initSignInModule() {
 
 initCategoryModule() {
   if (!GetIt.I.isRegistered<CategoryUseCase>()) {
-    instance.registerFactory<CategoryUseCase>(() => CategoryUseCase(instance()));
-    instance.registerFactory<CategoryViewModel>(() => CategoryViewModel(instance()));
+    instance
+        .registerFactory<CategoryUseCase>(() => CategoryUseCase(instance()));
+    instance.registerFactory<CategoryViewModel>(
+        () => CategoryViewModel(instance()));
   }
 }
 
 initProductsModule() {
   if (!GetIt.I.isRegistered<ProductUseCase>()) {
     instance.registerFactory<ProductUseCase>(() => ProductUseCase(instance()));
-    instance.registerFactory<ProductViewModel>(() => ProductViewModel(instance()));
+    instance
+        .registerFactory<ProductViewModel>(() => ProductViewModel(instance()));
   }
 }
 
 initSupplementsModule() {
   if (!GetIt.I.isRegistered<SupplementUseCase>()) {
-    instance.registerFactory<SupplementUseCase>(() => SupplementUseCase(instance()));
-    instance.registerFactory<SupplementViewModel>(() => SupplementViewModel(instance()));
+    instance.registerFactory<SupplementUseCase>(
+        () => SupplementUseCase(instance()));
+    instance.registerFactory<SupplementViewModel>(
+        () => SupplementViewModel(instance()));
   }
 }
 
@@ -104,34 +109,42 @@ initUsersModule() {
   }
 }
 
-
 initDashboardModule() {
   if (!GetIt.I.isRegistered<DashboardUseCase>()) {
-    instance.registerFactory<DashboardUseCase>(() => DashboardUseCase(instance()));
-    instance.registerFactory<DashboardViewModel>(() => DashboardViewModel(instance()));
+    instance
+        .registerFactory<DashboardUseCase>(() => DashboardUseCase(instance()));
+    instance.registerFactory<DashboardViewModel>(
+        () => DashboardViewModel(instance()));
   }
 }
 
 initCategoryDetailsModule() {
   if (!GetIt.I.isRegistered<CategoryDetailsUseCase>()) {
-    instance.registerFactory<CategoryDetailsUseCase>(() => CategoryDetailsUseCase(instance()));
-    instance.registerFactory<CategoryDetailsViewModel>(() => CategoryDetailsViewModel(instance()));
+    instance.registerFactory<CategoryDetailsUseCase>(
+        () => CategoryDetailsUseCase(instance()));
+    instance.registerFactory<CategoryDetailsViewModel>(
+        () => CategoryDetailsViewModel(instance()));
   }
 }
 
 initProductDetailsModule() {
   if (!GetIt.I.isRegistered<ProductDetailsUseCase>()) {
-    instance.registerFactory<ProductDetailsUseCase>(() => ProductDetailsUseCase(instance()));
-    instance.registerFactory<ProductDetailsViewModel>(() => ProductDetailsViewModel(instance()));
+    instance.registerFactory<ProductDetailsUseCase>(
+        () => ProductDetailsUseCase(instance()));
+    instance.registerFactory<ProductDetailsViewModel>(
+        () => ProductDetailsViewModel(instance()));
   }
 }
 
 initAddSupplementsToProductModule() {
   if (!GetIt.I.isRegistered<AddSupplementsToProductUseCase>()) {
-    instance.registerFactory<AddSupplementsToProductUseCase>(() => AddSupplementsToProductUseCase(instance()));
-    instance.registerFactory<AddSupplementsToProductViewModel>(() => AddSupplementsToProductViewModel(instance()));
+    instance.registerFactory<AddSupplementsToProductUseCase>(
+        () => AddSupplementsToProductUseCase(instance()));
+    instance.registerFactory<AddSupplementsToProductViewModel>(
+        () => AddSupplementsToProductViewModel(instance()));
   }
 }
+
 initAddUserModule() {
   if (!GetIt.I.isRegistered<AddUserUseCase>()) {
     instance.registerFactory<AddUserUseCase>(() => AddUserUseCase(instance()));

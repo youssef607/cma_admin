@@ -12,12 +12,14 @@ void showAlert(
                 borderRadius: BorderRadius.all(Radius.circular(AppSize.s10))),
             content: Builder(
               builder: (context) {
-                return Container(
-                  height: AppSize.s250,
+                return SizedBox(
+                  width: AppSize.s280,
+                  height: AppSize.s480,
                   child: Column(
                     children: [
                       ColorPicker(
                         enableAlpha: false,
+                        portraitOnly: true,
                         colorPickerWidth: AppSize.s200,
                         pickerColor: color,
                         onColorChanged: onchanged,

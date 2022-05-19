@@ -4,7 +4,7 @@ import 'package:cma_admin/presentation/add_supps_to_product/add_supps_to_product
 import 'package:cma_admin/presentation/category_details/category_details_view.dart';
 import 'package:cma_admin/presentation/addProduct/addProduct_View.dart';
 import 'package:cma_admin/presentation/addSupplement/addSupplement.dart';
-import 'package:cma_admin/presentation/addUser/user.dart';
+import 'package:cma_admin/presentation/addUser/addUser_view.dart';
 import 'package:cma_admin/presentation/addCategory/addcategory.dart';
 import 'package:cma_admin/presentation/home/homeview.dart';
 import 'package:cma_admin/presentation/product_details/product_details_view.dart';
@@ -37,7 +37,8 @@ class RouteGenerator {
 
       case Routes.addProductRoute:
         initAddProductModule();
-        return CupertinoPageRoute(builder: (_) => AddProductView());
+        Category Cat = routeSettings.arguments as Category;
+        return CupertinoPageRoute(builder: (_) => AddProductView(Cat));
 
       case Routes.addCategoryRoute:
         initAddCategoryModule();
@@ -67,7 +68,7 @@ class RouteGenerator {
           builder: (_) => ProductDetailsView(args),
         );
       case Routes.addSupplemntsToProductRoute:
-          initAddSupplementsToProductModule();
+        initAddSupplementsToProductModule();
         int args = routeSettings.arguments as int;
         return CupertinoPageRoute(
           builder: (_) => AddSupplementsToProductView(args),
