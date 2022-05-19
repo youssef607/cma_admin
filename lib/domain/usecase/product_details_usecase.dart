@@ -20,7 +20,11 @@ class ProductDetailsUseCase extends BaseUseCase<String,List<Supplement>> {
   }
   
   Future<Either<Failure, bool>> activeToggle(int id) {
-    return _repository.activeToggle(product, id.toString());
+    return _repository.activeToggle(productType, id.toString());
+  }
+
+  Future<Either<Failure,bool>> deleteProduct(int id){
+    return _repository.delete(productType,id.toString());
   }
   
 }

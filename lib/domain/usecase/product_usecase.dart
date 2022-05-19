@@ -5,7 +5,7 @@ import 'package:cma_admin/domain/repository/repository.dart';
 import 'package:cma_admin/domain/usecase/base_usecase.dart';
 import 'package:dartz/dartz.dart';
 
-const String product = "product";
+const String productType = "product";
 
 class ProductUseCase extends BaseUseCase<String,List<Product>> {
   Repository _repository;
@@ -17,7 +17,11 @@ class ProductUseCase extends BaseUseCase<String,List<Product>> {
   }
 
   Future<Either<Failure, bool>> activeToggle(int id) {
-    return _repository.activeToggle(product,id.toString());
+    return _repository.activeToggle(productType,id.toString());
+  }
+
+  Future<Either<Failure,bool>> delete(int id){
+    return _repository.delete(productType,id.toString());
   }
   
 }

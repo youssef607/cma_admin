@@ -49,6 +49,26 @@ class SupplementViewModel extends BaseViewModel with SupplementViewModelInput,Su
   }  
 
   @override
+  delete(BuildContext context, Supplement supplement, List<Supplement> supplements) async{
+    inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+    (await _useCase.delete(supplement.id)).fold(
+      (failure) {
+        inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE,failure.message));
+      }, 
+      (isDeleted) {
+        if (isDeleted) {
+          supplements.remove(supplement);
+          inputSupplements.add(supplements);
+          inputState.add(ContentState());
+          Navigator.of(context).pop();
+        } else {
+          inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE,"Impossible to delete this supplement"));
+        }
+        
+      });
+  }
+
+  @override
   Sink get inputSupplements => _supplementsStreamController.sink;
 
   @override
@@ -62,6 +82,7 @@ class SupplementViewModel extends BaseViewModel with SupplementViewModelInput,Su
 }
 
 abstract class SupplementViewModelInput {
+  delete(BuildContext context,Supplement supplement,List<Supplement> supplements);
   activeToggle(BuildContext context,Supplement supplement,List<Supplement> supplements);
   Sink get inputSupplements;
 }

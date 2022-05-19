@@ -19,6 +19,7 @@ abstract class RemoteDataSource {
   Future<CategoryResponse> addCategory(AddCategoryRequest addCategoryRequest);
   Future<ProductResponse> addProduct(AddProductRequest addProductRequest);
   Future<SupplementResponse> addSupplement(AddSupplementRequest addSupplementRequest);
+  Future<bool> delete(String type,String id);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -125,6 +126,11 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   @override
   Future<void> deleteSupplementsToProduct(String productId, String suppId) {
     return _appServiceClient.deleteSupplementFromProduct(productId, suppId);
+  }
+
+  @override
+  Future<bool> delete(String type,String id) {
+    return _appServiceClient.delete(type,id);
   }
   
 }

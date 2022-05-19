@@ -88,5 +88,7 @@ abstract class AppServiceClient {
     @Part() required String price,
     @Part() required String title,
   });
-
+  
+  @DELETE("/{type}/{id}/delete")
+  Future<bool> delete(@Path() String type,@Path() String id);
 }

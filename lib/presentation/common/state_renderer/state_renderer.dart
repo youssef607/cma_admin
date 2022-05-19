@@ -129,6 +129,7 @@ class StateRenderer extends StatelessWidget {
         padding: const EdgeInsets.all(AppPadding.p18),
         child: Text(
           message,
+          textAlign: TextAlign.center,
           style:
               getMediumStyle(color: ColorManager.black, fontSize: FontSize.s16),
         ),

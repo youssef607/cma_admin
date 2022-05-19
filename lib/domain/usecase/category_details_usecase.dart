@@ -16,7 +16,10 @@ class CategoryDetailsUseCase extends BaseUseCase<String,List<Product>> {
   }
   
   Future<Either<Failure, bool>> activeToggle(int id) {
-    return _repository.activeToggle(category, id.toString());
+    return _repository.activeToggle(categoryType, id.toString());
   }
   
+  Future<Either<Failure,bool>> deleteCategory(int id){
+    return _repository.delete(categoryType,id.toString());
+  }
 }

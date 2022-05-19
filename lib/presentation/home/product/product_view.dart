@@ -121,6 +121,9 @@ class _ProductViewState extends State<ProductView> {
                             })),
                         DataCell(PopUpMenuColumn(
                             update: () {},
+                            delete: (){
+                              _viewModel.delete(context, product, products);
+                            },
                             view: () {
                               Navigator.of(context).pushNamed(Routes.productDetailsRoute,arguments: product) .then((value) => _bind());
                             }))

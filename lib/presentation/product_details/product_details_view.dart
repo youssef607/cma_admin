@@ -160,6 +160,13 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             color: ColorManager.gold, title: AppStrings.update, onTap: () {}),
         SizedBox(width: AppSize.s20),
         ActionButton(
+            color: ColorManager.primary,
+            title: AppStrings.delete,
+            onTap: () {
+              _viewModel.deleteProduct(context, product.id);
+            }),
+        SizedBox(width: AppSize.s20),
+        ActionButton(
             color: product.active ? ColorManager.red : ColorManager.green,
             title: product.active ? AppStrings.deactivate : AppStrings.activate,
             onTap: () {
@@ -208,8 +215,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                             fontSize: FontSize.s12))),
                                     DataCell(PopUpMenuColumn(
                                       update: () {},
-                                      delete: (){
-                                        _viewModel.deleteSupplement(context, widget.product.id, supplement.id);
+                                      delete: () {
+                                        _viewModel.deleteSupplement(context,
+                                            widget.product.id, supplement.id);
                                       },
                                     )),
                                   ]))
