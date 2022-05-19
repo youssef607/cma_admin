@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/data/mapper/mapper.dart';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/domain/usecase/addproduct_usecase.dart';
+import 'package:cma_admin/domain/usecase/add_product_usecase.dart';
 import 'package:cma_admin/domain/usecase/category_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
@@ -51,24 +51,24 @@ class AddProductViewModel extends BaseViewModel
   }
 
   @override
-  addProduct() async {
-    inputState.add(
-        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+  addProduct(BuildContext context) async {
+    inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _addProductUseCase.execute(AddProductUseCaseInput(
       addroductViewObject.categoryId,
       addroductViewObject.color.toString(),
       addroductViewObject.image,
       addroductViewObject.price,
       addroductViewObject.title,
-    )))
-        .fold(
-            (failure) => {
-                  inputState.add(ErrorState(
-                      StateRendererType.POPUP_ERROR_STATE, failure.message))
-                }, (data) {
-      inputState.add(ContentState());
-      isUserLoggedInSuccessfullyStreamController.add(true);
-    });
+    ))).fold(
+      (failure) => {
+          inputState.add(ErrorState(
+          StateRendererType.POPUP_ERROR_STATE, failure.message))
+      }, 
+      (data) {
+        inputState.add(ContentState());
+        isUserLoggedInSuccessfullyStreamController.add(true);
+        Navigator.of(context).pop();
+      });
   }
 
   loadCategory() async {
@@ -230,7 +230,7 @@ class AddProductViewModel extends BaseViewModel
 }
 
 abstract class AddProductViewModelInput {
-  addProduct();
+  addProduct(BuildContext context);
 
   setColor(Color color);
 

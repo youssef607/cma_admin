@@ -20,8 +20,9 @@ void showAlert(
                       ColorPicker(
                         enableAlpha: false,
                         portraitOnly: true,
-                        colorPickerWidth: AppSize.s200,
+                        colorPickerWidth: AppSize.s280,
                         pickerColor: color,
+                        labelTypes: [ColorLabelType.hex,ColorLabelType.hsv,ColorLabelType.rgb],
                         onColorChanged: onchanged,
                       ),
                       Padding(

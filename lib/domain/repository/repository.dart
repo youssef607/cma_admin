@@ -1,5 +1,4 @@
 import 'package:cma_admin/data/network/failure.dart';
-import 'package:cma_admin/data/responses/responses.dart';
 import 'package:cma_admin/data/request/request.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:dartz/dartz.dart';

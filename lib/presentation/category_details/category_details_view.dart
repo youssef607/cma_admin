@@ -1,8 +1,6 @@
 import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/domain/usecase/category_usecase.dart';
-import 'package:cma_admin/domain/usecase/product_usecase.dart';
 import 'package:cma_admin/presentation/category_details/category_details_viewmodel.dart';
 import 'package:cma_admin/presentation/components/custom_appbar.dart';
 import 'package:cma_admin/presentation/components/details_image.dart';
@@ -18,7 +16,6 @@ import 'package:cma_admin/presentation/components/not_found_widget.dart';
 import 'package:cma_admin/presentation/components/popup_menu_column.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
-import 'package:cma_admin/presentation/resources/icon_manager.dart';
 import 'package:cma_admin/presentation/resources/routes_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/styles_manager.dart';
@@ -235,7 +232,7 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
         ActionButton(
             onTap: () {
               Navigator.of(context).pushNamed(Routes.addProductRoute,
-                  arguments: widget.category);
+                  arguments: widget.category).then((_) => _bind());
             },
             title: AppStrings.addProduct,
             color: ColorManager.primary)

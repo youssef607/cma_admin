@@ -4,11 +4,12 @@ import 'package:cma_admin/app/app_prefs.dart';
 import 'package:cma_admin/app/constant.dart';
 import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/domain/usecase/adduser_usecase.dart';
+import 'package:cma_admin/domain/usecase/add_user_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
+import 'package:flutter/material.dart';
 
 class AddUserViewModel extends BaseViewModel
     with AddUserViewModelInput, AddUserViewModelOutput {
@@ -48,7 +49,7 @@ class AddUserViewModel extends BaseViewModel
   }
 
   @override
-  register() async {
+  register(BuildContext context) async {
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _addUserUseCase.execute(AddUserUseCaseInput(
@@ -65,6 +66,7 @@ class AddUserViewModel extends BaseViewModel
                 }, (data) {
       inputState.add(ContentState());
       isUserLoggedInSuccessfullyStreamController.add(true);
+      Navigator.of(context).pop();
     });
   }
 
@@ -193,7 +195,7 @@ class AddUserViewModel extends BaseViewModel
 
   // -- private methods
   bool _isUserNameValid(String userName) {
-    return userName.length >= 8;
+    return userName.length >= 6;
   }
 
   bool _isRoleValid(String Role) {
@@ -201,11 +203,11 @@ class AddUserViewModel extends BaseViewModel
   }
 
   bool _isNameValid(String name) {
-    return name.length > 0;
+    return name.length > 6;
   }
 
   bool _isPasswordValid(String password) {
-    return password.length >= 8;
+    return password.length >= 6;
   }
 
   bool _validateAllInputs() {
@@ -241,7 +243,7 @@ class AddUserViewModel extends BaseViewModel
 }
 
 abstract class AddUserViewModelInput {
-  register();
+  register(BuildContext context);
 
   setUserName(String userName);
 

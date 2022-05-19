@@ -15,8 +15,7 @@ class ColorPickerForm extends StatelessWidget {
         ),
         width: double.infinity,
         height: AppSize.s45,
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        child:Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Padding(
             padding: const EdgeInsets.only(left: AppPadding.p4),
             child: Icon(

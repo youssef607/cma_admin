@@ -1,7 +1,8 @@
 import 'dart:typed_data';
-
-import 'package:cma_admin/app/app_prefs.dart';
 import 'package:cma_admin/domain/model/model.dart';
+import 'package:cma_admin/presentation/add_category/add_category_viewmodel.dart';
+import 'package:cma_admin/presentation/components/color_picker_dialogue.dart';
+import 'package:cma_admin/presentation/components/color_picker_label.dart';
 import 'package:cma_admin/presentation/components/custom_appbar.dart';
 import 'package:cma_admin/presentation/components/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
@@ -9,34 +10,26 @@ import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/styles_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:cma_admin/app/di.dart';
-import 'package:cma_admin/presentation/addUser/addUser_view_model.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
-import 'package:cma_admin/presentation/resources/routes_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:file_picker/file_picker.dart';
 
-class AddUserView extends StatefulWidget {
-  const AddUserView({Key? key}) : super(key: key);
+class AddCategoryView extends StatefulWidget {
+  const AddCategoryView({Key? key}) : super(key: key);
 
   @override
-  _AddUserViewState createState() => _AddUserViewState();
+  _AddCategoryViewState createState() => _AddCategoryViewState();
 }
 
-class _AddUserViewState extends State<AddUserView> {
-  AddUserViewModel _viewModel = instance<AddUserViewModel>();
-  AppPreferences _appPreferences = instance<AppPreferences>();
+class _AddCategoryViewState extends State<AddCategoryView> {
+  AddCategoryViewModel _viewModel = instance<AddCategoryViewModel>();
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _userNameTextEditingController =
-      TextEditingController();
-  TextEditingController _nameTextEditingController = TextEditingController();
-  TextEditingController _passwordEditingController = TextEditingController();
+  TextEditingController _labelTextEditingController = TextEditingController();
 
   @override
   void initState() {
@@ -46,24 +39,14 @@ class _AddUserViewState extends State<AddUserView> {
 
   _bind() {
     _viewModel.start();
-    _userNameTextEditingController.addListener(() {
-      _viewModel.setUserName(_userNameTextEditingController.text);
+
+    _labelTextEditingController.addListener(() {
+      _viewModel.setLabel(_labelTextEditingController.text);
     });
 
-    _passwordEditingController.addListener(() {
-      _viewModel.setPassword(_passwordEditingController.text);
-    });
-
-    _nameTextEditingController.addListener(() {
-      _viewModel.setName(_nameTextEditingController.text);
-    });
-
-    _viewModel.isUserLoggedInSuccessfullyStreamController.stream
-        .listen((isSuccessLoggedIn) {
-      SchedulerBinding.instance?.addPostFrameCallback((_) {
-        _appPreferences.setIsUserLoggedIn();
-        Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
-      });
+    _viewModel.isAddCategorySuccessfullyStreamController.stream
+        .listen((isSuccessAddCategory) {
+      Navigator.of(context).pop();
     });
   }
 
@@ -77,7 +60,7 @@ class _AddUserViewState extends State<AddUserView> {
           return Center(
             child: snapshot.data?.getScreenWidget(context, _getContentWidget(),
                     () {
-                  _viewModel.register();
+                  _viewModel.addCategory(context);
                 }) ??
                 _getContentWidget(),
           );
@@ -103,7 +86,7 @@ class _AddUserViewState extends State<AddUserView> {
                         padding: const EdgeInsets.only(bottom: AppPadding.p20),
                         child: Container(
                             child: Text(
-                          AppStrings.createUser,
+                          AppStrings.createCategory,
                           style: getBoldStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s24),
@@ -131,114 +114,53 @@ class _AddUserViewState extends State<AddUserView> {
                         ),
                       ),
                       SizedBox(height: AppSize.s12),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: AppPadding.p28, right: AppPadding.p8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RequiredLabel(
-                                      text: AppStrings.name, requiredText: "*"),
-                                  StreamBuilder<String?>(
-                                    stream: _viewModel.outputErrorName,
-                                    builder: (context, snapshot) {
-                                      return TextFormField(
-                                          keyboardType: TextInputType.text,
-                                          controller:
-                                              _nameTextEditingController,
-                                          decoration: InputDecoration(
-                                              hintText: AppStrings.name,
-                                              errorText: snapshot.data));
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: AppSize.s12),
-                          Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: AppPadding.p8, right: AppPadding.p28),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RequiredLabel(
-                                      text: AppStrings.role, requiredText: "*"),
-                                  StreamBuilder<String?>(
-                                    stream: _viewModel.outputRole,
-                                    builder: (context, snapshot) {
-                                      return DropdownSearch(
-                                        mode: Mode.MENU,
-                                        showSelectedItems: true,
-                                        items: _viewModel.rolechecked,
-                                        dropdownSearchDecoration:
-                                            InputDecoration(
-                                          hintText: AppStrings.role,
-                                        ),
-                                        onChanged: (value) {
-                                          _viewModel.setRole(value.toString());
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: AppSize.s12),
                       Padding(
                         padding: EdgeInsets.only(
-                            top: AppPadding.p12,
-                            left: AppPadding.p28,
-                            right: AppPadding.p28),
+                            left: AppPadding.p28, right: AppPadding.p28),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             RequiredLabel(
-                                text: AppStrings.username, requiredText: "*"),
+                                text: AppStrings.label, requiredText: "*"),
                             StreamBuilder<String?>(
-                              stream: _viewModel.outputErrorUserName,
+                              stream: _viewModel.outputErrorLabel,
                               builder: (context, snapshot) {
                                 return TextFormField(
                                     keyboardType: TextInputType.text,
-                                    controller: _userNameTextEditingController,
+                                    controller: _labelTextEditingController,
                                     decoration: InputDecoration(
-                                        hintText: AppStrings.username,
+                                        hintText: AppStrings.label,
                                         errorText: snapshot.data));
                               },
                             ),
                           ],
                         ),
                       ),
+                      SizedBox(height: AppSize.s12),
                       Padding(
                         padding: EdgeInsets.only(
-                            top: AppPadding.p20,
-                            left: AppPadding.p28,
-                            right: AppPadding.p28,
-                            bottom: AppPadding.p12),
+                            left: AppPadding.p28, right: AppPadding.p28),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             RequiredLabel(
-                                text: AppStrings.password, requiredText: "*"),
-                            StreamBuilder<String?>(
-                              stream: _viewModel.outputErrorPassword,
+                              text: AppStrings.color,
+                            ),
+                            StreamBuilder<Color?>(
+                              stream: _viewModel.outputPickerColor,
                               builder: (context, snapshot) {
-                                return TextFormField(
-                                  keyboardType: TextInputType.visiblePassword,
-                                  controller: _passwordEditingController,
-                                  decoration: InputDecoration(
-                                    labelText: AppStrings.password,
-                                    errorText: snapshot.data,
+                                Color color =
+                                    snapshot.data ?? ColorManager.grey;
+                                return InkWell(
+                                  child: ColorPickerForm(
+                                    color: color,
                                   ),
+                                  onTap: () {
+                                    showAlert(context, color, (value) {
+                                      _viewModel.setColor(value);
+                                      color = value;
+                                    });
+                                  },
                                 );
                               },
                             ),
@@ -258,7 +180,7 @@ class _AddUserViewState extends State<AddUserView> {
                                 child: ElevatedButton(
                                     onPressed: (snapshot.data ?? false)
                                         ? () {
-                                            _viewModel.register();
+                                            _viewModel.addCategory(context);
                                           }
                                         : null,
                                     child: Text(AppStrings.create)),
@@ -294,8 +216,7 @@ class _AddUserViewState extends State<AddUserView> {
                           )),
                       Padding(
                         padding: const EdgeInsets.all(AppPadding.p8),
-                        child: Expanded(
-                            flex: 1, child: Text(AppStrings.browsImage)),
+                        child: Text(AppStrings.browsImage),
                       ),
                     ],
                   );

@@ -19,6 +19,6 @@ class InfoText extends StatelessWidget {
         width: AppSize.s10,
       ),
       Text(value,style: getMediumStyle(color: color ?? ColorManager.lightGrey,fontSize:isMobile(context)?FontSize.s12:FontSize.s14)),
-    ]);;
+    ]);
   }
 }

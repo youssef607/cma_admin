@@ -1,5 +1,4 @@
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'freezed_data_classes.freezed.dart';

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/presentation/addProduct/addProduct_view_model.dart';
+import 'package:cma_admin/presentation/add_product/add_product_viewmodel.dart';
 import 'package:cma_admin/presentation/components/color_picker_dialogue.dart';
 import 'package:cma_admin/presentation/components/color_picker_label.dart';
 import 'package:cma_admin/presentation/components/custom_appbar.dart';
@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
 class AddProductView extends StatefulWidget {
-  final Category category;
+  final Category? category;
   const AddProductView(this.category, {Key? key}) : super(key: key);
 
   @override
@@ -43,7 +43,7 @@ class _AddProductViewViewState extends State<AddProductView> {
     _viewModel.start();
 
     widget.category != null
-        ? _viewModel.setCategoryId(widget.category.id.toString())
+        ? _viewModel.setCategoryId(widget.category!.id.toString())
         : _viewModel.loadCategory();
     _titleTextEditingController.addListener(() {
       _viewModel.setTitle(_titleTextEditingController.text);
@@ -65,7 +65,7 @@ class _AddProductViewViewState extends State<AddProductView> {
           return Center(
             child: snapshot.data?.getScreenWidget(context, _getContentWidget(),
                     () {
-                  _viewModel.addProduct();
+                  _viewModel.addProduct(context);
                 }) ??
                 _getContentWidget(),
           );
@@ -253,7 +253,7 @@ class _AddProductViewViewState extends State<AddProductView> {
                                 child: ElevatedButton(
                                     onPressed: (snapshot.data ?? false)
                                         ? () {
-                                            _viewModel.addProduct();
+                                            _viewModel.addProduct(context);
                                           }
                                         : null,
                                     child: Text(AppStrings.create)),
@@ -289,8 +289,7 @@ class _AddProductViewViewState extends State<AddProductView> {
                           )),
                       Padding(
                         padding: const EdgeInsets.all(AppPadding.p8),
-                        child: Expanded(
-                            flex: 1, child: Text(AppStrings.browsImage)),
+                        child: Text(AppStrings.browsImage),
                       ),
                     ],
                   );

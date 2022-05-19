@@ -1,5 +1,4 @@
 import 'package:cma_admin/data/mapper/mapper.dart';
-import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
@@ -115,6 +114,7 @@ class StateRenderer extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _getAnimatedImage(String animationName) {
     return SizedBox(
       height: AppSize.s100,

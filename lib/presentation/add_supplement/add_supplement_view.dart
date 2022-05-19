@@ -1,7 +1,6 @@
 import 'dart:typed_data';
-import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/presentation/addCategory/addcategory_view_model.dart';
+import 'package:cma_admin/presentation/add_supplement/add_supplement_viewmodel.dart';
 import 'package:cma_admin/presentation/components/color_picker_dialogue.dart';
 import 'package:cma_admin/presentation/components/color_picker_label.dart';
 import 'package:cma_admin/presentation/components/custom_appbar.dart';
@@ -19,18 +18,18 @@ import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
-class AddCategoryView extends StatefulWidget {
-  const AddCategoryView({Key? key}) : super(key: key);
+class AddSupplementView extends StatefulWidget {
+  const AddSupplementView({Key? key}) : super(key: key);
 
   @override
-  _AddCategoryViewState createState() => _AddCategoryViewState();
+  _AddSupplementViewState createState() => _AddSupplementViewState();
 }
 
-class _AddCategoryViewState extends State<AddCategoryView> {
-  AddCategoryViewModel _viewModel = instance<AddCategoryViewModel>();
+class _AddSupplementViewState extends State<AddSupplementView> {
+  AddSupplementViewModel _viewModel = instance<AddSupplementViewModel>();
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _labelTextEditingController = TextEditingController();
+  TextEditingController _titleTextEditingController = TextEditingController();
 
   @override
   void initState() {
@@ -41,11 +40,10 @@ class _AddCategoryViewState extends State<AddCategoryView> {
   _bind() {
     _viewModel.start();
 
-    _labelTextEditingController.addListener(() {
-      _viewModel.setLabel(_labelTextEditingController.text);
+    _titleTextEditingController.addListener(() {
+      _viewModel.setTitle(_titleTextEditingController.text);
     });
-
-    _viewModel.isAddCategorySuccessfullyStreamController.stream
+    _viewModel.isUserLoggedInSuccessfullyStreamController.stream
         .listen((isSuccessAddCategory) {
       Navigator.of(context).pop();
     });
@@ -61,7 +59,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
           return Center(
             child: snapshot.data?.getScreenWidget(context, _getContentWidget(),
                     () {
-                  _viewModel.addCategory();
+                  _viewModel.addSupplement(context);
                 }) ??
                 _getContentWidget(),
           );
@@ -87,7 +85,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                         padding: const EdgeInsets.only(bottom: AppPadding.p20),
                         child: Container(
                             child: Text(
-                          AppStrings.createCategory,
+                          AppStrings.createSupplement,
                           style: getBoldStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s24),
@@ -122,15 +120,42 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             RequiredLabel(
-                                text: AppStrings.label, requiredText: "*"),
+                                text: AppStrings.title, requiredText: "*"),
                             StreamBuilder<String?>(
-                              stream: _viewModel.outputErrorLabel,
+                              stream: _viewModel.outputErrorTitle,
                               builder: (context, snapshot) {
                                 return TextFormField(
                                     keyboardType: TextInputType.text,
-                                    controller: _labelTextEditingController,
+                                    controller: _titleTextEditingController,
                                     decoration: InputDecoration(
-                                        hintText: AppStrings.label,
+                                        hintText: AppStrings.title,
+                                        errorText: snapshot.data));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: AppSize.s12),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: AppPadding.p28, right: AppPadding.p28),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RequiredLabel(
+                              text: AppStrings.price,
+                              requiredText: "*",
+                            ),
+                            StreamBuilder<String?>(
+                              stream: _viewModel.outputErrorPrice,
+                              builder: (context, snapshot) {
+                                return TextFormField(
+                                    onChanged: (value) {
+                                      _viewModel.setPrice(value);
+                                    },
+                                    keyboardType: TextInputType.text,
+                                    decoration: InputDecoration(
+                                        hintText: AppStrings.price,
                                         errorText: snapshot.data));
                               },
                             ),
@@ -181,7 +206,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                                 child: ElevatedButton(
                                     onPressed: (snapshot.data ?? false)
                                         ? () {
-                                            _viewModel.addCategory();
+                                            _viewModel.addSupplement(context);
                                           }
                                         : null,
                                     child: Text(AppStrings.create)),
@@ -217,8 +242,7 @@ class _AddCategoryViewState extends State<AddCategoryView> {
                           )),
                       Padding(
                         padding: const EdgeInsets.all(AppPadding.p8),
-                        child: Expanded(
-                            flex: 1, child: Text(AppStrings.browsImage)),
+                        child: Text(AppStrings.browsImage),
                       ),
                     ],
                   );

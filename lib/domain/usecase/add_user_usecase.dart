@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cma_admin/data/network/failure.dart';
 import 'package:cma_admin/data/request/request.dart';
@@ -7,7 +5,6 @@ import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/repository/repository.dart';
 import 'package:cma_admin/domain/usecase/base_usecase.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 
 class AddUserUseCase implements BaseUseCase<AddUserUseCaseInput, SignInData> {
   Repository _repository;

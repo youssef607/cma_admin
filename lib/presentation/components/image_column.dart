@@ -1,5 +1,4 @@
 import 'package:cma_admin/app/constant.dart';
-import 'package:cma_admin/data/mapper/mapper.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/styles_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';

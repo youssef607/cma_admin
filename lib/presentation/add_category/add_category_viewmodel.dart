@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/domain/usecase/addcategory_usecase.dart';
+import 'package:cma_admin/domain/usecase/add_category_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
@@ -39,7 +39,7 @@ class AddCategoryViewModel extends BaseViewModel
   }
 
   @override
-  addCategory() async {
+  addCategory(BuildContext context) async {
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _addCategoryUseCase.execute(AddCategoryUseCaseInput(
@@ -54,6 +54,7 @@ class AddCategoryViewModel extends BaseViewModel
                 }, (data) {
       inputState.add(ContentState());
       isAddCategorySuccessfullyStreamController.add(true);
+      Navigator.of(context).pop();
     });
   }
 
@@ -142,7 +143,7 @@ class AddCategoryViewModel extends BaseViewModel
 }
 
 abstract class AddCategoryViewModelInput {
-  addCategory();
+  addCategory(BuildContext context);
 
   setColor(Color color);
 

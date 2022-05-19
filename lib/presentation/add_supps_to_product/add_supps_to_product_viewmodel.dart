@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/usecase/add_supps_to_product_usecase.dart';
-import 'package:cma_admin/domain/usecase/supplement_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';

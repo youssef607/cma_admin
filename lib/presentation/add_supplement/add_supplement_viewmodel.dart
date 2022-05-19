@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/domain/usecase/addsupplement_usecase.dart';
+import 'package:cma_admin/domain/usecase/add_supplement_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
@@ -43,7 +43,7 @@ class AddSupplementViewModel extends BaseViewModel
   }
 
   @override
-  addSupplement() async {
+  addSupplement(BuildContext context) async {
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _addSupplementUseCase.execute(AddSupplementUseCaseInput(
@@ -59,6 +59,7 @@ class AddSupplementViewModel extends BaseViewModel
                 }, (data) {
       inputState.add(ContentState());
       isUserLoggedInSuccessfullyStreamController.add(true);
+      Navigator.of(context).pop();
     });
   }
 
@@ -174,7 +175,7 @@ class AddSupplementViewModel extends BaseViewModel
 }
 
 abstract class AddSupplementViewModelInput {
-  addSupplement();
+  addSupplement(BuildContext context);
 
   setColor(Color color);
 

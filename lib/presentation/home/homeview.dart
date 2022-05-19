@@ -1,7 +1,6 @@
 import 'package:cma_admin/app/app_prefs.dart';
 import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/app/functions.dart';
-import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/home/category/category_view.dart';
 import 'package:cma_admin/presentation/home/components/side_nav_bar.dart';
 import 'package:cma_admin/presentation/home/dashboard/dashboard_view.dart';

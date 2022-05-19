@@ -2,10 +2,10 @@ import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/add_supps_to_product/add_supps_to_product_view.dart';
 import 'package:cma_admin/presentation/category_details/category_details_view.dart';
-import 'package:cma_admin/presentation/addProduct/addProduct_View.dart';
-import 'package:cma_admin/presentation/addSupplement/addSupplement.dart';
-import 'package:cma_admin/presentation/addUser/addUser_view.dart';
-import 'package:cma_admin/presentation/addCategory/addcategory.dart';
+import 'package:cma_admin/presentation/add_product/add_product_View.dart';
+import 'package:cma_admin/presentation/add_supplement/add_supplement_view.dart';
+import 'package:cma_admin/presentation/add_user/add_user_view.dart';
+import 'package:cma_admin/presentation/add_category/add_category_view.dart';
 import 'package:cma_admin/presentation/home/homeview.dart';
 import 'package:cma_admin/presentation/product_details/product_details_view.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
@@ -37,9 +37,8 @@ class RouteGenerator {
 
       case Routes.addProductRoute:
         initAddProductModule();
-        Category Cat = routeSettings.arguments as Category;
+        Category? Cat = routeSettings.arguments as Category?;
         return CupertinoPageRoute(builder: (_) => AddProductView(Cat));
-
       case Routes.addCategoryRoute:
         initAddCategoryModule();
         return CupertinoPageRoute(builder: (_) => AddCategoryView());

@@ -1,8 +1,5 @@
-import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'request.g.dart';
 

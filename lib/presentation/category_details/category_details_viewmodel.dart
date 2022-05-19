@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:cma_admin/data/mapper/mapper.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/domain/usecase/category_details_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';

@@ -1,8 +1,8 @@
 import 'dart:typed_data';
+
+import 'package:cma_admin/app/app_prefs.dart';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/presentation/addSupplement/addSupplement_view_model.dart';
-import 'package:cma_admin/presentation/components/color_picker_dialogue.dart';
-import 'package:cma_admin/presentation/components/color_picker_label.dart';
+import 'package:cma_admin/presentation/add_user/add_user_viewmodel.dart';
 import 'package:cma_admin/presentation/components/custom_appbar.dart';
 import 'package:cma_admin/presentation/components/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
@@ -12,25 +12,31 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
+import 'package:cma_admin/presentation/resources/routes_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:file_picker/file_picker.dart';
 
-class AddSupplementView extends StatefulWidget {
-  const AddSupplementView({Key? key}) : super(key: key);
+class AddUserView extends StatefulWidget {
+  const AddUserView({Key? key}) : super(key: key);
 
   @override
-  _AddSupplementViewState createState() => _AddSupplementViewState();
+  _AddUserViewState createState() => _AddUserViewState();
 }
 
-class _AddSupplementViewState extends State<AddSupplementView> {
-  AddSupplementViewModel _viewModel = instance<AddSupplementViewModel>();
+class _AddUserViewState extends State<AddUserView> {
+  AddUserViewModel _viewModel = instance<AddUserViewModel>();
+  AppPreferences _appPreferences = instance<AppPreferences>();
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _titleTextEditingController = TextEditingController();
+  TextEditingController _userNameTextEditingController =
+      TextEditingController();
+  TextEditingController _nameTextEditingController = TextEditingController();
+  TextEditingController _passwordEditingController = TextEditingController();
 
   @override
   void initState() {
@@ -40,13 +46,24 @@ class _AddSupplementViewState extends State<AddSupplementView> {
 
   _bind() {
     _viewModel.start();
-
-    _titleTextEditingController.addListener(() {
-      _viewModel.setTitle(_titleTextEditingController.text);
+    _userNameTextEditingController.addListener(() {
+      _viewModel.setUserName(_userNameTextEditingController.text);
     });
+
+    _passwordEditingController.addListener(() {
+      _viewModel.setPassword(_passwordEditingController.text);
+    });
+
+    _nameTextEditingController.addListener(() {
+      _viewModel.setName(_nameTextEditingController.text);
+    });
+
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream
-        .listen((isSuccessAddCategory) {
-      Navigator.of(context).pop();
+        .listen((isSuccessLoggedIn) {
+      SchedulerBinding.instance?.addPostFrameCallback((_) {
+        _appPreferences.setIsUserLoggedIn();
+        Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
+      });
     });
   }
 
@@ -60,7 +77,7 @@ class _AddSupplementViewState extends State<AddSupplementView> {
           return Center(
             child: snapshot.data?.getScreenWidget(context, _getContentWidget(),
                     () {
-                  _viewModel.addSupplement();
+                  _viewModel.register(context);
                 }) ??
                 _getContentWidget(),
           );
@@ -86,7 +103,7 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                         padding: const EdgeInsets.only(bottom: AppPadding.p20),
                         child: Container(
                             child: Text(
-                          AppStrings.createSupplement,
+                          AppStrings.createUser,
                           style: getBoldStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s24),
@@ -114,80 +131,114 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                         ),
                       ),
                       SizedBox(height: AppSize.s12),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RequiredLabel(
-                                text: AppStrings.title, requiredText: "*"),
-                            StreamBuilder<String?>(
-                              stream: _viewModel.outputErrorTitle,
-                              builder: (context, snapshot) {
-                                return TextFormField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _titleTextEditingController,
-                                    decoration: InputDecoration(
-                                        hintText: AppStrings.title,
-                                        errorText: snapshot.data));
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: AppSize.s12),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RequiredLabel(
-                              text: AppStrings.price,
-                              requiredText: "*",
-                            ),
-                            StreamBuilder<String?>(
-                              stream: _viewModel.outputErrorPrice,
-                              builder: (context, snapshot) {
-                                return TextFormField(
-                                    onChanged: (value) {
-                                      _viewModel.setPrice(value);
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: AppPadding.p28, right: AppPadding.p8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  RequiredLabel(
+                                      text: AppStrings.name, requiredText: "*"),
+                                  StreamBuilder<String?>(
+                                    stream: _viewModel.outputErrorName,
+                                    builder: (context, snapshot) {
+                                      return TextFormField(
+                                          keyboardType: TextInputType.text,
+                                          controller:
+                                              _nameTextEditingController,
+                                          decoration: InputDecoration(
+                                              hintText: AppStrings.name,
+                                              errorText: snapshot.data));
                                     },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: AppSize.s12),
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: AppPadding.p8, right: AppPadding.p28),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  RequiredLabel(
+                                      text: AppStrings.role, requiredText: "*"),
+                                  StreamBuilder<String?>(
+                                    stream: _viewModel.outputRole,
+                                    builder: (context, snapshot) {
+                                      return DropdownSearch(
+                                        mode: Mode.MENU,
+                                        showSelectedItems: true,
+                                        items: _viewModel.rolechecked,
+                                        dropdownSearchDecoration:
+                                            InputDecoration(
+                                          hintText: AppStrings.role,
+                                        ),
+                                        onChanged: (value) {
+                                          _viewModel.setRole(value.toString());
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: AppSize.s12),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: AppPadding.p12,
+                            left: AppPadding.p28,
+                            right: AppPadding.p28),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RequiredLabel(
+                                text: AppStrings.username, requiredText: "*"),
+                            StreamBuilder<String?>(
+                              stream: _viewModel.outputErrorUserName,
+                              builder: (context, snapshot) {
+                                return TextFormField(
                                     keyboardType: TextInputType.text,
+                                    controller: _userNameTextEditingController,
                                     decoration: InputDecoration(
-                                        hintText: AppStrings.price,
+                                        hintText: AppStrings.username,
                                         errorText: snapshot.data));
                               },
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(height: AppSize.s12),
                       Padding(
                         padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
+                            top: AppPadding.p20,
+                            left: AppPadding.p28,
+                            right: AppPadding.p28,
+                            bottom: AppPadding.p12),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             RequiredLabel(
-                              text: AppStrings.color,
-                            ),
-                            StreamBuilder<Color?>(
-                              stream: _viewModel.outputPickerColor,
+                                text: AppStrings.password, requiredText: "*"),
+                            StreamBuilder<String?>(
+                              stream: _viewModel.outputErrorPassword,
                               builder: (context, snapshot) {
-                                Color color =
-                                    snapshot.data ?? ColorManager.grey;
-                                return InkWell(
-                                  child: ColorPickerForm(
-                                    color: color,
+                                return TextFormField(
+                                  keyboardType: TextInputType.visiblePassword,
+                                  controller: _passwordEditingController,
+                                  decoration: InputDecoration(
+                                    labelText: AppStrings.password,
+                                    errorText: snapshot.data,
                                   ),
-                                  onTap: () {
-                                    showAlert(context, color, (value) {
-                                      _viewModel.setColor(value);
-                                      color = value;
-                                    });
-                                  },
                                 );
                               },
                             ),
@@ -207,7 +258,7 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                                 child: ElevatedButton(
                                     onPressed: (snapshot.data ?? false)
                                         ? () {
-                                            _viewModel.addSupplement();
+                                            _viewModel.register(context);
                                           }
                                         : null,
                                     child: Text(AppStrings.create)),
@@ -243,8 +294,7 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                           )),
                       Padding(
                         padding: const EdgeInsets.all(AppPadding.p8),
-                        child: Expanded(
-                            flex: 1, child: Text(AppStrings.browsImage)),
+                        child: Text(AppStrings.browsImage),
                       ),
                     ],
                   );
