@@ -11,6 +11,7 @@ import 'package:cma_admin/domain/usecase/product_details_usecase.dart';
 import 'package:cma_admin/domain/usecase/product_usecase.dart';
 import 'package:cma_admin/domain/usecase/signIn_usecase.dart';
 import 'package:cma_admin/domain/usecase/supplement_usecase.dart';
+import 'package:cma_admin/domain/usecase/update_supplement_usecase.dart';
 import 'package:cma_admin/domain/usecase/user_usecase.dart';
 import 'package:cma_admin/presentation/add_supps_to_product/add_supps_to_product_viewmodel.dart';
 import 'package:cma_admin/presentation/category_details/category_details_viewmodel.dart';
@@ -29,6 +30,7 @@ import 'package:cma_admin/presentation/add_product/add_product_viewmodel.dart';
 import 'package:cma_admin/presentation/add_supplement/add_supplement_viewmodel.dart';
 import 'package:cma_admin/presentation/add_user/add_user_viewmodel.dart';
 import 'package:cma_admin/presentation/signIn/signIn_view_model.dart';
+import 'package:cma_admin/presentation/update_supplement/update_supplement_view_model.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -134,6 +136,8 @@ initProductDetailsModule() {
   }
 }
 
+///init add
+
 initAddSupplementsToProductModule() {
   if (!GetIt.I.isRegistered<AddSupplementsToProductUseCase>()) {
     instance.registerFactory<AddSupplementsToProductUseCase>(
@@ -180,6 +184,17 @@ initAddProductModule() {
   }
 }
 
+/// init update
+
+initUpdateSupplementModule() {
+  if (!GetIt.I.isRegistered<UpdateSupplementUseCase>()) {
+    instance.registerFactory<UpdateSupplementUseCase>(
+        () => UpdateSupplementUseCase(instance()));
+    instance.registerFactory<UpdateSupplementViewModel>(
+        () => UpdateSupplementViewModel(instance()));
+  }
+}
+
 resetModules() {
   instance.reset(dispose: false);
   initAppModule();
@@ -196,4 +211,6 @@ resetModules() {
   initAddCategoryModule();
   initAddSupplementModule();
   initAddProductModule();
+  //update
+  initUpdateSupplementModule();
 }

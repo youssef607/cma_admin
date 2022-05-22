@@ -8,7 +8,7 @@ part of 'app_api.dart';
 
 class _AppServiceClient implements AppServiceClient {
   _AppServiceClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://192.168.1.68:8080/api';
+    baseUrl ??= 'http://192.168.0.159:8080/api';
   }
 
   final Dio _dio;
@@ -227,7 +227,8 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('name', name));
     _data.fields.add(MapEntry('password', password));
@@ -252,7 +253,8 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('label', label));
     _data.fields.add(MapEntry('color', color));
@@ -260,6 +262,31 @@ class _AppServiceClient implements AppServiceClient {
         _setStreamType<CategoryResponse>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/category/save',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CategoryResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<CategoryResponse> UpdateCategory(
+      {required id, image, required label, required color}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
+    }
+    _data.fields.add(MapEntry('label', label));
+    _data.fields.add(MapEntry('color', color));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CategoryResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/category/$id/update',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = CategoryResponse.fromJson(_result.data!);
@@ -277,7 +304,8 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('price', price));
     _data.fields.add(MapEntry('title', title));
@@ -285,6 +313,34 @@ class _AppServiceClient implements AppServiceClient {
         _setStreamType<SupplementResponse>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/supplement/save',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SupplementResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<SupplementResponse> UpdateSupplement(
+      {color, image, required price, required title, required id}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (color != null) {
+      _data.fields.add(MapEntry('color', color));
+    }
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
+    }
+    _data.fields.add(MapEntry('price', price));
+    _data.fields.add(MapEntry('title', title));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SupplementResponse>(
+            Options(method: 'PUT', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/supplement/$id/update',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = SupplementResponse.fromJson(_result.data!);
@@ -307,7 +363,8 @@ class _AppServiceClient implements AppServiceClient {
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
-          MultipartFile.fromBytes(image.byte,filename: "image.${image.extensions}")));
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
     }
     _data.fields.add(MapEntry('price', price));
     _data.fields.add(MapEntry('title', title));
@@ -322,7 +379,39 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<bool> delete(type,id) async {
+  Future<ProductResponse> updateProduct(
+      {required id,
+      required categoryId,
+      required color,
+      image,
+      required price,
+      required title}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    _data.fields.add(MapEntry('categoryId', categoryId));
+    _data.fields.add(MapEntry('color', color));
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromBytes(image.byte,
+              filename: "image.${image.extensions}")));
+    }
+    _data.fields.add(MapEntry('price', price));
+    _data.fields.add(MapEntry('title', title));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ProductResponse>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, '/product/$id/update',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ProductResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<bool> delete(type, id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};

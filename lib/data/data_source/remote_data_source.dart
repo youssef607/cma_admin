@@ -8,18 +8,27 @@ abstract class RemoteDataSource {
   Future<List<ProductResponse>> getAllProduct();
   Future<List<SupplementResponse>> getAllSupplement();
   Future<List<UserResponse>> getAllUser();
-  Future<bool> activeToggle(String type,String id);
-  Future<HomeResponse> home(String date1,String date2);
+  Future<bool> activeToggle(String type, String id);
+  Future<HomeResponse> home(String date1, String date2);
   Future<List<ProductResponse>> getProductsByCategory(String id);
   Future<List<SupplementResponse>> getSupplemensByProduct(String id);
   Future<List<SupplementResponse>> getSupplementsForAdd(String id);
-  Future<ProductResponse> addSupplementsToProduct(String productId,String suppsId);
-  Future<void> deleteSupplementsToProduct(String productId,String suppId);
+  Future<ProductResponse> addSupplementsToProduct(
+      String productId, String suppsId);
+  Future<void> deleteSupplementsToProduct(String productId, String suppId);
   Future<SignInResponse> addUser(AddUserRequest addUserRequest);
   Future<CategoryResponse> addCategory(AddCategoryRequest addCategoryRequest);
   Future<ProductResponse> addProduct(AddProductRequest addProductRequest);
-  Future<SupplementResponse> addSupplement(AddSupplementRequest addSupplementRequest);
-  Future<bool> delete(String type,String id);
+  Future<SupplementResponse> addSupplement(
+      AddSupplementRequest addSupplementRequest);
+  Future<SupplementResponse> updateSupplement(
+      UpdateSupplementRequest updateSupplementRequest);
+  Future<bool> delete(String type, String id);
+
+  Future<CategoryResponse> updateCategory(
+      UpdateCategoryRequest updateCategoryRequest);
+  Future<ProductResponse> updateProduct(
+      UpdateProductRequest updateProductRequest);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -47,12 +56,12 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   Future<List<SupplementResponse>> getAllSupplement() {
     return _appServiceClient.getAllSupplement();
   }
-  
-    @override
+
+  @override
   Future<List<UserResponse>> getAllUser() {
     return _appServiceClient.getAllUser();
   }
-  
+
   @override
   Future<bool> activeToggle(String type, String id) {
     return _appServiceClient.activeTogle(type, id);
@@ -74,7 +83,8 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<ProductResponse> addSupplementsToProduct(String productId, String suppsId) {
+  Future<ProductResponse> addSupplementsToProduct(
+      String productId, String suppsId) {
     return _appServiceClient.addSupplementsToProduct(productId, suppsId);
   }
 
@@ -129,8 +139,41 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<bool> delete(String type,String id) {
-    return _appServiceClient.delete(type,id);
+  Future<bool> delete(String type, String id) {
+    return _appServiceClient.delete(type, id);
   }
-  
+
+  @override
+  Future<SupplementResponse> updateSupplement(
+      UpdateSupplementRequest updateSupplementRequest) async {
+    return await _appServiceClient.UpdateSupplement(
+      id: updateSupplementRequest.id,
+      color: updateSupplementRequest.color,
+      image: updateSupplementRequest.image,
+      price: updateSupplementRequest.price,
+      title: updateSupplementRequest.title,
+    );
+  }
+
+  @override
+  Future<CategoryResponse> updateCategory(
+      UpdateCategoryRequest updateCategoryRequest) async {
+    return await _appServiceClient.UpdateCategory(
+        id: updateCategoryRequest.id,
+        color: updateCategoryRequest.color,
+        image: updateCategoryRequest.image,
+        label: updateCategoryRequest.label);
+  }
+
+  @override
+  Future<ProductResponse> updateProduct(
+      UpdateProductRequest updateProductRequest) async {
+    return await _appServiceClient.updateProduct(
+        id: updateProductRequest.id,
+        categoryId: updateProductRequest.categoryId,
+        color: updateProductRequest.color,
+        image: updateProductRequest.image,
+        price: updateProductRequest.price,
+        title: updateProductRequest.title);
+  }
 }

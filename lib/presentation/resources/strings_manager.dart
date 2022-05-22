@@ -112,7 +112,6 @@ class AppStrings {
   static const String active = "Active";
   static const String notActive = "Not Active";
   static const String exportExcel = "Export Excel";
-  static const String update = "Update";
   static const String delete = "Delete";
   static const String save = "Save";
   static const String view = "View";
@@ -122,18 +121,17 @@ class AppStrings {
   static const String browsImage = "brows your image here";
 
   //category
-  static const String createCategory = "Create Category";
   static const String pickColor = "Pick a color";
   static const String goIt = "Got it";
 
-  //Add supplement
-
+  //Add
   static const String createSupplement = "Create Supplement";
+  static const String createCategory = "Create Category";
   static const String addSupplemet = "Add Supplement";
-
-  //Add product
   static const String createProduct = "Create Product";
-
-  //Create
   static const String create = "Create";
+
+  //Update
+  static const String update = "Update";
+  static const String updateSupplement = "Update Supplement";
 }

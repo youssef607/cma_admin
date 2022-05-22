@@ -963,6 +963,651 @@ abstract class _AddProductObject implements AddProductObject {
 }
 
 /// @nodoc
+class _$UpdateSupplementObjectTearOff {
+  const _$UpdateSupplementObjectTearOff();
+
+  _UpdateSupplementObject call(
+      String id, String color, PickerFile? image, String price, String title) {
+    return _UpdateSupplementObject(
+      id,
+      color,
+      image,
+      price,
+      title,
+    );
+  }
+}
+
+/// @nodoc
+const $UpdateSupplementObject = _$UpdateSupplementObjectTearOff();
+
+/// @nodoc
+mixin _$UpdateSupplementObject {
+  String get id => throw _privateConstructorUsedError;
+  String get color => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $UpdateSupplementObjectCopyWith<UpdateSupplementObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UpdateSupplementObjectCopyWith<$Res> {
+  factory $UpdateSupplementObjectCopyWith(UpdateSupplementObject value,
+          $Res Function(UpdateSupplementObject) then) =
+      _$UpdateSupplementObjectCopyWithImpl<$Res>;
+  $Res call(
+      {String id, String color, PickerFile? image, String price, String title});
+}
+
+/// @nodoc
+class _$UpdateSupplementObjectCopyWithImpl<$Res>
+    implements $UpdateSupplementObjectCopyWith<$Res> {
+  _$UpdateSupplementObjectCopyWithImpl(this._value, this._then);
+
+  final UpdateSupplementObject _value;
+  // ignore: unused_field
+  final $Res Function(UpdateSupplementObject) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? price = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$UpdateSupplementObjectCopyWith<$Res>
+    implements $UpdateSupplementObjectCopyWith<$Res> {
+  factory _$UpdateSupplementObjectCopyWith(_UpdateSupplementObject value,
+          $Res Function(_UpdateSupplementObject) then) =
+      __$UpdateSupplementObjectCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String id, String color, PickerFile? image, String price, String title});
+}
+
+/// @nodoc
+class __$UpdateSupplementObjectCopyWithImpl<$Res>
+    extends _$UpdateSupplementObjectCopyWithImpl<$Res>
+    implements _$UpdateSupplementObjectCopyWith<$Res> {
+  __$UpdateSupplementObjectCopyWithImpl(_UpdateSupplementObject _value,
+      $Res Function(_UpdateSupplementObject) _then)
+      : super(_value, (v) => _then(v as _UpdateSupplementObject));
+
+  @override
+  _UpdateSupplementObject get _value => super._value as _UpdateSupplementObject;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? price = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_UpdateSupplementObject(
+      id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_UpdateSupplementObject implements _UpdateSupplementObject {
+  _$_UpdateSupplementObject(
+      this.id, this.color, this.image, this.price, this.title);
+
+  @override
+  final String id;
+  @override
+  final String color;
+  @override
+  final PickerFile? image;
+  @override
+  final String price;
+  @override
+  final String title;
+
+  @override
+  String toString() {
+    return 'UpdateSupplementObject(id: $id, color: $color, image: $image, price: $price, title: $title)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _UpdateSupplementObject &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)) &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.price, price) ||
+                const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(color) ^
+      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(price) ^
+      const DeepCollectionEquality().hash(title);
+
+  @JsonKey(ignore: true)
+  @override
+  _$UpdateSupplementObjectCopyWith<_UpdateSupplementObject> get copyWith =>
+      __$UpdateSupplementObjectCopyWithImpl<_UpdateSupplementObject>(
+          this, _$identity);
+}
+
+abstract class _UpdateSupplementObject implements UpdateSupplementObject {
+  factory _UpdateSupplementObject(String id, String color, PickerFile? image,
+      String price, String title) = _$_UpdateSupplementObject;
+
+  @override
+  String get id => throw _privateConstructorUsedError;
+  @override
+  String get color => throw _privateConstructorUsedError;
+  @override
+  PickerFile? get image => throw _privateConstructorUsedError;
+  @override
+  String get price => throw _privateConstructorUsedError;
+  @override
+  String get title => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$UpdateSupplementObjectCopyWith<_UpdateSupplementObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$UpdateCategoryObjectTearOff {
+  const _$UpdateCategoryObjectTearOff();
+
+  _UpdateCategoryObject call(
+      String id, String color, PickerFile? image, String label) {
+    return _UpdateCategoryObject(
+      id,
+      color,
+      image,
+      label,
+    );
+  }
+}
+
+/// @nodoc
+const $UpdateCategoryObject = _$UpdateCategoryObjectTearOff();
+
+/// @nodoc
+mixin _$UpdateCategoryObject {
+  String get id => throw _privateConstructorUsedError;
+  String get color => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
+  String get label => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $UpdateCategoryObjectCopyWith<UpdateCategoryObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UpdateCategoryObjectCopyWith<$Res> {
+  factory $UpdateCategoryObjectCopyWith(UpdateCategoryObject value,
+          $Res Function(UpdateCategoryObject) then) =
+      _$UpdateCategoryObjectCopyWithImpl<$Res>;
+  $Res call({String id, String color, PickerFile? image, String label});
+}
+
+/// @nodoc
+class _$UpdateCategoryObjectCopyWithImpl<$Res>
+    implements $UpdateCategoryObjectCopyWith<$Res> {
+  _$UpdateCategoryObjectCopyWithImpl(this._value, this._then);
+
+  final UpdateCategoryObject _value;
+  // ignore: unused_field
+  final $Res Function(UpdateCategoryObject) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? label = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      label: label == freezed
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$UpdateCategoryObjectCopyWith<$Res>
+    implements $UpdateCategoryObjectCopyWith<$Res> {
+  factory _$UpdateCategoryObjectCopyWith(_UpdateCategoryObject value,
+          $Res Function(_UpdateCategoryObject) then) =
+      __$UpdateCategoryObjectCopyWithImpl<$Res>;
+  @override
+  $Res call({String id, String color, PickerFile? image, String label});
+}
+
+/// @nodoc
+class __$UpdateCategoryObjectCopyWithImpl<$Res>
+    extends _$UpdateCategoryObjectCopyWithImpl<$Res>
+    implements _$UpdateCategoryObjectCopyWith<$Res> {
+  __$UpdateCategoryObjectCopyWithImpl(
+      _UpdateCategoryObject _value, $Res Function(_UpdateCategoryObject) _then)
+      : super(_value, (v) => _then(v as _UpdateCategoryObject));
+
+  @override
+  _UpdateCategoryObject get _value => super._value as _UpdateCategoryObject;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? label = freezed,
+  }) {
+    return _then(_UpdateCategoryObject(
+      id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      label == freezed
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_UpdateCategoryObject implements _UpdateCategoryObject {
+  _$_UpdateCategoryObject(this.id, this.color, this.image, this.label);
+
+  @override
+  final String id;
+  @override
+  final String color;
+  @override
+  final PickerFile? image;
+  @override
+  final String label;
+
+  @override
+  String toString() {
+    return 'UpdateCategoryObject(id: $id, color: $color, image: $image, label: $label)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _UpdateCategoryObject &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)) &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.label, label) ||
+                const DeepCollectionEquality().equals(other.label, label)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(color) ^
+      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(label);
+
+  @JsonKey(ignore: true)
+  @override
+  _$UpdateCategoryObjectCopyWith<_UpdateCategoryObject> get copyWith =>
+      __$UpdateCategoryObjectCopyWithImpl<_UpdateCategoryObject>(
+          this, _$identity);
+}
+
+abstract class _UpdateCategoryObject implements UpdateCategoryObject {
+  factory _UpdateCategoryObject(
+          String id, String color, PickerFile? image, String label) =
+      _$_UpdateCategoryObject;
+
+  @override
+  String get id => throw _privateConstructorUsedError;
+  @override
+  String get color => throw _privateConstructorUsedError;
+  @override
+  PickerFile? get image => throw _privateConstructorUsedError;
+  @override
+  String get label => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$UpdateCategoryObjectCopyWith<_UpdateCategoryObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$UpdateProductObjectTearOff {
+  const _$UpdateProductObjectTearOff();
+
+  _UpdateProductObject call(String id, String categoryId, String color,
+      PickerFile? image, String price, String title) {
+    return _UpdateProductObject(
+      id,
+      categoryId,
+      color,
+      image,
+      price,
+      title,
+    );
+  }
+}
+
+/// @nodoc
+const $UpdateProductObject = _$UpdateProductObjectTearOff();
+
+/// @nodoc
+mixin _$UpdateProductObject {
+  String get id => throw _privateConstructorUsedError;
+  String get categoryId => throw _privateConstructorUsedError;
+  String get color => throw _privateConstructorUsedError;
+  PickerFile? get image => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $UpdateProductObjectCopyWith<UpdateProductObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UpdateProductObjectCopyWith<$Res> {
+  factory $UpdateProductObjectCopyWith(
+          UpdateProductObject value, $Res Function(UpdateProductObject) then) =
+      _$UpdateProductObjectCopyWithImpl<$Res>;
+  $Res call(
+      {String id,
+      String categoryId,
+      String color,
+      PickerFile? image,
+      String price,
+      String title});
+}
+
+/// @nodoc
+class _$UpdateProductObjectCopyWithImpl<$Res>
+    implements $UpdateProductObjectCopyWith<$Res> {
+  _$UpdateProductObjectCopyWithImpl(this._value, this._then);
+
+  final UpdateProductObject _value;
+  // ignore: unused_field
+  final $Res Function(UpdateProductObject) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? categoryId = freezed,
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? price = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      categoryId: categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$UpdateProductObjectCopyWith<$Res>
+    implements $UpdateProductObjectCopyWith<$Res> {
+  factory _$UpdateProductObjectCopyWith(_UpdateProductObject value,
+          $Res Function(_UpdateProductObject) then) =
+      __$UpdateProductObjectCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String id,
+      String categoryId,
+      String color,
+      PickerFile? image,
+      String price,
+      String title});
+}
+
+/// @nodoc
+class __$UpdateProductObjectCopyWithImpl<$Res>
+    extends _$UpdateProductObjectCopyWithImpl<$Res>
+    implements _$UpdateProductObjectCopyWith<$Res> {
+  __$UpdateProductObjectCopyWithImpl(
+      _UpdateProductObject _value, $Res Function(_UpdateProductObject) _then)
+      : super(_value, (v) => _then(v as _UpdateProductObject));
+
+  @override
+  _UpdateProductObject get _value => super._value as _UpdateProductObject;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? categoryId = freezed,
+    Object? color = freezed,
+    Object? image = freezed,
+    Object? price = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_UpdateProductObject(
+      id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as PickerFile?,
+      price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_UpdateProductObject implements _UpdateProductObject {
+  _$_UpdateProductObject(
+      this.id, this.categoryId, this.color, this.image, this.price, this.title);
+
+  @override
+  final String id;
+  @override
+  final String categoryId;
+  @override
+  final String color;
+  @override
+  final PickerFile? image;
+  @override
+  final String price;
+  @override
+  final String title;
+
+  @override
+  String toString() {
+    return 'UpdateProductObject(id: $id, categoryId: $categoryId, color: $color, image: $image, price: $price, title: $title)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _UpdateProductObject &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.categoryId, categoryId) ||
+                const DeepCollectionEquality()
+                    .equals(other.categoryId, categoryId)) &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)) &&
+            (identical(other.image, image) ||
+                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.price, price) ||
+                const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(categoryId) ^
+      const DeepCollectionEquality().hash(color) ^
+      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(price) ^
+      const DeepCollectionEquality().hash(title);
+
+  @JsonKey(ignore: true)
+  @override
+  _$UpdateProductObjectCopyWith<_UpdateProductObject> get copyWith =>
+      __$UpdateProductObjectCopyWithImpl<_UpdateProductObject>(
+          this, _$identity);
+}
+
+abstract class _UpdateProductObject implements UpdateProductObject {
+  factory _UpdateProductObject(String id, String categoryId, String color,
+      PickerFile? image, String price, String title) = _$_UpdateProductObject;
+
+  @override
+  String get id => throw _privateConstructorUsedError;
+  @override
+  String get categoryId => throw _privateConstructorUsedError;
+  @override
+  String get color => throw _privateConstructorUsedError;
+  @override
+  PickerFile? get image => throw _privateConstructorUsedError;
+  @override
+  String get price => throw _privateConstructorUsedError;
+  @override
+  String get title => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$UpdateProductObjectCopyWith<_UpdateProductObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 class _$AddSupplementsToProductObjectTearOff {
   const _$AddSupplementsToProductObjectTearOff();
 

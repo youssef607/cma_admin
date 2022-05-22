@@ -1,4 +1,3 @@
-
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'request.g.dart';
@@ -62,4 +61,50 @@ class AddProductRequest {
 
   AddProductRequest(
       this.categoryId, this.color, this.image, this.price, this.title);
+}
+
+//update
+class UpdateSupplementRequest {
+  String id;
+  String color;
+  PickerFile? image;
+  String price;
+  String title;
+
+  UpdateSupplementRequest(
+      this.id, this.color, this.image, this.price, this.title);
+}
+
+class UpdateUserRequest {
+  String id;
+  PickerFile? image;
+  String name;
+  String password;
+
+  String role;
+  String username;
+
+  UpdateUserRequest(
+      this.id, this.image, this.name, this.password, this.role, this.username);
+}
+
+class UpdateCategoryRequest {
+  String id;
+  PickerFile? image;
+  String label;
+  String color;
+
+  UpdateCategoryRequest(this.id, this.image, this.label, this.color);
+}
+
+class UpdateProductRequest {
+  String id;
+  String categoryId;
+  String color;
+  PickerFile? image;
+  String price;
+  String title;
+
+  UpdateProductRequest(
+      this.id, this.categoryId, this.color, this.image, this.price, this.title);
 }

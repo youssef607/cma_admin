@@ -49,8 +49,42 @@ class AddProductObject with _$AddProductObject {
   ) = _AddProductObject;
 }
 
+//update
+@freezed
+class UpdateSupplementObject with _$UpdateSupplementObject {
+  factory UpdateSupplementObject(
+    String id,
+    String color,
+    PickerFile? image,
+    String price,
+    String title,
+  ) = _UpdateSupplementObject;
+}
+
+@freezed
+class UpdateCategoryObject with _$UpdateCategoryObject {
+  factory UpdateCategoryObject(
+    String id,
+    String color,
+    PickerFile? image,
+    String label,
+  ) = _UpdateCategoryObject;
+}
+
+@freezed
+class UpdateProductObject with _$UpdateProductObject {
+  factory UpdateProductObject(
+    String id,
+    String categoryId,
+    String color,
+    PickerFile? image,
+    String price,
+    String title,
+  ) = _UpdateProductObject;
+}
+
 @freezed
 class AddSupplementsToProductObject with _$AddSupplementsToProductObject {
-  factory AddSupplementsToProductObject(
-      List<int> selectedSupplements) = _AddSupplementsToProductObject;
+  factory AddSupplementsToProductObject(List<int> selectedSupplements) =
+      _AddSupplementsToProductObject;
 }

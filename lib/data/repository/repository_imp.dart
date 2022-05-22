@@ -66,7 +66,7 @@ class RepositoryImpl extends Repository {
       return Left(ErrorHandler.handle(error).failure);
     }
   }
-  
+
   @override
   Future<Either<Failure, bool>> activeToggle(String type, String id) async {
     try {
@@ -100,7 +100,8 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, List<Supplement>>> getSupplementsByProduct(String id) async {
+  Future<Either<Failure, List<Supplement>>> getSupplementsByProduct(
+      String id) async {
     try {
       final response = await _remoteDataSource.getSupplemensByProduct(id);
       return Right(response.toDomain());
@@ -110,9 +111,11 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, Product>> addSupplementsToProduct(String productId,String suppsId) async {
+  Future<Either<Failure, Product>> addSupplementsToProduct(
+      String productId, String suppsId) async {
     try {
-      final response = await _remoteDataSource.addSupplementsToProduct(productId, suppsId);
+      final response =
+          await _remoteDataSource.addSupplementsToProduct(productId, suppsId);
       return Right(response.toDomain());
     } catch (error) {
       return Left(ErrorHandler.handle(error).failure);
@@ -120,7 +123,8 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, List<Supplement>>> getSupplementsForAdd(String id) async {
+  Future<Either<Failure, List<Supplement>>> getSupplementsForAdd(
+      String id) async {
     try {
       final response = await _remoteDataSource.getSupplementsForAdd(id);
       return Right(response.toDomain());
@@ -130,7 +134,8 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, Category>> addCategory(AddCategoryRequest addCategoryRequest)async {
+  Future<Either<Failure, Category>> addCategory(
+      AddCategoryRequest addCategoryRequest) async {
     try {
       final response = await _remoteDataSource.addCategory(addCategoryRequest);
 
@@ -141,7 +146,8 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, Product>> addProduct(AddProductRequest addProductRequest) async{
+  Future<Either<Failure, Product>> addProduct(
+      AddProductRequest addProductRequest) async {
     try {
       final response = await _remoteDataSource.addProduct(addProductRequest);
 
@@ -152,9 +158,11 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, Supplement>> addSupplement(AddSupplementRequest addSupplementRequest) async{
+  Future<Either<Failure, Supplement>> addSupplement(
+      AddSupplementRequest addSupplementRequest) async {
     try {
-      final response = await _remoteDataSource.addSupplement(addSupplementRequest);
+      final response =
+          await _remoteDataSource.addSupplement(addSupplementRequest);
 
       return Right(response.toDomain());
     } catch (error) {
@@ -163,7 +171,8 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, SignInData>> addUser(AddUserRequest addUserRequest) async{
+  Future<Either<Failure, SignInData>> addUser(
+      AddUserRequest addUserRequest) async {
     try {
       final response = await _remoteDataSource.addUser(addUserRequest);
 
@@ -174,9 +183,11 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteSupplementFromProduct(String productId, String suppId) async{
+  Future<Either<Failure, void>> deleteSupplementFromProduct(
+      String productId, String suppId) async {
     try {
-      final response = await _remoteDataSource.deleteSupplementsToProduct(productId, suppId);
+      final response =
+          await _remoteDataSource.deleteSupplementsToProduct(productId, suppId);
 
       return Right(response);
     } catch (error) {
@@ -185,10 +196,23 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, bool>> delete(String type,String id) async{
+  Future<Either<Failure, bool>> delete(String type, String id) async {
     try {
-      final response = await _remoteDataSource.delete(type,id);
+      final response = await _remoteDataSource.delete(type, id);
       return Right(response);
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, Supplement>> updateSupplement(
+      UpdateSupplementRequest updateSupplementRequest) async {
+    try {
+      final response =
+          await _remoteDataSource.updateSupplement(updateSupplementRequest);
+
+      return Right(response.toDomain());
     } catch (error) {
       return Left(ErrorHandler.handle(error).failure);
     }

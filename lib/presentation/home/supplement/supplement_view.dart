@@ -115,11 +115,14 @@ class _SupplementViewState extends State<SupplementView> {
                               _viewModel.activeToggle(
                                   context, supplement, supplements);
                             })),
-                        DataCell(PopUpMenuColumn(
-                          delete: (){
-                            _viewModel.delete(context, supplement, supplements);
-                          },
-                          update: (){}))
+                        DataCell(PopUpMenuColumn(delete: () {
+                          _viewModel.delete(context, supplement, supplements);
+                        }, update: () {
+                          Navigator.of(context)
+                              .pushNamed(Routes.updateSupplementRoute,
+                                  arguments: supplement)
+                              .then((value) => _bind());
+                        }))
                       ]))
                   .toList())
         ],
@@ -139,7 +142,9 @@ class _SupplementViewState extends State<SupplementView> {
               ActionButton(
                   title: AppStrings.addSupplement,
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.addSupplementRoute).then((_) => _bind());
+                    Navigator.of(context)
+                        .pushNamed(Routes.addSupplementRoute)
+                        .then((_) => _bind());
                   },
                   color: ColorManager.primary),
               SizedBox(width: AppSize.s10),
