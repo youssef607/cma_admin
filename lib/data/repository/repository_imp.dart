@@ -217,4 +217,17 @@ class RepositoryImpl extends Repository {
       return Left(ErrorHandler.handle(error).failure);
     }
   }
+
+  @override
+  Future<Either<Failure, Category>> UpdateCategory(
+      UpdateCategoryRequest updateCategoryRequest) async {
+    try {
+      final response =
+          await _remoteDataSource.updateCategory(updateCategoryRequest);
+
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
 }

@@ -28,4 +28,7 @@ abstract class Repository {
   Future<Either<Failure, Product>> addProduct(
       AddProductRequest addProductRequest);
   Future<Either<Failure, bool>> delete(String type, String id);
+
+  Future<Either<Failure, Category>> UpdateCategory(
+      UpdateCategoryRequest updateCategoryRequest);
 }

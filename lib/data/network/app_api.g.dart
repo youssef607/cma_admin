@@ -285,7 +285,7 @@ class _AppServiceClient implements AppServiceClient {
     _data.fields.add(MapEntry('color', color));
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<CategoryResponse>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'PUT', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/category/$id/update',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -402,7 +402,7 @@ class _AppServiceClient implements AppServiceClient {
     _data.fields.add(MapEntry('title', title));
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ProductResponse>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'PUT', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, '/product/$id/update',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));

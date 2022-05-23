@@ -72,7 +72,7 @@ abstract class AppServiceClient {
     @Part() required String color,
   });
 
-  @POST("/category/{id}/update")
+  @PUT("/category/{id}/update")
   @MultiPart()
   Future<CategoryResponse> UpdateCategory({
     @Path() required String id,
@@ -110,7 +110,7 @@ abstract class AppServiceClient {
     @Part() required String title,
   });
 
-  @POST("/product/{id}/update")
+  @PUT("/product/{id}/update")
   @MultiPart()
   Future<ProductResponse> updateProduct({
     @Path() required String id,

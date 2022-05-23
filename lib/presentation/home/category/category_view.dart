@@ -109,7 +109,12 @@ class _CategoryViewState extends State<CategoryView> {
                             value: category.active,
                             onChanged: (value) {_viewModel.activeToggle(context,category, categories);})),
                         DataCell(PopUpMenuColumn(
-                            update: () {},
+                            update: () {
+                                    Navigator.of(context)
+                              .pushNamed(Routes.updateCategoryRoute,
+                                  arguments: category)
+                              .then((value) => _bind());
+                            },
                             delete: (){
                               _viewModel.delete(context, category, categories);
                             },
