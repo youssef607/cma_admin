@@ -31,4 +31,7 @@ abstract class Repository {
 
   Future<Either<Failure, Category>> UpdateCategory(
       UpdateCategoryRequest updateCategoryRequest);
+
+  Future<Either<Failure, Product>> updateProduct(
+      UpdateProductRequest updateProductRequest);
 }

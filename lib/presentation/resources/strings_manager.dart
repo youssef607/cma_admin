@@ -134,4 +134,6 @@ class AppStrings {
   //Update
   static const String update = "Update";
   static const String updateSupplement = "Update Supplement";
+  static const String updateProduct = "Update Product";
+  static const String updateCategory = "Update Category";
 }

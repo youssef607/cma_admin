@@ -7,27 +7,28 @@ import 'package:cma_admin/presentation/components/image_picker.dart';
 import 'package:cma_admin/presentation/components/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/styles_manager.dart';
-import 'package:cma_admin/presentation/update_supplement/update_supplement_view_model.dart';
+import 'package:cma_admin/presentation/update_product/update_product_view_model.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
-class UpdateSupplementView extends StatefulWidget {
-  final Supplement supplement;
-  const UpdateSupplementView(this.supplement, {Key? key}) : super(key: key);
+class UpdateProductView extends StatefulWidget {
+  final Product product;
+  const UpdateProductView(this.product, {Key? key}) : super(key: key);
 
   @override
-  _UpdateSupplementViewState createState() => _UpdateSupplementViewState();
+  _UpdateProductViewViewState createState() => _UpdateProductViewViewState();
 }
 
-class _UpdateSupplementViewState extends State<UpdateSupplementView> {
-  UpdateSupplementViewModel _viewModel = instance<UpdateSupplementViewModel>();
+class _UpdateProductViewViewState extends State<UpdateProductView> {
+  UpdateProductViewModel _viewModel = instance<UpdateProductViewModel>();
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _titleTextEditingController = TextEditingController();
@@ -45,17 +46,19 @@ class _UpdateSupplementViewState extends State<UpdateSupplementView> {
     _titleTextEditingController.addListener(() {
       _viewModel.setTitle(_titleTextEditingController.text);
     });
-    _titleTextEditingController.text = widget.supplement.title;
+    _titleTextEditingController.text = widget.product.title;
 
     _priceTextEditingController.addListener(() {
       _viewModel.setPrice(_priceTextEditingController.text);
     });
-    _priceTextEditingController.text = widget.supplement.price.toString();
-    _viewModel.setId(widget.supplement.id.toString());
-    _viewModel.setColor(widget.supplement.color);
+    _priceTextEditingController.text = widget.product.price.toString();
 
-    _viewModel.isSupplementUpdatedSuccessfullyStreamController.stream
-        .listen((isSuccessUpdateSupplement) {
+    _viewModel.setId(widget.product.id.toString());
+    _viewModel.setColor(widget.product.color);
+    _viewModel.setCategoryId(widget.product.category!.id.toString());
+
+    _viewModel.isUpdateProductSuccessfullyStreamController.stream
+        .listen((isSuccessUpdateProduct) {
       Navigator.of(context).pop();
     });
   }
@@ -70,7 +73,7 @@ class _UpdateSupplementViewState extends State<UpdateSupplementView> {
           return Center(
             child: snapshot.data?.getScreenWidget(context, _getContentWidget(),
                     () {
-                  _viewModel.updateSupplement(context);
+                  _viewModel.updateProduct();
                 }) ??
                 _getContentWidget(),
           );
@@ -82,7 +85,7 @@ class _UpdateSupplementViewState extends State<UpdateSupplementView> {
   Widget _getContentWidget() {
     return Container(
         width: AppSize.s500,
-        padding: EdgeInsets.symmetric(vertical: AppPadding.p10),
+        padding: EdgeInsets.symmetric(vertical: AppPadding.p4),
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -93,10 +96,10 @@ class _UpdateSupplementViewState extends State<UpdateSupplementView> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: AppPadding.p20),
+                        padding: const EdgeInsets.only(bottom: AppPadding.p10),
                         child: Container(
                             child: Text(
-                          AppStrings.updateSupplement,
+                          AppStrings.updateProduct,
                           style: getBoldStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s24),
@@ -111,10 +114,7 @@ class _UpdateSupplementViewState extends State<UpdateSupplementView> {
                           },
                           child: DottedBorder(
                             borderType: BorderType.RRect,
-                            radius: Radius.circular(AppSize.s4),
-                            dashPattern: [5, 5],
-                            color: ColorManager.grey,
-                            strokeWidth: AppSize.s2,
+                            radius: Radius.circular(12),
                             child: Container(
                               child: _getMediaWidget(),
                               height: AppSize.s200,
@@ -139,7 +139,7 @@ class _UpdateSupplementViewState extends State<UpdateSupplementView> {
                                     keyboardType: TextInputType.text,
                                     controller: _titleTextEditingController,
                                     decoration: InputDecoration(
-                                        hintText: AppStrings.title,
+                                        hintText: AppStrings.label,
                                         errorText: snapshot.data));
                               },
                             ),
@@ -154,20 +154,16 @@ class _UpdateSupplementViewState extends State<UpdateSupplementView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             RequiredLabel(
-                              text: AppStrings.price,
-                              requiredText: "*",
-                            ),
+                                text: AppStrings.price, requiredText: "*"),
                             StreamBuilder<String?>(
                               stream: _viewModel.outputErrorPrice,
                               builder: (context, snapshot) {
                                 return TextFormField(
-                                    // initialValue:
-                                    //     widget.supplement.price.toString(),
                                     controller: _priceTextEditingController,
-                                    // onChanged: (value) {
-                                    //   _viewModel.setPrice(value);
-                                    // },
                                     keyboardType: TextInputType.text,
+                                    onChanged: (value) {
+                                      _viewModel.setPrice(value);
+                                    },
                                     decoration: InputDecoration(
                                         hintText: AppStrings.price,
                                         errorText: snapshot.data));
@@ -184,13 +180,51 @@ class _UpdateSupplementViewState extends State<UpdateSupplementView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             RequiredLabel(
-                              text: AppStrings.color,
+                                text: AppStrings.addCategory,
+                                requiredText: "*"),
+                            StreamBuilder<List<Category>?>(
+                              stream: _viewModel.outputCategories,
+                              builder: (context, snapshot) {
+                                List<Category>? categories = snapshot.data;
+
+                                return categories != null
+                                    ? DropdownSearch<Category>(
+                                        mode: Mode.MENU,
+                                        selectedItem: widget.product.category,
+                                        items: categories
+                                            .map((category) => category)
+                                            .toList(),
+                                        itemAsString: (Category? category) =>
+                                            category!.label,
+                                        dropdownSearchDecoration:
+                                            InputDecoration(
+                                          hintText: AppStrings.addCategory,
+                                        ),
+                                        onChanged: (category) {
+                                          _viewModel.setCategoryId(
+                                              category!.id.toString());
+                                        },
+                                      )
+                                    : DropdownSearch<Category>();
+                              },
+                              // return Text(categories![0].label);
                             ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: AppSize.s12),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: AppPadding.p28, right: AppPadding.p28),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RequiredLabel(text: AppStrings.color),
                             StreamBuilder<Color?>(
                               stream: _viewModel.outputPickerColor,
                               builder: (context, snapshot) {
                                 Color color =
-                                    snapshot.data ?? widget.supplement.color;
+                                    snapshot.data ?? widget.product.color;
                                 return InkWell(
                                   child: ColorPickerForm(
                                     color: color,
@@ -220,8 +254,7 @@ class _UpdateSupplementViewState extends State<UpdateSupplementView> {
                                 child: ElevatedButton(
                                     onPressed: (snapshot.data ?? false)
                                         ? () {
-                                            _viewModel
-                                                .updateSupplement(context);
+                                            _viewModel.updateProduct();
                                           }
                                         : null,
                                     child: Text(AppStrings.update)),
@@ -247,7 +280,7 @@ class _UpdateSupplementViewState extends State<UpdateSupplementView> {
             PickerFile? pickerFile = snapshot.data;
             return pickerFile != null
                 ? _imagePickedByUser(pickerFile.byte)
-                : ImagePicker(widget.supplement.image);
+                : ImagePicker(widget.product.image);
           },
         ),
       ),

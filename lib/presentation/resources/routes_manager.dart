@@ -12,6 +12,7 @@ import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/signIn/signIn.dart';
 import 'package:cma_admin/presentation/splash/splash.dart';
 import 'package:cma_admin/presentation/update_category/update_category_view.dart';
+import 'package:cma_admin/presentation/update_product/update_product_view.dart';
 import 'package:cma_admin/presentation/update_supplement/update_supplement.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class Routes {
   static const String addSupplementRoute = "/addSupplement";
   static const String updateSupplementRoute = "/updateSupplement";
   static const String updateCategoryRoute = "/updateCategory";
+  static const String updateProductRoute = "/updateProduct";
   static const String addProductRoute = "/addProduct";
   static const String splashRoute = "/splash";
   static const String categoryDetailsRoute = "/category/details";
@@ -53,6 +55,14 @@ class RouteGenerator {
         return CupertinoPageRoute(
             builder: (_) => UpdateCategoryView(
                   category,
+                ));
+
+      case Routes.updateProductRoute:
+        initUpdateProductModule();
+        Product product = routeSettings.arguments as Product;
+        return CupertinoPageRoute(
+            builder: (_) => UpdateProductView(
+                  product,
                 ));
 
       case Routes.addProductRoute:

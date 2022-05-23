@@ -50,8 +50,8 @@ class _UpdateCategoryViewState extends State<UpdateCategoryView> {
     _viewModel.setId(widget.category.id.toString());
     _viewModel.setColor(widget.category.color);
 
-    _viewModel.isAddCategorySuccessfullyStreamController.stream
-        .listen((isSuccessAddCategory) {
+    _viewModel.isUpdateCategorySuccessfullyStreamController.stream
+        .listen((isSuccessUpdateCategory) {
       Navigator.of(context).pop();
     });
   }
@@ -92,7 +92,7 @@ class _UpdateCategoryViewState extends State<UpdateCategoryView> {
                         padding: const EdgeInsets.only(bottom: AppPadding.p20),
                         child: Container(
                             child: Text(
-                          AppStrings.createCategory,
+                          AppStrings.updateCategory,
                           style: getBoldStyle(
                               color: ColorManager.black,
                               fontSize: FontSize.s24),
@@ -189,7 +189,7 @@ class _UpdateCategoryViewState extends State<UpdateCategoryView> {
                                             _viewModel.updateCategory(context);
                                           }
                                         : null,
-                                    child: Text(AppStrings.create)),
+                                    child: Text(AppStrings.update)),
                               );
                             },
                           )),

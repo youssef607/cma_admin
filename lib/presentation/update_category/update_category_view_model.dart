@@ -5,7 +5,6 @@ import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
-import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -20,15 +19,14 @@ class UpdateCategoryViewModel extends BaseViewModel
       StreamController<String>.broadcast();
 
   StreamController _isAllInputsValidStreamController =
-      StreamController<void>.broadcast();
+      StreamController<bool>.broadcast();
 
-  StreamController isAddCategorySuccessfullyStreamController =
+  StreamController isUpdateCategorySuccessfullyStreamController =
       StreamController<bool>();
 
   UpdateCategoryUseCase _updateCategoryUseCase;
 
-  var updateCategoryViewObject = UpdateCategoryObject(
-      "", ColorManager.grey.value.toRadixString(16), null, "");
+  var updateCategoryViewObject = UpdateCategoryObject("", "", null, "");
 
   UpdateCategoryViewModel(this._updateCategoryUseCase);
 
@@ -54,8 +52,8 @@ class UpdateCategoryViewModel extends BaseViewModel
                       StateRendererType.POPUP_ERROR_STATE, failure.message))
                 }, (data) {
       inputState.add(ContentState());
-      isAddCategorySuccessfullyStreamController.add(true);
-      Navigator.of(context).pop();
+      isUpdateCategorySuccessfullyStreamController.add(true);
+      // Navigator.of(context).pop();
     });
   }
 
@@ -65,7 +63,7 @@ class UpdateCategoryViewModel extends BaseViewModel
     _profilePictureStreamController.close();
     _colorStreamController.close();
     _labelStreamController.close();
-    isAddCategorySuccessfullyStreamController.close();
+    isUpdateCategorySuccessfullyStreamController.close();
 
     super.dispose();
   }

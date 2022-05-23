@@ -1,22 +1,29 @@
 import 'dart:async';
 
 import 'package:cma_admin/app/functions.dart';
+import 'package:cma_admin/data/mapper/mapper.dart';
 import 'package:cma_admin/domain/model/model.dart';
-import 'package:cma_admin/domain/usecase/update_supplement_usecase.dart';
+import 'package:cma_admin/domain/usecase/category_usecase.dart';
+import 'package:cma_admin/domain/usecase/update_product_usecase.dart';
 import 'package:cma_admin/presentation/base/baseviewmodel.dart';
 import 'package:cma_admin/presentation/common/freezed_data_classes.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:rxdart/rxdart.dart';
 
-class UpdateSupplementViewModel extends BaseViewModel
-    with UpdateSupplementViewModelInput, UpdateSupplementViewModelOutput {
+class UpdateProductViewModel extends BaseViewModel
+    with UpdateProductViewModelInput, UpdateProductViewModelOutput {
+  final _categorieStreamController = BehaviorSubject<List<Category>>();
   StreamController _colorStreamController = StreamController<Color>.broadcast();
   StreamController _priceStreamController =
       StreamController<String>.broadcast();
 
   StreamController _titleStreamController =
+      StreamController<String>.broadcast();
+
+  StreamController _categoryIdStreamController =
       StreamController<String>.broadcast();
 
   StreamController _profilePictureStreamController =
@@ -25,19 +32,58 @@ class UpdateSupplementViewModel extends BaseViewModel
   StreamController _isAllInputsValidStreamController =
       StreamController<bool>.broadcast();
 
-  StreamController isSupplementUpdatedSuccessfullyStreamController =
+  StreamController isUpdateProductSuccessfullyStreamController =
       StreamController<bool>();
 
-  UpdateSupplementUseCase _updateSupplementUseCase;
+  UpdateProductUseCase _updateProductUseCase;
+  CategoryUseCase _categoryUseCase;
 
-  var updateSupplementViewObject = UpdateSupplementObject("", "", null, "", "");
+  var updateProductViewObject = UpdateProductObject("", "", "", null, "", "");
 
-  UpdateSupplementViewModel(this._updateSupplementUseCase);
+  UpdateProductViewModel(this._updateProductUseCase, this._categoryUseCase);
 
   //  -- inputs
   @override
   void start() {
     inputState.add(ContentState());
+    loadCategory();
+  }
+
+  @override
+  updateProduct() async {
+    inputState.add(
+        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+    (await _updateProductUseCase.execute(UpdateProductUseCaseInput(
+      updateProductViewObject.id,
+      updateProductViewObject.categoryId,
+      updateProductViewObject.color.toString(),
+      updateProductViewObject.image,
+      updateProductViewObject.price,
+      updateProductViewObject.title,
+    )))
+        .fold(
+            (failure) => {
+                  inputState.add(ErrorState(
+                      StateRendererType.POPUP_ERROR_STATE, failure.message))
+                }, (data) {
+      inputState.add(ContentState());
+      isUpdateProductSuccessfullyStreamController.add(true);
+    });
+  }
+
+  loadCategory() async {
+    inputState.add(LoadingState(
+        stateRendererType: StateRendererType.FULL_SCREEN_LOADING_STATE));
+    (await _categoryUseCase.execute(EMPTY)).fold(
+      (failure) {
+        inputState.add(ErrorState(
+            StateRendererType.FULL_SCREEN_ERROR_STATE, failure.message));
+      },
+      (categories) async {
+        inputState.add(ContentState());
+        inputCategories.add(categories);
+      },
+    );
   }
 
   @override
@@ -47,35 +93,16 @@ class UpdateSupplementViewModel extends BaseViewModel
     _colorStreamController.close();
     _titleStreamController.close();
     _priceStreamController.close();
+    _categoryIdStreamController.close();
+    _isAllInputsValidStreamController.close();
+    _categorieStreamController.close();
     super.dispose();
-  }
-
-  @override
-  updateSupplement(BuildContext context) async {
-    inputState.add(
-        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
-    (await _updateSupplementUseCase.execute(UpdateSupplementUseCaseInput(
-      updateSupplementViewObject.id,
-      updateSupplementViewObject.color.toString(),
-      updateSupplementViewObject.image,
-      updateSupplementViewObject.price,
-      updateSupplementViewObject.title,
-    )))
-        .fold(
-            (failure) => {
-                  inputState.add(ErrorState(
-                      StateRendererType.POPUP_ERROR_STATE, failure.message))
-                }, (data) {
-      inputState.add(ContentState());
-      isSupplementUpdatedSuccessfullyStreamController.add(true);
-      // Navigator.of(context).pop();
-    });
   }
 
   @override
   setColor(Color color) {
     inputPickerColor.add(color);
-    updateSupplementViewObject = updateSupplementViewObject.copyWith(
+    updateProductViewObject = updateProductViewObject.copyWith(
         color: colorToHex(color, includeHashSign: false));
   }
 
@@ -83,11 +110,9 @@ class UpdateSupplementViewModel extends BaseViewModel
   setTitle(String title) {
     inputTitle.add(title);
     if (_isTitleValid(title)) {
-      updateSupplementViewObject =
-          updateSupplementViewObject.copyWith(title: title);
+      updateProductViewObject = updateProductViewObject.copyWith(title: title);
     } else {
-      updateSupplementViewObject =
-          updateSupplementViewObject.copyWith(title: "");
+      updateProductViewObject = updateProductViewObject.copyWith(title: "");
     }
     _validate();
   }
@@ -96,29 +121,42 @@ class UpdateSupplementViewModel extends BaseViewModel
   setPrice(String price) {
     inputPrice.add(price);
     if (_isPriceValid(price)) {
-      updateSupplementViewObject =
-          updateSupplementViewObject.copyWith(price: price);
+      updateProductViewObject = updateProductViewObject.copyWith(price: price);
     } else {
-      updateSupplementViewObject =
-          updateSupplementViewObject.copyWith(price: "");
+      updateProductViewObject = updateProductViewObject.copyWith(price: "");
     }
     _validate();
   }
 
-  setId(String id) {
-    updateSupplementViewObject = updateSupplementViewObject.copyWith(id: id);
+  @override
+  setCategoryId(String id) {
+    inputCategoryId.add(id);
+    if (_isCategoryIdValid(id)) {
+      updateProductViewObject =
+          updateProductViewObject.copyWith(categoryId: id);
+    } else {
+      updateProductViewObject =
+          updateProductViewObject.copyWith(categoryId: "");
+    }
+    _validate();
   }
 
   @override
   setProfilePicture(PickerFile file) {
     inputProfilePicture.add(file);
-    updateSupplementViewObject =
-        updateSupplementViewObject.copyWith(image: file);
+    updateProductViewObject = updateProductViewObject.copyWith(image: file);
     _validate();
+  }
+
+  setId(String id) {
+    updateProductViewObject = updateProductViewObject.copyWith(id: id);
   }
 
   @override
   Sink get inputPickerColor => _colorStreamController.sink;
+
+  @override
+  Sink get inputCategoryId => _categoryIdStreamController.sink;
 
   @override
   Sink get inputProfilePicture => _profilePictureStreamController.sink;
@@ -132,11 +170,18 @@ class UpdateSupplementViewModel extends BaseViewModel
   @override
   Sink get inputAllInputsValid => _isAllInputsValidStreamController.sink;
 
+  @override
+  Sink get inputCategories => _categorieStreamController.sink;
+
   // -- outputs
 
   @override
   Stream<Color> get outputPickerColor =>
       _colorStreamController.stream.map((color) => color);
+
+  @override
+  Stream<String> get outputCategoryId =>
+      _categoryIdStreamController.stream.map((categoryId) => categoryId);
 
   @override
   Stream<bool> get outputIsTitleValid =>
@@ -162,6 +207,10 @@ class UpdateSupplementViewModel extends BaseViewModel
   Stream<bool> get outputIsAllInputsValid =>
       _isAllInputsValidStreamController.stream.map((_) => _validateAllInputs());
 
+  @override
+  Stream<List<Category>> get outputCategories =>
+      _categorieStreamController.stream.map((categories) => categories);
+
   // -- private methods
   bool _isTitleValid(String title) {
     return title.isNotEmpty;
@@ -171,21 +220,29 @@ class UpdateSupplementViewModel extends BaseViewModel
     return isNumeric(price);
   }
 
+  bool _isCategoryIdValid(String id) {
+    return id.isNotEmpty;
+  }
+
   bool _validateAllInputs() {
-    return updateSupplementViewObject.title.isNotEmpty &&
-        updateSupplementViewObject.price.isNotEmpty;
+    return updateProductViewObject.title.isNotEmpty &&
+        updateProductViewObject.categoryId.toString().isNotEmpty &&
+        updateProductViewObject.price.toString().isNotEmpty;
   }
 
   _validate() {
-    inputAllInputsValid.add(true);
+    inputAllInputsValid.add(null);
   }
 }
 
-abstract class UpdateSupplementViewModelInput {
-  updateSupplement(BuildContext context);
+abstract class UpdateProductViewModelInput {
+  updateProduct();
+
   setColor(Color color);
 
   setProfilePicture(PickerFile file);
+
+  setCategoryId(String id);
 
   setPrice(String price);
 
@@ -197,15 +254,21 @@ abstract class UpdateSupplementViewModelInput {
 
   Sink get inputPrice;
 
+  Sink get inputCategoryId;
+
   Sink get inputTitle;
 
   Sink get inputAllInputsValid;
+
+  Sink get inputCategories;
 }
 
-abstract class UpdateSupplementViewModelOutput {
+abstract class UpdateProductViewModelOutput {
   Stream<Color> get outputPickerColor;
 
   Stream<PickerFile?> get outputProfilePicture;
+
+  Stream<String?> get outputCategoryId;
 
   Stream<bool> get outputIsPriceValid;
 
@@ -216,4 +279,6 @@ abstract class UpdateSupplementViewModelOutput {
   Stream<String?> get outputErrorTitle;
 
   Stream<bool> get outputIsAllInputsValid;
+
+  Stream<List<Category>> get outputCategories;
 }

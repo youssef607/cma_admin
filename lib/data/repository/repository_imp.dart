@@ -230,4 +230,17 @@ class RepositoryImpl extends Repository {
       return Left(ErrorHandler.handle(error).failure);
     }
   }
+
+  @override
+  Future<Either<Failure, Product>> updateProduct(
+      UpdateProductRequest updateProductRequest) async {
+    try {
+      final response =
+          await _remoteDataSource.updateProduct(updateProductRequest);
+
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
 }

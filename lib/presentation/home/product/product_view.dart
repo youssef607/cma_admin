@@ -114,16 +114,22 @@ class _ProductViewState extends State<ProductView> {
                         DataCell(Switch(
                             value: product.active,
                             onChanged: (value) {
-                              _viewModel.activeToggle(context,product, products);
+                              _viewModel.activeToggle(
+                                  context, product, products);
                             })),
-                        DataCell(PopUpMenuColumn(
-                            update: () {},
-                            delete: (){
-                              _viewModel.delete(context, product, products);
-                            },
-                            view: () {
-                              Navigator.of(context).pushNamed(Routes.productDetailsRoute,arguments: product) .then((value) => _bind());
-                            }))
+                        DataCell(PopUpMenuColumn(update: () {
+                          Navigator.of(context)
+                              .pushNamed(Routes.updateProductRoute,
+                                  arguments: product)
+                              .then((value) => _bind());
+                        }, delete: () {
+                          _viewModel.delete(context, product, products);
+                        }, view: () {
+                          Navigator.of(context)
+                              .pushNamed(Routes.productDetailsRoute,
+                                  arguments: product)
+                              .then((value) => _bind());
+                        }))
                       ]))
                   .toList())
         ],
@@ -143,7 +149,9 @@ class _ProductViewState extends State<ProductView> {
               ActionButton(
                   title: AppStrings.addProduct,
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.addProductRoute).then((_) => _bind());
+                    Navigator.of(context)
+                        .pushNamed(Routes.addProductRoute)
+                        .then((_) => _bind());
                   },
                   color: ColorManager.primary),
               SizedBox(width: AppSize.s10),
@@ -161,8 +169,10 @@ class _ProductViewState extends State<ProductView> {
   }
 
   Widget _getStatiqueGrid(List<Product> products) {
-    int isActiveCount =products.where((Product) => Product.active == true).toList().length;
-    int isNotActiveCount = products.where((Product) => Product.active == false).toList().length;
+    int isActiveCount =
+        products.where((Product) => Product.active == true).toList().length;
+    int isNotActiveCount =
+        products.where((Product) => Product.active == false).toList().length;
     return ResponsiveGrid(
         widthPourcentage: isMobile(context) ? 0.3 : 0.25,
         children: [
