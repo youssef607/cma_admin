@@ -87,6 +87,7 @@ class _SupplementViewState extends State<SupplementView> {
 
   Widget _getDataTable(List<Supplement> supplements) {
     return SingleChildScrollView(
+      controller: ScrollController(),
       child: Column(
         children: [
           SizedBox(height: AppSize.s20),

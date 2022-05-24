@@ -85,6 +85,7 @@ class _UserViewState extends State<UserView> {
 
   Widget _getDataTable(List<User> users) {
     return SingleChildScrollView(
+      controller: ScrollController(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -142,7 +142,7 @@ class UpdateCategoryViewModel extends BaseViewModel
   }
 
   _validate() {
-    inputAllInputsValid.add(null);
+    inputAllInputsValid.add(true);
   }
 }
 

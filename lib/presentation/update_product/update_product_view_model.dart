@@ -231,7 +231,7 @@ class UpdateProductViewModel extends BaseViewModel
   }
 
   _validate() {
-    inputAllInputsValid.add(null);
+    inputAllInputsValid.add(true);
   }
 }
 

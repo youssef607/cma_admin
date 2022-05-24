@@ -88,6 +88,7 @@ class _ProductViewState extends State<ProductView> {
 
   Widget _getDataTable(List<Product> products) {
     return SingleChildScrollView(
+      controller: ScrollController(),
       child: Column(
         children: [
           SizedBox(height: AppSize.s20),

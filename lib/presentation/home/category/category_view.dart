@@ -86,6 +86,7 @@ class _CategoryViewState extends State<CategoryView> {
 
   Widget _getDataTable(List<Category> categories) {
     return SingleChildScrollView(
+      controller: ScrollController(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
