@@ -3,7 +3,10 @@ import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/addProduct/addProduct_view_model.dart';
 import 'package:cma_admin/presentation/components/color_picker_dialogue.dart';
 import 'package:cma_admin/presentation/components/color_picker_label.dart';
+import 'package:cma_admin/presentation/components/dotted_border.dart';
+import 'package:cma_admin/presentation/components/imagePickedByUser.dart';
 import 'package:cma_admin/presentation/components/requiredlabel.dart';
+import 'package:cma_admin/presentation/components/title_form.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/styles_manager.dart';
@@ -82,33 +85,18 @@ class _AddProductViewViewState extends State<AddProductView> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: AppPadding.p10),
-                        child: Container(
-                            child: Text(
-                          AppStrings.createCategory,
-                          style: getBoldStyle(
-                              color: ColorManager.black,
-                              fontSize: FontSize.s24),
-                        )),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: GestureDetector(
+                          padding:
+                              const EdgeInsets.only(bottom: AppPadding.p10),
+                          child: TitleForm(
+                            title: AppStrings.createProduct,
+                          )),
+                      GestureDetector(
                           onTap: () {
                             _startFilePicker();
                           },
-                          child: DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(12),
-                            child: Container(
-                              child: _getMediaWidget(),
-                              height: AppSize.s200,
-                              width: MediaQuery.of(context).size.width * 0.5,
-                            ),
-                          ),
-                        ),
-                      ),
+                          child: PickImageWidget(
+                            getMediaWidget: _getMediaWidget(),
+                          )),
                       SizedBox(height: AppSize.s12),
                       Padding(
                         padding: EdgeInsets.only(
@@ -261,7 +249,7 @@ class _AddProductViewViewState extends State<AddProductView> {
         builder: (context, snapshot) {
           PickerFile? pickerFile = snapshot.data;
           return pickerFile != null
-              ? _imagePickedByUser(pickerFile.byte)
+              ? ImagePickedByUser(pickerFile.byte)
               : Column(
                   children: [
                     Expanded(
@@ -276,17 +264,6 @@ class _AddProductViewViewState extends State<AddProductView> {
         },
       ),
     );
-  }
-
-  Widget _imagePickedByUser(Uint8List? image) {
-    if (image != null) {
-      return Image.memory(
-        image,
-        fit: BoxFit.contain,
-      );
-    } else {
-      return Container();
-    }
   }
 
   @override

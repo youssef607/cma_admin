@@ -90,9 +90,13 @@ class _AddSupplementViewState extends State<AddSupplementView> {
                           title: AppStrings.createSupplement,
                         ),
                       ),
-                      PickImageWidget(
-                          getMediaWidget: _getMediaWidget(),
-                          startFilePicker: _startFilePicker()),
+                      GestureDetector(
+                          onTap: () {
+                            _startFilePicker();
+                          },
+                          child: PickImageWidget(
+                            getMediaWidget: _getMediaWidget(),
+                          )),
                       SizedBox(height: AppSize.s12),
                       Padding(
                         padding: EdgeInsets.only(

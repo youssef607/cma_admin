@@ -4,6 +4,7 @@ import 'package:cma_admin/presentation/add_product/add_product_viewmodel.dart';
 import 'package:cma_admin/presentation/components/color_picker_dialogue.dart';
 import 'package:cma_admin/presentation/components/color_picker_label.dart';
 import 'package:cma_admin/presentation/components/custom_appbar.dart';
+import 'package:cma_admin/presentation/components/dotted_border.dart';
 import 'package:cma_admin/presentation/components/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
@@ -97,27 +98,13 @@ class _AddProductViewViewState extends State<AddProductView> {
                               fontSize: FontSize.s24),
                         )),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: GestureDetector(
+                      GestureDetector(
                           onTap: () {
                             _startFilePicker();
                           },
-                          child: DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(AppSize.s4),
-                            dashPattern: [5, 5],
-                            color: ColorManager.grey,
-                            strokeWidth: AppSize.s2,
-                            child: Container(
-                              child: _getMediaWidget(),
-                              height: AppSize.s200,
-                              width: MediaQuery.of(context).size.width * 0.5,
-                            ),
-                          ),
-                        ),
-                      ),
+                          child: PickImageWidget(
+                            getMediaWidget: _getMediaWidget(),
+                          )),
                       SizedBox(height: AppSize.s12),
                       Padding(
                         padding: EdgeInsets.only(

@@ -104,9 +104,13 @@ class _AddUserViewState extends State<AddUserView> {
                           child: TitleForm(
                             title: AppStrings.createUser,
                           )),
-                      PickImageWidget(
-                          getMediaWidget: _getMediaWidget(),
-                          startFilePicker: _startFilePicker()),
+                      GestureDetector(
+                          onTap: () {
+                            _startFilePicker();
+                          },
+                          child: PickImageWidget(
+                            getMediaWidget: _getMediaWidget(),
+                          )),
                       SizedBox(height: AppSize.s12),
                       Row(
                         children: [
