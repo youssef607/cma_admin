@@ -98,6 +98,7 @@ class _AddProductViewViewState extends State<AddProductView> {
                               fontSize: FontSize.s24),
                         )),
                       ),
+                      //
                       GestureDetector(
                           onTap: () {
                             _startFilePicker();
