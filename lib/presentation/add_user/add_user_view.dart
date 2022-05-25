@@ -4,14 +4,13 @@ import 'package:cma_admin/app/app_prefs.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/add_user/add_user_viewmodel.dart';
 import 'package:cma_admin/presentation/components/custom_appbar.dart';
+import 'package:cma_admin/presentation/components/dotted_border.dart';
+import 'package:cma_admin/presentation/components/imagePickedByUser.dart';
 import 'package:cma_admin/presentation/components/requiredlabel.dart';
+import 'package:cma_admin/presentation/components/title_form.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
-import 'package:cma_admin/presentation/resources/font_manager.dart';
-import 'package:cma_admin/presentation/resources/styles_manager.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
-import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/routes_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
@@ -100,36 +99,14 @@ class _AddUserViewState extends State<AddUserView> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: AppPadding.p20),
-                        child: Container(
-                            child: Text(
-                          AppStrings.createUser,
-                          style: getBoldStyle(
-                              color: ColorManager.black,
-                              fontSize: FontSize.s24),
-                        )),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: GestureDetector(
-                          onTap: () {
-                            _startFilePicker();
-                          },
-                          child: DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(AppSize.s4),
-                            dashPattern: [5, 5],
-                            color: ColorManager.grey,
-                            strokeWidth: AppSize.s2,
-                            child: Container(
-                              child: _getMediaWidget(),
-                              height: AppSize.s200,
-                              width: MediaQuery.of(context).size.width * 0.5,
-                            ),
-                          ),
-                        ),
-                      ),
+                          padding:
+                              const EdgeInsets.only(bottom: AppPadding.p20),
+                          child: TitleForm(
+                            title: AppStrings.createUser,
+                          )),
+                      PickImageWidget(
+                          getMediaWidget: _getMediaWidget(),
+                          startFilePicker: _startFilePicker()),
                       SizedBox(height: AppSize.s12),
                       Row(
                         children: [
@@ -283,7 +260,7 @@ class _AddUserViewState extends State<AddUserView> {
           builder: (context, snapshot) {
             PickerFile? pickerFile = snapshot.data;
             return pickerFile != null
-                ? _imagePickedByUser(pickerFile.byte)
+                ? ImagePickedByUser(pickerFile.byte)
                 : Column(
                     children: [
                       Expanded(
@@ -302,17 +279,6 @@ class _AddUserViewState extends State<AddUserView> {
         ),
       ),
     );
-  }
-
-  Widget _imagePickedByUser(Uint8List? image) {
-    if (image != null) {
-      return Image.memory(
-        image,
-        fit: BoxFit.contain,
-      );
-    } else {
-      return Container();
-    }
   }
 
   @override
