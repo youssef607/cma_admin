@@ -1,5 +1,6 @@
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 part 'freezed_data_classes.freezed.dart';
 
@@ -87,4 +88,11 @@ class UpdateProductObject with _$UpdateProductObject {
 class AddSupplementsToProductObject with _$AddSupplementsToProductObject {
   factory AddSupplementsToProductObject(List<int> selectedSupplements) =
       _AddSupplementsToProductObject;
+}
+
+@freezed
+class OrdersViewObject with _$OrdersViewObject {
+  factory OrdersViewObject(
+    PickerDateRange dateRange,
+  ) = _OrdersViewObject; 
 }

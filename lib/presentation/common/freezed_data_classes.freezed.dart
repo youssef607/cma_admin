@@ -1745,3 +1745,133 @@ abstract class _AddSupplementsToProductObject
   _$AddSupplementsToProductObjectCopyWith<_AddSupplementsToProductObject>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$OrdersViewObjectTearOff {
+  const _$OrdersViewObjectTearOff();
+
+  _OrdersViewObject call(PickerDateRange dateRange) {
+    return _OrdersViewObject(
+      dateRange,
+    );
+  }
+}
+
+/// @nodoc
+const $OrdersViewObject = _$OrdersViewObjectTearOff();
+
+/// @nodoc
+mixin _$OrdersViewObject {
+  PickerDateRange get dateRange => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $OrdersViewObjectCopyWith<OrdersViewObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OrdersViewObjectCopyWith<$Res> {
+  factory $OrdersViewObjectCopyWith(
+          OrdersViewObject value, $Res Function(OrdersViewObject) then) =
+      _$OrdersViewObjectCopyWithImpl<$Res>;
+  $Res call({PickerDateRange dateRange});
+}
+
+/// @nodoc
+class _$OrdersViewObjectCopyWithImpl<$Res>
+    implements $OrdersViewObjectCopyWith<$Res> {
+  _$OrdersViewObjectCopyWithImpl(this._value, this._then);
+
+  final OrdersViewObject _value;
+  // ignore: unused_field
+  final $Res Function(OrdersViewObject) _then;
+
+  @override
+  $Res call({
+    Object? dateRange = freezed,
+  }) {
+    return _then(_value.copyWith(
+      dateRange: dateRange == freezed
+          ? _value.dateRange
+          : dateRange // ignore: cast_nullable_to_non_nullable
+              as PickerDateRange,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$OrdersViewObjectCopyWith<$Res>
+    implements $OrdersViewObjectCopyWith<$Res> {
+  factory _$OrdersViewObjectCopyWith(
+          _OrdersViewObject value, $Res Function(_OrdersViewObject) then) =
+      __$OrdersViewObjectCopyWithImpl<$Res>;
+  @override
+  $Res call({PickerDateRange dateRange});
+}
+
+/// @nodoc
+class __$OrdersViewObjectCopyWithImpl<$Res>
+    extends _$OrdersViewObjectCopyWithImpl<$Res>
+    implements _$OrdersViewObjectCopyWith<$Res> {
+  __$OrdersViewObjectCopyWithImpl(
+      _OrdersViewObject _value, $Res Function(_OrdersViewObject) _then)
+      : super(_value, (v) => _then(v as _OrdersViewObject));
+
+  @override
+  _OrdersViewObject get _value => super._value as _OrdersViewObject;
+
+  @override
+  $Res call({
+    Object? dateRange = freezed,
+  }) {
+    return _then(_OrdersViewObject(
+      dateRange == freezed
+          ? _value.dateRange
+          : dateRange // ignore: cast_nullable_to_non_nullable
+              as PickerDateRange,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_OrdersViewObject implements _OrdersViewObject {
+  _$_OrdersViewObject(this.dateRange);
+
+  @override
+  final PickerDateRange dateRange;
+
+  @override
+  String toString() {
+    return 'OrdersViewObject(dateRange: $dateRange)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _OrdersViewObject &&
+            (identical(other.dateRange, dateRange) ||
+                const DeepCollectionEquality()
+                    .equals(other.dateRange, dateRange)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(dateRange);
+
+  @JsonKey(ignore: true)
+  @override
+  _$OrdersViewObjectCopyWith<_OrdersViewObject> get copyWith =>
+      __$OrdersViewObjectCopyWithImpl<_OrdersViewObject>(this, _$identity);
+}
+
+abstract class _OrdersViewObject implements OrdersViewObject {
+  factory _OrdersViewObject(PickerDateRange dateRange) = _$_OrdersViewObject;
+
+  @override
+  PickerDateRange get dateRange => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$OrdersViewObjectCopyWith<_OrdersViewObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}

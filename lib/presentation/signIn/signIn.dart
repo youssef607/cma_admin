@@ -4,6 +4,8 @@ import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
+import 'package:cma_admin/presentation/common/state_renderer/state_renderer.dart';
+import 'package:cma_admin/presentation/components/custom_appbar.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
@@ -33,29 +35,22 @@ class _SignInViewState extends State<SignInView> {
 
   _bind() {
     _viewModel.start();
-    _userNameController
-        .addListener(() => _viewModel.setUserName(_userNameController.text));
-    _passwordController
-        .addListener(() => _viewModel.setPassword(_passwordController.text));
+    _userNameController.addListener(() => _viewModel.setUserName(_userNameController.text));
+    _passwordController.addListener(() => _viewModel.setPassword(_passwordController.text));
 
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream.listen((data) {
-      SchedulerBinding.instance?.addPostFrameCallback((_) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
         SignInData dataa = data;
-
         _appPreferences.setUserToken(dataa.token.toString());
         _appPreferences.setIsUserLoggedIn();
         _appPreferences.setUserRole(dataa.user!.role);
         _appPreferences.setCurrentUserId(dataa.user!.id);
-
         resetModules();
-        if (dataa.user?.role == Constant.OWNER) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, Routes.homeRoute, ModalRoute.withName('/'),
-              arguments: 0);
-        } else if ((dataa.user?.role == Constant.MANAGER)) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, Routes.homeRoute, ModalRoute.withName('/'),
-              arguments: 0);
+        if (dataa.user?.role == Constant.OWNER||dataa.user?.role == Constant.MANAGER) {
+          Navigator.pushNamedAndRemoveUntil(context,Routes.homeRoute, ModalRoute.withName('/'),arguments:0);
+        } 
+        else{
+          _viewModel.inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE, AppStrings.accessError));
         }
       });
     });
@@ -76,6 +71,7 @@ class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: customAppBar(),
       body: StreamBuilder<FlowState>(
         stream: _viewModel.outputState,
         builder: (context, snapshot) {
@@ -90,157 +86,80 @@ class _SignInViewState extends State<SignInView> {
   }
 
   Widget _getContentWidget() {
-    return Container(
-        child: Row(
-      children: [
-        !isMobile(context)
-            ? Expanded(
-                flex: 1,
-                child: Image(
-                  image: AssetImage(
-                    ImageAssets.resImage,
-                  ),
-                  fit: BoxFit.fitWidth,
-                ))
-            : SizedBox(height: AppSize.s28),
-        Expanded(
-          flex: 1,
+    return Center(
+      child: Container(
+        height: AppSize.s400,
+        width: AppSize.s400,
+        child: Card(
+          shadowColor: ColorManager.grey2,
+          elevation: AppSize.s2,
           child: Padding(
-            padding: const EdgeInsets.only(right: 40.0),
+            padding: EdgeInsets.symmetric(horizontal: AppPadding.p20,vertical: AppPadding.p40),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                isMobile(context)
-                    ? Image(
-                        image: AssetImage(ImageAssets.signInImage),
-                        fit: BoxFit.fitHeight,
-                      )
-                    : Container(),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: !isMobile(context)
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      height: AppSize.s35,
-                                      child: Text(
-                                        AppStrings.welcomeAdmin,
-                                        style: getBoldStyle(
-                                            color: ColorManager.black,
-                                            fontSize: FontSize.s24),
-                                      )),
-                                  Container(
-                                      height: AppSize.s80,
-                                      child: Text(
-                                        AppStrings.loginInYour,
-                                        style: getLightStyle(
-                                            color: ColorManager.lightGrey,
-                                            fontSize: FontSize.s14),
-                                      )),
-                                ],
-                              )
-                            : Container(),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: AppPadding.p10,
-                          horizontal: AppPadding.p28,
-                        ),
-                        child: Text(
-                          AppStrings.emailHint,
-                          style: getMediumStyle(color: ColorManager.black),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: StreamBuilder<bool>(
-                          stream: _viewModel.outputIsUserNameValid,
-                          builder: (context, snapshot) {
-                            return TextFormField(
-                              keyboardType: TextInputType.emailAddress,
-                              controller: _userNameController,
-                              decoration: InputDecoration(
-                                  hintText: AppStrings.username,
-                                  errorText: (snapshot.data ?? true)
-                                      ? null
-                                      : AppStrings.usernameError),
-                            );
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: AppPadding.p10,
-                          horizontal: AppPadding.p28,
-                        ),
-                        child: Text(
-                          AppStrings.password,
-                          style: getMediumStyle(color: ColorManager.black),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: StreamBuilder<bool>(
-                          stream: _viewModel.outputIsPasswordValid,
-                          builder: (context, snapshot) {
-                            return TextFormField(
-                              keyboardType: TextInputType.visiblePassword,
-                              controller: _passwordController,
-                              decoration: InputDecoration(
-                                  hintText: AppStrings.password,
-                                  errorText: (snapshot.data ?? true)
-                                      ? null
-                                      : AppStrings.passwordError),
-                            );
-                          },
-                        ),
-                      ),
-                      SizedBox(height: AppSize.s28),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: AppPadding.p28, right: AppPadding.p28),
-                          child: StreamBuilder<bool>(
-                            stream: _viewModel.outputIsAllInputsValid,
-                            builder: (context, snapshot) {
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: AppSize.s40,
-                                child: ElevatedButton(
-                                    onPressed: (snapshot.data ?? false)
-                                        ? () {
-                                            _viewModel.login();
-                                          }
-                                        : null,
-                                    child: Text(AppStrings.login)),
-                              );
-                            },
-                          )),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: AppPadding.p8,
-                          left: AppPadding.p28,
-                          right: AppPadding.p28,
-                        ),
-                      ),
-                    ],
-                  ),
+                Text(
+                  AppStrings.welcomeAdmin,
+                  style: getSemiBoldStyle(color: ColorManager.black,fontSize: FontSize.s20)),
+                SizedBox(height: AppSize.s8),
+                Text(
+                  AppStrings.loginInYour,
+                  style: getRegularStyle(
+                      color: ColorManager.lightGrey,
+                      fontSize: FontSize.s14),
                 ),
+                SizedBox(height: AppSize.s20),
+                StreamBuilder<bool>(
+                  stream: _viewModel.outputIsUserNameValid,
+                  builder: (context, snapshot) {
+                    return TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: _userNameController,
+                      decoration: InputDecoration(
+                          hintText: AppStrings.username,
+                          errorText: (snapshot.data ?? true)
+                              ? null
+                              : AppStrings.usernameError),
+                    );
+                  },
+                ),
+                SizedBox(height: AppSize.s20),  
+                StreamBuilder<bool>(
+                  stream: _viewModel.outputIsPasswordValid,
+                  builder: (context, snapshot) {
+                    return TextFormField(
+                      keyboardType: TextInputType.visiblePassword,
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                          hintText: AppStrings.password,
+                          errorText: (snapshot.data ?? true)
+                              ? null
+                              : AppStrings.passwordError),
+                    );
+                  },
+                ),
+                SizedBox(height: AppSize.s40),  
+                StreamBuilder<bool>(
+                  stream: _viewModel.outputIsAllInputsValid,
+                  builder: (context, snapshot) {
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: AppSize.s40,
+                      child: ElevatedButton(
+                          onPressed: (snapshot.data ?? false)
+                              ? () {
+                                  _viewModel.login();
+                                }
+                              : null,
+                          child: Text(AppStrings.login)),
+                    );
+                  },
+                )
               ],
             ),
           ),
-        )
-      ],
-    ));
+        ),
+      ),
+    );
   }
 }

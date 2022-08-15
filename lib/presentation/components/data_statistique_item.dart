@@ -5,12 +5,12 @@ import 'package:cma_admin/presentation/resources/styles_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
-class DataStatistiqueItem extends StatelessWidget {
+class DataStatististicsItem extends StatelessWidget {
   final String count;
   final String label;
   final Color color;
   final IconData icon;
-  const DataStatistiqueItem(
+  const DataStatististicsItem(
       {Key? key,
       required this.count,
       required this.label,

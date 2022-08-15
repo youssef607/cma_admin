@@ -67,7 +67,7 @@ exportOrdersToExcel(List<OrderModel> orders,String name) {
   ];
   sheetObject.appendRow(columns);
   for (var order in orders) {
-    sheetObject.appendRow([order.id,order.createdAt,order.itemsNumber,order.totalOrderPrice,order.status]);
+    sheetObject.appendRow([order.id,order.createdAt,order.itemsNumber,order.totalAmount,order.status]);
   }
   excel.save(fileName: "orders${name}.xlsx");
 }

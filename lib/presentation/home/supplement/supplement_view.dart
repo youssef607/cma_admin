@@ -57,19 +57,15 @@ class _SupplementViewState extends State<SupplementView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorManager.white,
-      height: double.infinity,
-      child: StreamBuilder<FlowState>(
-          stream: _viewModel.outputState,
-          builder: (context, snapshot) {
-            return snapshot.data
-                    ?.getScreenWidget(context, _getcontentScreenWidget(), () {
-                  _bind();
-                }) ??
-                Container();
-          }),
-    );
+    return StreamBuilder<FlowState>(
+        stream: _viewModel.outputState,
+        builder: (context, snapshot) {
+          return snapshot.data
+                  ?.getScreenWidget(context, _getcontentScreenWidget(), () {
+                _bind();
+              }) ??
+              Container();
+        });
   }
 
   Widget _getcontentScreenWidget() {
@@ -174,17 +170,17 @@ class _SupplementViewState extends State<SupplementView> {
     return ResponsiveGrid(
         widthPourcentage: isMobile(context) ? 0.3 : 0.25,
         children: [
-          DataStatistiqueItem(
+          DataStatististicsItem(
               label: AppStrings.active,
               count: isActiveCount.toString(),
               color: ColorManager.green,
               icon: IconManger.active),
-          DataStatistiqueItem(
+          DataStatististicsItem(
               label: AppStrings.notActive,
               count: isNotActiveCount.toString(),
               color: ColorManager.red,
               icon: IconManger.notActive),
-          DataStatistiqueItem(
+          DataStatististicsItem(
               label: AppStrings.total,
               count: supplements.length.toString(),
               color: ColorManager.orange,

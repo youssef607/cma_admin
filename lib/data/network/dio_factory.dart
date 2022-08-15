@@ -38,9 +38,9 @@ class DioFactory {
       print("release mode no logs");
     } else {
       dio.interceptors.add(PrettyDioLogger(
-          requestHeader: true,
-          requestBody: true,
-          responseHeader: true,
+          requestHeader: false,
+          requestBody: false,
+          responseHeader: false,
           responseBody: false));
     }
 

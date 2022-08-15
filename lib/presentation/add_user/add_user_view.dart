@@ -1,9 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:cma_admin/app/app_prefs.dart';
+import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/add_user/add_user_viewmodel.dart';
 import 'package:cma_admin/presentation/components/custom_appbar.dart';
+import 'package:cma_admin/presentation/components/field_label.dart';
+import 'package:cma_admin/presentation/components/image_picker_widget.dart';
 import 'package:cma_admin/presentation/components/requiredlabel.dart';
 import 'package:cma_admin/presentation/resources/assets_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
@@ -33,8 +36,7 @@ class _AddUserViewState extends State<AddUserView> {
   AppPreferences _appPreferences = instance<AppPreferences>();
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _userNameTextEditingController =
-      TextEditingController();
+  TextEditingController _userNameTextEditingController = TextEditingController();
   TextEditingController _nameTextEditingController = TextEditingController();
   TextEditingController _passwordEditingController = TextEditingController();
 
@@ -60,7 +62,7 @@ class _AddUserViewState extends State<AddUserView> {
 
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream
         .listen((isSuccessLoggedIn) {
-      SchedulerBinding.instance?.addPostFrameCallback((_) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
         _appPreferences.setIsUserLoggedIn();
         Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
       });
@@ -87,232 +89,130 @@ class _AddUserViewState extends State<AddUserView> {
   }
 
   Widget _getContentWidget() {
-    return Container(
-        width: AppSize.s500,
-        padding: EdgeInsets.symmetric(vertical: AppPadding.p10),
-        child: SingleChildScrollView(
+    return SizedBox(
+      width: double.infinity,
+      height: double.infinity,
+      child: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical:AppPadding.p40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //title
+                Text(
+                  AppStrings.createUser,
+                  style: getSemiBoldStyle(
+                  color: ColorManager.black,
+                  fontSize: FontSize.s24),
+                ),
+                SizedBox(height: AppSize.s30),
+                // form
+                _getForm()
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+  
+  Widget _getForm() {
+    return Card(
+      shadowColor: ColorManager.grey2,
+      elevation: AppSize.s2,
+      child: Container(
+          padding: EdgeInsets.symmetric(horizontal:AppPadding.p20,vertical: AppPadding.p30),
+          width: isMobile(context)?AppSize.s400:AppSize.s600,
           child: Form(
             key: _formKey,
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: AppPadding.p20),
-                        child: Container(
-                            child: Text(
-                          AppStrings.createUser,
-                          style: getBoldStyle(
-                              color: ColorManager.black,
-                              fontSize: FontSize.s24),
-                        )),
+                //image
+                ImagePickerWidget(
+                  setImage: (image)=>_viewModel.setProfilePicture(image), 
+                  imageStream: _viewModel.outputProfilePicture),
+                SizedBox(height: AppSize.s30),
+                // name field
+                FieldLabel(AppStrings.name,isRequired: true),
+                StreamBuilder<String?>(
+                  stream: _viewModel.outputErrorName,
+                  builder: (context, snapshot) {
+                    return TextFormField(
+                        keyboardType: TextInputType.text,
+                        controller:
+                            _nameTextEditingController,
+                        decoration: InputDecoration(
+                            hintText: AppStrings.name,
+                            errorText: snapshot.data));
+                  },
+                ),
+                SizedBox(height: AppSize.s30),
+                // role field
+                FieldLabel(AppStrings.role,isRequired: true),
+                StreamBuilder<String?>(
+                  stream: _viewModel.outputRole,
+                  builder: (context, snapshot) {
+                    return DropdownSearch(
+                      mode: Mode.MENU,
+                      showSelectedItems: true,
+                      items: _viewModel.rolechecked,
+                      dropdownSearchDecoration: InputDecoration(hintText: AppStrings.role),
+                      onChanged: (value) {
+                        _viewModel.setRole(value.toString());
+                      },
+                    );
+                  },
+                ),
+                SizedBox(height: AppSize.s30),
+                // username field
+                FieldLabel(AppStrings.username,isRequired: true),
+                StreamBuilder<String?>(
+                  stream: _viewModel.outputErrorUserName,
+                  builder: (context, snapshot) {
+                    return TextFormField(
+                        keyboardType: TextInputType.text,
+                        controller: _userNameTextEditingController,
+                        decoration: InputDecoration(
+                            hintText: AppStrings.username,
+                            errorText: snapshot.data));
+                  },
+                ),
+                SizedBox(height: AppSize.s30),
+                // password field
+                FieldLabel(AppStrings.password,isRequired: true),
+                StreamBuilder<String?>(
+                  stream: _viewModel.outputErrorPassword,
+                  builder: (context, snapshot) {
+                    return TextFormField(
+                      keyboardType: TextInputType.visiblePassword,
+                      controller: _passwordEditingController,
+                      decoration: InputDecoration(
+                        labelText: AppStrings.password,
+                        errorText: snapshot.data,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: GestureDetector(
-                          onTap: () {
-                            _startFilePicker();
-                          },
-                          child: DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(AppSize.s4),
-                            dashPattern: [5, 5],
-                            color: ColorManager.grey,
-                            strokeWidth: AppSize.s2,
-                            child: Container(
-                              child: _getMediaWidget(),
-                              height: AppSize.s200,
-                              width: MediaQuery.of(context).size.width * 0.5,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: AppSize.s12),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: AppPadding.p28, right: AppPadding.p8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RequiredLabel(
-                                      text: AppStrings.name, requiredText: "*"),
-                                  StreamBuilder<String?>(
-                                    stream: _viewModel.outputErrorName,
-                                    builder: (context, snapshot) {
-                                      return TextFormField(
-                                          keyboardType: TextInputType.text,
-                                          controller:
-                                              _nameTextEditingController,
-                                          decoration: InputDecoration(
-                                              hintText: AppStrings.name,
-                                              errorText: snapshot.data));
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: AppSize.s12),
-                          Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: AppPadding.p8, right: AppPadding.p28),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RequiredLabel(
-                                      text: AppStrings.role, requiredText: "*"),
-                                  StreamBuilder<String?>(
-                                    stream: _viewModel.outputRole,
-                                    builder: (context, snapshot) {
-                                      return DropdownSearch(
-                                        mode: Mode.MENU,
-                                        showSelectedItems: true,
-                                        items: _viewModel.rolechecked,
-                                        dropdownSearchDecoration:
-                                            InputDecoration(
-                                          hintText: AppStrings.role,
-                                        ),
-                                        onChanged: (value) {
-                                          _viewModel.setRole(value.toString());
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: AppSize.s12),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: AppPadding.p12,
-                            left: AppPadding.p28,
-                            right: AppPadding.p28),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RequiredLabel(
-                                text: AppStrings.username, requiredText: "*"),
-                            StreamBuilder<String?>(
-                              stream: _viewModel.outputErrorUserName,
-                              builder: (context, snapshot) {
-                                return TextFormField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _userNameTextEditingController,
-                                    decoration: InputDecoration(
-                                        hintText: AppStrings.username,
-                                        errorText: snapshot.data));
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: AppPadding.p20,
-                            left: AppPadding.p28,
-                            right: AppPadding.p28,
-                            bottom: AppPadding.p12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RequiredLabel(
-                                text: AppStrings.password, requiredText: "*"),
-                            StreamBuilder<String?>(
-                              stream: _viewModel.outputErrorPassword,
-                              builder: (context, snapshot) {
-                                return TextFormField(
-                                  keyboardType: TextInputType.visiblePassword,
-                                  controller: _passwordEditingController,
-                                  decoration: InputDecoration(
-                                    labelText: AppStrings.password,
-                                    errorText: snapshot.data,
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: AppSize.s28),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: AppPadding.p28, right: AppPadding.p28),
-                          child: StreamBuilder<bool>(
-                            stream: _viewModel.outputIsAllInputsValid,
-                            builder: (context, snapshot) {
-                              return SizedBox(
-                                width: double.infinity,
-                                height: AppSize.s40,
-                                child: ElevatedButton(
-                                    onPressed: (snapshot.data ?? false)
-                                        ? () {
-                                            _viewModel.register(context);
-                                          }
-                                        : null,
-                                    child: Text(AppStrings.create)),
-                              );
-                            },
-                          )),
-                    ],
-                  ),
+                    );
+                  },
+                ),
+                SizedBox(height: AppSize.s40),
+                StreamBuilder<bool>(
+                  stream: _viewModel.outputIsAllInputsValid,
+                  builder: (context, snapshot) {
+                    return SizedBox(
+                      width: double.infinity,
+                      height: AppSize.s40,
+                      child: ElevatedButton(
+                          onPressed: (snapshot.data ?? false)? () {_viewModel.register(context);}: null,
+                          child: Text(AppStrings.create)),
+                    );
+                  },
                 ),
               ],
             ),
           ),
         ));
-  }
-
-  Widget _getMediaWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(AppPadding.p8),
-      child: Container(
-        child: StreamBuilder<PickerFile?>(
-          stream: _viewModel.outputProfilePicture,
-          builder: (context, snapshot) {
-            PickerFile? pickerFile = snapshot.data;
-            return pickerFile != null
-                ? _imagePickedByUser(pickerFile.byte)
-                : Column(
-                    children: [
-                      Expanded(
-                          flex: 3,
-                          child: Image.asset(
-                            ImageAssets.gallery,
-                            fit: BoxFit.cover,
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.all(AppPadding.p8),
-                        child: Text(AppStrings.browsImage),
-                      ),
-                    ],
-                  );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _imagePickedByUser(Uint8List? image) {
-    if (image != null) {
-      return Image.memory(
-        image,
-        fit: BoxFit.contain,
-      );
-    } else {
-      return Container();
-    }
   }
 
   @override
@@ -321,10 +221,4 @@ class _AddUserViewState extends State<AddUserView> {
     super.dispose();
   }
 
-  _startFilePicker() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    Uint8List byte = result!.files.first.bytes!;
-    String extension = result.files.first.extension!;
-    _viewModel.setProfilePicture(PickerFile(byte, extension));
-  }
 }

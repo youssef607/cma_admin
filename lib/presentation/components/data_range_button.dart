@@ -1,4 +1,5 @@
 import 'package:cma_admin/app/functions.dart';
+import 'package:cma_admin/presentation/components/bordered_container.dart';
 import 'package:cma_admin/presentation/home/dashboard/dashboard_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
@@ -9,20 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class DateRangeButton extends StatelessWidget {
-  final DashboardViewModel viewModel;
-  const DateRangeButton(this.viewModel, {Key? key}) : super(key: key);
+  final Stream<PickerDateRange> dateRangeStream;
+  final Function(PickerDateRange) onSumbit;
+  const DateRangeButton({Key? key,required this.dateRangeStream,required this.onSumbit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<DateRange>(
-        stream: viewModel.outpuDateRange,
+    return StreamBuilder<PickerDateRange>(
+        stream: dateRangeStream,
         builder: (context, snapshot) {
-          DateRange? dateRange = snapshot.data;
-          return Container(
+          PickerDateRange? dateRange = snapshot.data;
+          return BorderedContainer(
             padding: EdgeInsets.all(AppPadding.p8),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppSize.s6),
-                border: Border.all(color: ColorManager.grey100)),
             child: InkWell(
                 onTap: () {
                   showDialog(
@@ -33,22 +32,19 @@ class DateRangeButton extends StatelessWidget {
                             height: AppSize.s350,
                             width: AppSize.s350,
                             child: SfDateRangePicker(
+
                               onSubmit: (dateRange) {
                                 if (dateRange is PickerDateRange) {
-                                  viewModel.getHomeData(dateRange);
+                                  onSumbit.call(dateRange);
                                   Navigator.of(context).pop();
                                 }
                               },
                               onCancel: () {
                                 Navigator.of(context).pop();
                               },
-                              // showTodayButton: true,
                               showActionButtons: true,
                               selectionMode: DateRangePickerSelectionMode.range,
-                              initialSelectedRange: PickerDateRange(
-                                  DateTime.now()
-                                      .subtract(const Duration(days: 7)),
-                                  DateTime.now()),
+                              initialSelectedRange: dateRange
                             ),
                           ),
                         );
@@ -59,7 +55,7 @@ class DateRangeButton extends StatelessWidget {
                     : Row(
                         children: [
                           Text(
-                              "${dateFormat2(dateRange.startDate)} - ${dateFormat2(dateRange.endDate)}",
+                              "${dateToStringFormat(dateRange.startDate)} - ${dateToStringFormat(dateRange.endDate)}",
                               style: getSemiBoldStyle(
                                   color: ColorManager.black,
                                   fontSize: isMobile(context)?FontSize.s10:FontSize.s14)),

@@ -50,7 +50,7 @@ class UpdateProductViewModel extends BaseViewModel
   }
 
   @override
-  updateProduct() async {
+  updateProduct(BuildContext context) async {
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _updateProductUseCase.execute(UpdateProductUseCaseInput(
@@ -60,14 +60,14 @@ class UpdateProductViewModel extends BaseViewModel
       updateProductViewObject.image,
       updateProductViewObject.price,
       updateProductViewObject.title,
-    )))
-        .fold(
-            (failure) => {
-                  inputState.add(ErrorState(
-                      StateRendererType.POPUP_ERROR_STATE, failure.message))
-                }, (data) {
+    ))).fold(
+      (failure) => {
+        inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE, failure.message))
+      }, (data) {
       inputState.add(ContentState());
+      // Navigator.of(context).pop();
       isUpdateProductSuccessfullyStreamController.add(true);
+      Navigator.of(context).pop();
     });
   }
 
@@ -236,7 +236,7 @@ class UpdateProductViewModel extends BaseViewModel
 }
 
 abstract class UpdateProductViewModelInput {
-  updateProduct();
+  updateProduct(BuildContext context);
 
   setColor(Color color);
 

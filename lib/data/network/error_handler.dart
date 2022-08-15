@@ -51,7 +51,9 @@ class ErrorHandler implements Exception {
           case ResponseCode.NOT_FOUND:
             return DataSource.NOT_FOUND.getFailure();
           case ResponseCode.INTERNAL_SERVER_ERROR:
-            return DataSource.INTERNAL_SERVER_ERROR.getFailure();
+            return DataSource.INTERNAL_SERVER_ERROR.getFailure(
+              message: getInternalServerErrorMessage(error.response!.data["message"])
+            );
           default:
             return DataSource.DEFAULT.getFailure();
         }
@@ -63,8 +65,22 @@ class ErrorHandler implements Exception {
   }
 }
 
+String getInternalServerErrorMessage(String message){
+  switch (message) {
+    case AppStrings.userNotFound:
+      return AppStrings.usernameIEM;
+    case AppStrings.badCredentials:
+      return AppStrings.passwordIEM;
+    case AppStrings.indentificationsErronees:
+      return AppStrings.passwordIEM;
+    case AppStrings.userIsDisabled:
+      return AppStrings.accountDisbledIEM;  
+    default:
+      return ResponseMessage.INTERNAL_SERVER_ERROR;
+  }
+}
 extension DataSourceExtension on DataSource {
-  Failure getFailure() {
+  Failure getFailure({String? message}) {
     switch (this) {
       case DataSource.BAD_REQUEST:
         return Failure(ResponseCode.BAD_REQUEST, ResponseMessage.BAD_REQUEST);
@@ -76,7 +92,7 @@ extension DataSourceExtension on DataSource {
         return Failure(ResponseCode.NOT_FOUND, ResponseMessage.NOT_FOUND);
       case DataSource.INTERNAL_SERVER_ERROR:
         return Failure(ResponseCode.INTERNAL_SERVER_ERROR,
-            ResponseMessage.INTERNAL_SERVER_ERROR);
+            message??ResponseMessage.INTERNAL_SERVER_ERROR);
       case DataSource.CONNECT_TIMEOUT:
         return Failure(
             ResponseCode.CONNECT_TIMEOUT, ResponseMessage.CONNECT_TIMEOUT);

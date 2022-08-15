@@ -69,11 +69,34 @@ class ProductViewModel extends BaseViewModel with ProductViewModelInput,ProductV
   }
 
   @override
+  reorder(BuildContext context,List<Product> products,int oldIndex,int newIndex) async{
+    inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+    (await _useCase.reorder(products[oldIndex].id,products[newIndex].id)).fold(
+      (failure) {
+        inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE,failure.message));
+      }, 
+      (_) {
+        int oldNumber = products[oldIndex].orderNumber;
+        int newNumber = products[newIndex].orderNumber;                   
+        products[oldIndex].orderNumber = newNumber;
+        products[newIndex].orderNumber = oldNumber;
+        inputProducts.add(products);
+        inputState.add(ContentState());
+        Navigator.of(context).pop();
+      });
+  }
+
+  @override
   Sink get inputProducts => _productsStreamController.sink;
 
   @override
-  Stream<List<Product>> get outputProducts => _productsStreamController.stream.map((products) => products);
+  Stream<List<Product>> get outputProducts => _productsStreamController.stream.map((products) => sortProducts(products));
   
+  List<Product> sortProducts(List<Product> products){
+    products.sort((a, b) => a.orderNumber.compareTo(b.orderNumber));
+    return products;
+  }
+
   @override
   void dispose() {
     _productsStreamController.close();
@@ -82,6 +105,7 @@ class ProductViewModel extends BaseViewModel with ProductViewModelInput,ProductV
 }
 
 abstract class ProductViewModelInput {
+  reorder(BuildContext context,List<Product> products,int oldIndex,int newIndex);
   delete(BuildContext context,Product product,List<Product> products);
   activeToggle(BuildContext context,Product product,List<Product> products);
   Sink get inputProducts;

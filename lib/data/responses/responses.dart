@@ -50,7 +50,7 @@ class UserResponse extends BaseResponse {
   @JsonKey(name: "role")
   String? role;
 
-  @JsonKey(name: "userName")
+  @JsonKey(name: "username")
   String? userName;
 
   UserResponse(this.image, this.name, this.password, this.role, this.userName);
@@ -73,11 +73,15 @@ class CategoryResponse extends BaseResponse {
 
   @JsonKey(name: "label")
   String? label;
+   
+  @JsonKey(name: "orderNumber") 
+  int? orderNumber;
 
   CategoryResponse(
     this.color,
     this.image,
     this.label,
+    this.orderNumber
   );
 
   // from json
@@ -99,6 +103,9 @@ class ProductResponse extends BaseResponse {
   @JsonKey(name: "title")
   String? title;
 
+  @JsonKey(name: "orderNumber") 
+  int? orderNumber;
+
   @JsonKey(name: "price")
   double? price;
 
@@ -108,7 +115,7 @@ class ProductResponse extends BaseResponse {
   @JsonKey(name: "supplements")
   List<SupplementResponse>? supplements;
 
-  ProductResponse(this.color, this.image, this.title, this.price, this.category,
+  ProductResponse(this.color, this.image, this.title,this.orderNumber,this.price, this.category,
       this.supplements);
 
   // from json
@@ -133,11 +140,15 @@ class SupplementResponse extends BaseResponse {
   @JsonKey(name: "price")
   double? price;
 
+  @JsonKey(name: "orderNumber") 
+  int? orderNumber;
+
   SupplementResponse(
     this.color,
     this.image,
     this.title,
     this.price,
+    this.orderNumber
   );
 
   // from json
@@ -159,14 +170,14 @@ class OrderProdcutResponse {
   @JsonKey(name: "quantity")
   int? quantity;
 
-  @JsonKey(name: "totalPrice")
-  double? totalPrice;
+  @JsonKey(name: "amount")
+  double? amount;
 
   OrderProdcutResponse(
     this.product,
     this.supplements,
     this.quantity,
-    this.totalPrice,
+    this.amount,
   );
 
   // from json
@@ -185,8 +196,8 @@ class OrderResponse extends BaseResponse {
   @JsonKey(name: "items")
   List<OrderProdcutResponse>? items;
 
-  @JsonKey(name: "totalOrderPrice")
-  double? totalOrderPrice;
+  @JsonKey(name: "totalAmount")
+  double? totalAmount;
 
   @JsonKey(name: "itemsNumber")
   int? itemsNumber;
@@ -194,7 +205,7 @@ class OrderResponse extends BaseResponse {
   @JsonKey(name: "waiter")
   UserResponse? waiter;
 
-  OrderResponse(this.status, this.items, this.totalOrderPrice, this.itemsNumber,
+  OrderResponse(this.status, this.items, this.totalAmount, this.itemsNumber,
       this.waiter);
 
   // from json
@@ -206,39 +217,50 @@ class OrderResponse extends BaseResponse {
 }
 
 @JsonSerializable()
-class StatiqueResponse {
-  @JsonKey(name: "amount")
-  double? amount;
+class StatusCountResponse {
+  @JsonKey(name: "done")
+  int? done;
 
-  @JsonKey(name: "numOfDoneOrders")
-  int? numOfDoneOrders;
+  @JsonKey(name: "canceled")
+  int? canceled;
 
-  @JsonKey(name: "numOfInProgressOrders")
-  int? numOfInProgressOrders;
+  @JsonKey(name: "inprogress")
+  int? inprogress;
 
-  @JsonKey(name: "numOfOrders")
-  int? numOfOrders;
-
-  StatiqueResponse(this.amount, this.numOfDoneOrders,
-      this.numOfInProgressOrders, this.numOfOrders);
+  StatusCountResponse(this.done,this.canceled,this.inprogress);
 
   // from json
-  factory StatiqueResponse.fromJson(Map<String, dynamic> json) =>
-      _$StatiqueResponseFromJson(json);
+  factory StatusCountResponse.fromJson(Map<String, dynamic> json) =>
+      _$StatusCountResponseFromJson(json);
 
   // to json
-  Map<String, dynamic> toJson() => _$StatiqueResponseToJson(this);
+  Map<String, dynamic> toJson() => _$StatusCountResponseToJson(this);
 }
 
 @JsonSerializable()
 class WaiterResponse {
-  @JsonKey(name: "waiter")
-  UserResponse? waiter;
+  @JsonKey(name: "id")
+  int? id;
+  
+  @JsonKey(name: "name")
+  String? name;
 
-  @JsonKey(name: "ordersCount")
-  int? ordersCount;
+  @JsonKey(name: "image")
+  String? image;
 
-  WaiterResponse(this.waiter, this.ordersCount);
+  @JsonKey(name: "inprogress")
+  int? inprogress;
+
+  @JsonKey(name: "done")
+  int? done;
+
+  @JsonKey(name: "canceled")
+  int? canceled;
+
+  @JsonKey(name: "amount")
+  double? amount;
+
+  WaiterResponse(this.id,this.name,this.image,this.inprogress,this.done,this.canceled,this.amount);
 
   // from json
   factory WaiterResponse.fromJson(Map<String, dynamic> json) =>
@@ -247,6 +269,55 @@ class WaiterResponse {
   // to json
   Map<String, dynamic> toJson() => _$WaiterResponseToJson(this);
 }
+
+@JsonSerializable()
+class AllWaitersInsightsResponse {
+  @JsonKey(name: "statusCount")
+  StatusCountResponse? statusCount;
+  
+  @JsonKey(name: "totalAmount")
+  double? totalAmount;
+
+  @JsonKey(name: "waiters")
+  List<WaiterResponse>? waiters;
+
+  AllWaitersInsightsResponse(
+    this.statusCount,
+    this.totalAmount,
+    this.waiters,
+  );
+
+  // from json
+  factory AllWaitersInsightsResponse.fromJson(Map<String, dynamic> json) =>
+      _$AllWaitersInsightsResponseFromJson(json);
+
+  // to json
+  Map<String, dynamic> toJson() => _$AllWaitersInsightsResponseToJson(this);
+}
+
+
+@JsonSerializable()
+class WaiterInsightsResponse {
+  @JsonKey(name: "waiter")
+  WaiterResponse? waiter;
+  
+  
+  @JsonKey(name: "timeInsights")
+  List<TimeInsightsResponse>? timeInsights;
+
+  WaiterInsightsResponse(
+    this.waiter,
+    this.timeInsights
+  );
+
+  // from json
+  factory WaiterInsightsResponse.fromJson(Map<String, dynamic> json) =>
+      _$WaiterInsightsResponseFromJson(json);
+
+  // to json
+  Map<String, dynamic> toJson() => _$WaiterInsightsResponseToJson(this);
+}
+
 
 @JsonSerializable()
 class CategoryCountResponse {
@@ -259,10 +330,10 @@ class CategoryCountResponse {
   @JsonKey(name: "label")
   String? label;
 
-  @JsonKey(name: "itemsCount")
-  int? itemsCount;
+  @JsonKey(name: "quantity")
+  int? quantity;
 
-  CategoryCountResponse(this.id, this.color, this.label, this.itemsCount);
+  CategoryCountResponse(this.id, this.color, this.label, this.quantity);
 
   // from json
   factory CategoryCountResponse.fromJson(Map<String, dynamic> json) =>
@@ -273,20 +344,91 @@ class CategoryCountResponse {
 }
 
 @JsonSerializable()
-class HomeResponse {
-  @JsonKey(name: "statique")
-  StatiqueResponse? statique;
+class ProductCountResponse {
+  @JsonKey(name: "id")
+  int? id;
 
-  @JsonKey(name: "orders")
-  List<OrderResponse>? orders;
+  @JsonKey(name: "color")
+  String? color;
+
+  @JsonKey(name: "title")
+  String? title;
+
+  @JsonKey(name: "categoryId")
+  int? categoryId;
+
+  @JsonKey(name: "quantity")
+  int? quantity;
+
+  ProductCountResponse(this.id, this.color, this.title,this.categoryId,this.quantity);
+
+  // from json
+  factory ProductCountResponse.fromJson(Map<String, dynamic> json) =>
+      _$ProductCountResponseFromJson(json);
+
+  // to json
+  Map<String, dynamic> toJson() => _$ProductCountResponseToJson(this);
+}
+
+@JsonSerializable()
+class TimeInsightsResponse {
+  
+  @JsonKey(name: "time")
+  String? time;
+
+  @JsonKey(name: "inprogress")
+  int? inprogress;
+
+  @JsonKey(name: "done")
+  int? done;
+
+  @JsonKey(name: "canceled")
+  int? canceled;
+
+  @JsonKey(name: "amount")
+  double? amount;
+
+  TimeInsightsResponse(
+    this.time,
+    this.inprogress,
+    this.done,
+    this.canceled,
+    this.amount,
+  );
+
+  // from json
+  factory TimeInsightsResponse.fromJson(Map<String, dynamic> json) =>
+      _$TimeInsightsResponseFromJson(json);
+
+  // to json
+  Map<String, dynamic> toJson() => _$TimeInsightsResponseToJson(this);
+}
+
+@JsonSerializable()
+class HomeResponse {
+
+  @JsonKey(name: "lastOrders")
+  List<OrderResponse>? lastOrders;
+
+  @JsonKey(name: "statusCount")
+  StatusCountResponse? statusCount;
+  
+  @JsonKey(name: "totalAmount")
+  double? totalAmount;
 
   @JsonKey(name: "waiters")
   List<WaiterResponse>? waiters;
+  
+  @JsonKey(name: "hoursInsights")
+  List<TimeInsightsResponse>? hoursInsights;
 
   @JsonKey(name: "categoryCounts")
   List<CategoryCountResponse>? categoryCounts;
 
-  HomeResponse(this.statique, this.orders, this.waiters, this.categoryCounts);
+  @JsonKey(name: "productCounts")
+  List<ProductCountResponse>? productCounts;
+
+  HomeResponse(this.statusCount,this.lastOrders,this.totalAmount,this.waiters,this.hoursInsights, this.categoryCounts,this.productCounts);
 
   // from json
   factory HomeResponse.fromJson(Map<String, dynamic> json) =>
@@ -294,4 +436,38 @@ class HomeResponse {
 
   // to json
   Map<String, dynamic> toJson() => _$HomeResponseToJson(this);
+}
+
+@JsonSerializable()
+class OrdersInsightsResponse {
+  @JsonKey(name: "statusCount")
+  StatusCountResponse? statusCount;
+  
+  @JsonKey(name: "timeInsights")
+  List<TimeInsightsResponse>? timeInsights;
+
+  @JsonKey(name: "totalAmount")
+  double? totalAmount;
+
+  @JsonKey(name: "totalCount")
+  int? totalCount;
+
+  @JsonKey(name: "orders")
+  List<OrderResponse>? orders;
+
+  OrdersInsightsResponse(
+    this.statusCount,
+    this.timeInsights,
+    this.totalAmount,
+    this.totalCount,
+    this.orders,
+  );
+
+  // from json
+  factory OrdersInsightsResponse.fromJson(Map<String, dynamic> json) =>
+      _$OrdersInsightsResponseFromJson(json);
+
+  // to json
+  Map<String, dynamic> toJson() => _$OrdersInsightsResponseToJson(this);
+
 }

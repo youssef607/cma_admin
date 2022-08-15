@@ -108,3 +108,4 @@ class UpdateProductRequest {
   UpdateProductRequest(
       this.id, this.categoryId, this.color, this.image, this.price, this.title);
 }
+

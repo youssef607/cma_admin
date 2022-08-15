@@ -1,23 +1,19 @@
-import 'dart:typed_data';
+import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/add_product/add_product_viewmodel.dart';
-import 'package:cma_admin/presentation/components/color_picker_dialogue.dart';
 import 'package:cma_admin/presentation/components/color_picker_label.dart';
 import 'package:cma_admin/presentation/components/custom_appbar.dart';
-import 'package:cma_admin/presentation/components/requiredlabel.dart';
-import 'package:cma_admin/presentation/resources/assets_manager.dart';
+import 'package:cma_admin/presentation/components/field_label.dart';
+import 'package:cma_admin/presentation/components/image_picker_widget.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/styles_manager.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:cma_admin/app/di.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
 
 class AddProductView extends StatefulWidget {
   final Category? category;
@@ -41,10 +37,10 @@ class _AddProductViewViewState extends State<AddProductView> {
 
   _bind() {
     _viewModel.start();
-
-    widget.category != null
-        ? _viewModel.setCategoryId(widget.category!.id.toString())
-        : _viewModel.loadCategory();
+    if (widget.category!=null) {
+      _viewModel.setCategoryId(widget.category!.id.toString());      
+    }
+    _viewModel.loadCategory();
     _titleTextEditingController.addListener(() {
       _viewModel.setTitle(_titleTextEditingController.text);
     });
@@ -75,239 +71,137 @@ class _AddProductViewViewState extends State<AddProductView> {
   }
 
   Widget _getContentWidget() {
-    return Container(
-        width: AppSize.s500,
-        padding: EdgeInsets.symmetric(vertical: AppPadding.p10),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Row(
+    return SizedBox(
+      width: double.infinity,
+      height: double.infinity,
+      child: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical:AppPadding.p40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: AppPadding.p20),
-                        child: Container(
-                            child: Text(
-                          AppStrings.createProduct,
-                          style: getBoldStyle(
-                              color: ColorManager.black,
-                              fontSize: FontSize.s24),
-                        )),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: GestureDetector(
-                          onTap: () {
-                            _startFilePicker();
-                          },
-                          child: DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(AppSize.s4),
-                            dashPattern: [5, 5],
-                            color: ColorManager.grey,
-                            strokeWidth: AppSize.s2,
-                            child: Container(
-                              child: _getMediaWidget(),
-                              height: AppSize.s200,
-                              width: MediaQuery.of(context).size.width * 0.5,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: AppSize.s12),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RequiredLabel(
-                                text: AppStrings.title, requiredText: "*"),
-                            StreamBuilder<String?>(
-                              stream: _viewModel.outputErrorTitle,
-                              builder: (context, snapshot) {
-                                return TextFormField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _titleTextEditingController,
-                                    decoration: InputDecoration(
-                                        hintText: AppStrings.label,
-                                        errorText: snapshot.data));
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: AppSize.s12),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RequiredLabel(
-                                text: AppStrings.price, requiredText: "*"),
-                            StreamBuilder<String?>(
-                              stream: _viewModel.outputErrorPrice,
-                              builder: (context, snapshot) {
-                                return TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (value) {
-                                      _viewModel.setPrice(value);
-                                    },
-                                    decoration: InputDecoration(
-                                        hintText: AppStrings.price,
-                                        errorText: snapshot.data));
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: AppSize.s12),
-                      widget.category == null
-                          ? Padding(
-                              padding: EdgeInsets.only(
-                                  left: AppPadding.p28, right: AppPadding.p28),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RequiredLabel(
-                                      text: AppStrings.addCategory,
-                                      requiredText: "*"),
-                                  StreamBuilder<List<Category>?>(
-                                    stream: _viewModel.outputCategories,
-                                    builder: (context, snapshot) {
-                                      List<Category>? categories =
-                                          snapshot.data;
-
-                                      return categories != null
-                                          ? DropdownSearch<Category>(
-                                              mode: Mode.MENU,
-                                              items: categories
-                                                  .map((category) => category)
-                                                  .toList(),
-                                              itemAsString:
-                                                  (Category? category) =>
-                                                      category!.label,
-                                              dropdownSearchDecoration:
-                                                  InputDecoration(
-                                                hintText:
-                                                    AppStrings.addCategory,
-                                              ),
-                                              onChanged: (category) {
-                                                _viewModel.setCategoryId(
-                                                    category!.id.toString());
-                                              },
-                                            )
-                                          : DropdownSearch<Category>();
-                                    },
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Container(),
-                      widget.category == null
-                          ? SizedBox(height: AppSize.s12)
-                          : Container(),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: AppPadding.p28, right: AppPadding.p28),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RequiredLabel(text: AppStrings.color),
-                            StreamBuilder<Color?>(
-                              stream: _viewModel.outputPickerColor,
-                              builder: (context, snapshot) {
-                                Color color =
-                                    snapshot.data ?? ColorManager.grey;
-                                return InkWell(
-                                  child: ColorPickerForm(
-                                    color: color,
-                                  ),
-                                  onTap: () {
-                                    showAlert(context, color, (value) {
-                                      _viewModel.setColor(value);
-                                      color = value;
-                                    });
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: AppSize.s28),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: AppPadding.p28, right: AppPadding.p28),
-                          child: StreamBuilder<bool>(
-                            stream: _viewModel.outputIsAllInputsValid,
-                            builder: (context, snapshot) {
-                              return SizedBox(
-                                width: double.infinity,
-                                height: AppSize.s40,
-                                child: ElevatedButton(
-                                    onPressed: (snapshot.data ?? false)
-                                        ? () {
-                                            _viewModel.addProduct(context);
-                                          }
-                                        : null,
-                                    child: Text(AppStrings.create)),
-                              );
-                            },
-                          )),
-                    ],
-                  ),
+                //title
+                Text(
+                  AppStrings.createProduct,
+                  style: getSemiBoldStyle(
+                  color: ColorManager.black,
+                  fontSize: FontSize.s24),
                 ),
+                SizedBox(height: AppSize.s30),
+                // form
+                _getForm()
               ],
             ),
           ),
-        ));
-  }
-
-  Widget _getMediaWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(AppPadding.p8),
-      child: Container(
-        child: StreamBuilder<PickerFile?>(
-          stream: _viewModel.outputProfilePicture,
-          builder: (context, snapshot) {
-            PickerFile? pickerFile = snapshot.data;
-            return pickerFile != null
-                ? _imagePickedByUser(pickerFile.byte)
-                : Column(
-                    children: [
-                      Expanded(
-                          flex: 3,
-                          child: Image.asset(
-                            ImageAssets.gallery,
-                            fit: BoxFit.cover,
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.all(AppPadding.p8),
-                        child: Text(AppStrings.browsImage),
-                      ),
-                    ],
-                  );
-          },
         ),
       ),
     );
   }
 
-  Widget _imagePickedByUser(Uint8List? image) {
-    if (image != null) {
-      return Image.memory(
-        image,
-        fit: BoxFit.contain,
-      );
-    } else {
-      return Container();
-    }
+  Widget _getForm() {
+    return Card(
+      shadowColor: ColorManager.grey2,
+      elevation: AppSize.s2,
+      child: Container(
+      padding: EdgeInsets.symmetric(horizontal:AppPadding.p20,vertical: AppPadding.p30),
+      width: isMobile(context)?AppSize.s400:AppSize.s600,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // image field
+            ImagePickerWidget(
+              setImage: (image)=>_viewModel.setProfilePicture(image), 
+              imageStream: _viewModel.outputProfilePicture),
+            SizedBox(height: AppSize.s30),
+            // title field
+            FieldLabel(AppStrings.title,isRequired: true),
+            StreamBuilder<String?>(
+              stream: _viewModel.outputErrorTitle,
+              builder: (context, snapshot) {
+                return TextFormField(
+                    keyboardType: TextInputType.text,
+                    controller: _titleTextEditingController,
+                    decoration: InputDecoration(
+                        hintText: AppStrings.label,
+                        errorText: snapshot.data));
+              },
+            ),
+            SizedBox(height: AppSize.s30),
+            // price field
+            FieldLabel(AppStrings.price,isRequired: true),
+            StreamBuilder<String?>(
+              stream: _viewModel.outputErrorPrice,
+              builder: (context, snapshot) {
+                return TextFormField(
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      _viewModel.setPrice(value);
+                    },
+                    decoration: InputDecoration(
+                        hintText: AppStrings.price,
+                        errorText: snapshot.data));
+              },
+            ),
+            SizedBox(height: AppSize.s30),
+            // category field
+            FieldLabel(AppStrings.category,isRequired: true),
+            StreamBuilder<List<Category>?>(
+              stream: _viewModel.outputCategories,
+              builder: (context, snapshot) {
+                List<Category>? categories = snapshot.data;
+                return DropdownSearch<Category>(
+                  mode: Mode.MENU,
+                  items: categories,
+                  selectedItem: widget.category,
+                  itemAsString: (Category? category) => category!.label,
+                  dropdownSearchDecoration:InputDecoration(
+                    hintText:  AppStrings.addCategory,
+                  ),
+                  onChanged: (category) {
+                    _viewModel.setCategoryId(category!.id.toString());
+                  },
+                );
+              },
+            ),
+            SizedBox(height: AppSize.s30),
+            // color field
+            FieldLabel(AppStrings.color),
+            StreamBuilder<Color?>(
+              stream: _viewModel.outputPickerColor,
+              builder: (context, snapshot) {
+                Color color = snapshot.data ?? ColorManager.grey;
+                return ColorPickerForm(
+                  color: color,
+                  setColor: (color)=>_viewModel.setColor(color),
+                );
+              },
+            ),
+            SizedBox(height: AppSize.s40),
+            // Button
+            StreamBuilder<bool>(
+              stream: _viewModel.outputIsAllInputsValid,
+              builder: (context, snapshot) {
+                return SizedBox(
+                  width: double.infinity,
+                  height: AppSize.s40,
+                  child: ElevatedButton(
+                      onPressed: (snapshot.data ?? false)
+                          ? () {
+                              _viewModel.addProduct(context);
+                            }
+                          : null,
+                      child: Text(AppStrings.create)),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 
   @override
@@ -316,10 +210,4 @@ class _AddProductViewViewState extends State<AddProductView> {
     super.dispose();
   }
 
-  _startFilePicker() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    Uint8List byte = result!.files.first.bytes!;
-    String extension = result.files.first.extension!;
-    _viewModel.setProfilePicture(PickerFile(byte, extension));
-  }
 }

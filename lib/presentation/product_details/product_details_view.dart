@@ -65,7 +65,6 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(),
-      backgroundColor: ColorManager.white,
       body: StreamBuilder<FlowState>(
           stream: _viewModel.outputState,
           builder: (context, snapshot) {
@@ -144,7 +143,6 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             left: AppSize.s50,
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: AppPadding.p10),
-                color: ColorManager.white,
                 child: Text(AppStrings.productInfo,
                     style: getBoldStyle(
                         color: ColorManager.black, fontSize: FontSize.s20)))),
@@ -155,8 +153,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   Widget _getActionButton(Product product) {
     return Row(
       children: [
-        ActionButton(
-            color: ColorManager.gold, title: AppStrings.update, onTap: () {}),
+        ActionButton(color: ColorManager.gold, title: AppStrings.update, onTap: () {
+          Navigator.of(context).pushNamed(Routes.updateProductRoute,arguments: product);
+        }),
         SizedBox(width: AppSize.s20),
         ActionButton(
             color: ColorManager.primary,
@@ -191,16 +190,12 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       ? NotfoundWidget(AppStrings.noSupplementFound)
                       : CustomDataTable(
                           padding: EdgeInsets.zero,
-                          columns: columns
-                              .map((column) => DataColumn(label: Text(column)))
-                              .toList(),
-                          rows: supplements
-                              .map((supplement) => DataRow(cells: [
+                          columns: columns.map((column) => DataColumn(label: Text(column))).toList(),
+                          rows: supplements.map((supplement) => DataRow(cells: [
                                     DataCell(Text(supplement.id.toString())),
                                     DataCell(ImageColumn(supplement.image)),
                                     DataCell(Text(supplement.title)),
-                                    DataCell(Text(
-                                        "${supplement.price} ${AppStrings.dh}")),
+                                    DataCell(Text("${supplement.price} ${AppStrings.dh}")),
                                     DataCell(Text(supplement.createdAt)),
                                     DataCell(ColorColumn(supplement.color)),
                                     DataCell(Text(
@@ -213,10 +208,11 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                                 : ColorManager.red,
                                             fontSize: FontSize.s12))),
                                     DataCell(PopUpMenuColumn(
-                                      update: () {},
+                                      update: () {
+                                        Navigator.of(context).pushNamed(Routes.updateSupplementRoute,arguments: supplement);
+                                      },
                                       delete: () {
-                                        _viewModel.deleteSupplement(context,
-                                            widget.product.id, supplement.id);
+                                        _viewModel.deleteSupplement(context,widget.product.id, supplement.id);
                                       },
                                     )),
                                   ]))

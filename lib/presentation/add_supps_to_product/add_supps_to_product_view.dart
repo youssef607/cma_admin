@@ -118,39 +118,42 @@ class _AddSupplementsToProductViewState
           if (supplements != null) {
             return supplements.isEmpty
                 ? NotfoundWidget(AppStrings.noSupplementFound)
-                : CustomDataTable(
-                    padding: EdgeInsets.zero,
-                    columns: columns
-                        .map((column) => DataColumn(label: Text(column)))
-                        .toList(),
-                    rows: supplements
-                        .map((supplement) => DataRow(cells: [
-                              DataCell(Text(supplement.id.toString())),
-                              DataCell(ImageColumn(supplement.image)),
-                              DataCell(Text(supplement.title)),
-                              DataCell(
-                                  Text("${supplement.price} ${AppStrings.dh}")),
-                              DataCell(Text(supplement.createdAt)),
-                              DataCell(ColorColumn(supplement.color)),
-                              DataCell(Text(
-                                  supplement.active
-                                      ? AppStrings.active
-                                      : AppStrings.notActive,
-                                  style: getSemiBoldStyle(
-                                      color: supplement.active
-                                          ? ColorManager.green
-                                          : ColorManager.red,
-                                      fontSize: FontSize.s12))),
-                              DataCell(Checkbox(
-                                onChanged: (bool? isSelected) {
-                                  _viewModel.select(
-                                      supplement, selectedSupplemnts);
-                                },
-                                value: _viewModel.isSelected(
-                                    supplement, selectedSupplemnts),
-                              )),
-                            ]))
-                        .toList());
+                : Padding(
+                  padding: EdgeInsets.symmetric(horizontal:AppPadding.p30),
+                  child: CustomDataTable(
+                      padding: EdgeInsets.zero,
+                      columns: columns
+                          .map((column) => DataColumn(label: Text(column)))
+                          .toList(),
+                      rows: supplements
+                          .map((supplement) => DataRow(cells: [
+                                DataCell(Text(supplement.id.toString())),
+                                DataCell(ImageColumn(supplement.image)),
+                                DataCell(Text(supplement.title)),
+                                DataCell(
+                                    Text("${supplement.price} ${AppStrings.dh}")),
+                                DataCell(Text(supplement.createdAt)),
+                                DataCell(ColorColumn(supplement.color)),
+                                DataCell(Text(
+                                    supplement.active
+                                        ? AppStrings.active
+                                        : AppStrings.notActive,
+                                    style: getSemiBoldStyle(
+                                        color: supplement.active
+                                            ? ColorManager.green
+                                            : ColorManager.red,
+                                        fontSize: FontSize.s12))),
+                                DataCell(Checkbox(
+                                  onChanged: (bool? isSelected) {
+                                    _viewModel.select(
+                                        supplement, selectedSupplemnts);
+                                  },
+                                  value: _viewModel.isSelected(
+                                      supplement, selectedSupplemnts),
+                                )),
+                              ]))
+                          .toList()),
+                );
           } else {
             return Container();
           }

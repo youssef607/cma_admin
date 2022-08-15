@@ -1,22 +1,23 @@
-
 import 'package:ant_icons/ant_icons.dart';
 import 'package:cma_admin/app/di.dart';
-import 'package:cma_admin/app/excel.dart';
 import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
-import 'package:cma_admin/presentation/components/action_button.dart';
+import 'package:cma_admin/presentation/components/bordered_container.dart';
 import 'package:cma_admin/presentation/components/custom_data_table.dart';
 import 'package:cma_admin/presentation/components/data_statistique_item.dart';
 import 'package:cma_admin/presentation/components/headar_text.dart';
-import 'package:cma_admin/presentation/components/order_status.dart';
+import 'package:cma_admin/presentation/components/not_found_widget.dart';
+import 'package:cma_admin/presentation/components/order_status_item.dart';
+import 'package:cma_admin/presentation/components/orders_statistics_grid.dart';
 import 'package:cma_admin/presentation/components/popup_menu_column.dart';
 import 'package:cma_admin/presentation/components/responsive_grid.dart';
-import 'package:cma_admin/presentation/home/dashboard/components/custom_line_chart.dart';
-import 'package:cma_admin/presentation/home/dashboard/components/custom_pie_chart.dart';
-import 'package:cma_admin/presentation/home/dashboard/components/data_range_button.dart';
-import 'package:cma_admin/presentation/home/dashboard/components/details_widget.dart';
+import 'package:cma_admin/presentation/home/dashboard/components/hours_chart.dart';
+import 'package:cma_admin/presentation/home/dashboard/components/waiters_chart.dart';
+import 'package:cma_admin/presentation/home/dashboard/components/quantity_chart.dart';
+import 'package:cma_admin/presentation/components/order_details_widget.dart';
 import 'package:cma_admin/presentation/home/dashboard/dashboard_viewmodel.dart';
+import 'package:cma_admin/presentation/home/home_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/icon_manager.dart';
@@ -24,7 +25,6 @@ import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/styles_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -35,20 +35,20 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   DashboardViewModel _viewModel = instance<DashboardViewModel>();
+  HomeViewModel _homeViewModel = instance<HomeViewModel>();
 
   List<String> columns = [
-    "Status",
     "N°",
     "CreatedAt",
     "Items Count",
     "Amount",
+    "Status",
     "Actions"
   ];
-  int touchedIndex = -1;
+
   _bind() {
     _viewModel.start();
-    _viewModel.getHomeData(PickerDateRange(
-        DateTime.now().subtract(const Duration(days: 7)), DateTime.now()));
+    _viewModel.getHomeData();
   }
 
   @override
@@ -65,15 +65,15 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorManager.white,
-      height: double.infinity,
-      child: StreamBuilder<FlowState>(
-          stream: _viewModel.outputState,
-          builder: (context, snapshot) {
-            return snapshot.data?.getScreenWidget(context, _getcontentScreenWidget(), () {_bind();})??Container();
-          }),
-    );
+    return StreamBuilder<FlowState>(
+        stream: _viewModel.outputState,
+        builder: (context, snapshot) {
+          return snapshot.data
+                  ?.getScreenWidget(context, _getcontentScreenWidget(), () {
+                _bind();
+              }) ??
+              _getcontentScreenWidget();
+        });
   }
 
   Widget _getcontentScreenWidget() {
@@ -91,13 +91,11 @@ class _DashboardViewState extends State<DashboardView> {
                   SizedBox(height: AppSize.s14),
                   _getHeaders(),
                   SizedBox(height: AppSize.s14),
-                  _getStatiqueGrid(homeData.statique),
-                  SizedBox(height: AppSize.s14),
+                  OrdersStatisticsGrid(homeData.statusCount!, homeData.totalAmount),
                   _getChartsSection(homeData),
                   SizedBox(height: AppSize.s18),
-                  _getSection(homeData.orders!),
-                  SizedBox(height: AppSize.s14),
-                  _getOrdersDataTable(homeData.orders!)
+                  _getOrdersAndWaitersSection(homeData),
+                  SizedBox(height: AppSize.s30)
                 ],
               ),
             );
@@ -114,117 +112,104 @@ class _DashboardViewState extends State<DashboardView> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           HeaderText(AppStrings.dashboard),
-          DateRangeButton(_viewModel),
+          Text(dateToStringFormat2(DateTime.now()),style: getSemiBoldStyle(color: ColorManager.black,fontSize: FontSize.s15)),
         ],
       ),
     );
   }
 
-  Widget _getSection(List<OrderModel> orders) {
-    return StreamBuilder<DateRange>(
-      stream: _viewModel.outpuDateRange,
-      builder: (context, snapshot) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(AppStrings.allOrders,style:getBoldStyle(color: ColorManager.black, fontSize: FontSize.s17)),
-              ActionButton(
-                title: AppStrings.exportExcel,
-                onTap: () {
-                  exportOrdersToExcel(orders,"${snapshot.data!.startDate}<->${snapshot.data!.endDate}");
-                },
-                color: ColorManager.gold),
-            ],
-          ),
-        );
-      }
-    );
-  }
 
   Widget _getChartsSection(HomeData homeData) {
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: AppPadding.p14),
-        child: ResponsiveGrid(
-          widthPourcentage: isMobile(context) ? 0.5 : 0.32,
+        padding: EdgeInsets.symmetric(horizontal: AppPadding.p30),
+        child: isDesktop(context)
+        ?SizedBox(
+          height: AppSize.s400,
+          child: Row(
+            children: [
+              Expanded(flex:3,child: HoursChart(homeData.hoursStatistics!, viewInsights: ()=>_homeViewModel.inputCurrentIndex.add(1))),
+              SizedBox(width: AppSize.s20),
+              Expanded(flex:2,child: QuantityChart(homeData.categoryCounts!,homeData.productCounts!)),
+            ],
+          ),
+         )
+        :Column(
           children: [
-            SizedBox(
-              height: AppSize.s300,
-              child: CustomLineChart(homeData.orders!, _viewModel),
-            ),
-            SizedBox(
-              height: AppSize.s300,
-              child: CustomPieChart(homeData.categoryCounts!),
-            ),
+            HoursChart(homeData.hoursStatistics!, viewInsights: ()=>_homeViewModel.inputCurrentIndex.add(1)),
+            SizedBox(height: AppSize.s20),
+            QuantityChart(homeData.categoryCounts!,homeData.productCounts!),
           ],
         ));
   }
 
-  Widget _getOrdersDataTable(List<OrderModel> orders) {
-    return CustomDataTable(
-        columns: columns.map((column) => DataColumn(label: Text(column))).toList(),
-        rows: orders.map((order) => DataRow(cells: [
-                  DataCell(OrderStatus(status: order.status.toString())),
-                  DataCell(Text(order.id.toString())),
-                  DataCell(Text(dateFormat(order.createdAt))),
-                  DataCell(Text(order.itemsNumber.toString())),
-                  DataCell(Text("${order.totalOrderPrice.toString()} ${AppStrings.dh}")),
-                  DataCell(PopUpMenuColumn(
-                      view: () {
-                        showDetails(order);
-                      }))
-                ]))
-            .toList());
+  Widget _getOrdersAndWaitersSection(HomeData homeData){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal:AppPadding.p30),
+      child: isDesktop(context)
+        ?Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(flex:3,child: _getOrdersDataTable(homeData.lastOrders!)),
+            SizedBox(width: AppSize.s20),
+            Expanded(flex:2,child: WaitersChart(homeData.waiters!)),
+           ],
+        )
+        :Column(
+          children: [
+            WaitersChart(homeData.waiters!),
+            SizedBox(height: AppSize.s20),
+            _getOrdersDataTable(homeData.lastOrders!),
+          ],
+        )  
+    );
   }
 
-  Widget _getStatiqueGrid(Statique? statistic) {
-    if (statistic != null) {
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: AppPadding.p16),
-        child: ResponsiveGrid(
-            widthPourcentage: isMobile(context)
-                ? 0.5
-                : isTab(context)
-                    ? 0.3
-                    : 0.19,
-            children: [
-              DataStatistiqueItem(
-                label: AppStrings.inProgressOrders,
-                count: statistic.numOfInProgressOrders.toString(),
-                color: ColorManager.orange,
-                icon: IconManger.inprogress,
-              ),
-              DataStatistiqueItem(
-                label: AppStrings.completedOrders,
-                count: statistic.numOfDoneOrders.toString(),
-                color: ColorManager.green,
-                icon: IconManger.done,
-              ),
-              DataStatistiqueItem(
-                label: AppStrings.totalOrders,
-                count: statistic.numOfOrders.toString(),
-                color: ColorManager.red,
-                icon: IconManger.total,
-              ),
-              DataStatistiqueItem(
-                label: AppStrings.amount,
-                count: "${statistic.amount} ${AppStrings.dh}",
-                color: ColorManager.blue,
-                icon: AntIcons.euro,
-              ),
-            ]),
-      );
-    } else {
-      return Container();
-    }
+  Widget _getOrdersHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(AppStrings.latestOrders,style: getSemiBoldStyle( color: ColorManager.black, fontSize: FontSize.s16)),
+        TextButton(onPressed: (){
+          _homeViewModel.inputCurrentIndex.add(1);
+        }, 
+        child: Text(AppStrings.viewAll))
+      ],
+    );
+  }
+
+  Widget _getOrdersDataTable(List<OrderModel> lastOrders) {
+    return BorderedContainer(
+      padding: EdgeInsets.all(AppPadding.p14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _getOrdersHeader(),
+          SizedBox(height: AppSize.s14),
+          lastOrders.isEmpty?NotfoundWidget(AppStrings.noDataAvailable):CustomDataTable(
+              card: false,
+              padding: EdgeInsets.zero,
+              columns: columns.map((column) => DataColumn(label: Text(column))).toList(),
+              rows: lastOrders.map((order) => DataRow(cells: [
+                        DataCell(Text(order.id.toString())),
+                        DataCell(Text(dateFormat(order.createdAt))),
+                        DataCell(Text(order.itemsNumber.toString())),
+                        DataCell(Text("${order.totalAmount.toString()} ${AppStrings.dh}")),
+                        DataCell(OrderStatusItem(status: order.status)),
+                        DataCell(PopUpMenuColumn(view:(){showDetails(order);}))
+                      ])).toList()),
+        ],
+      ),
+    );
   }
 
   showDetails(OrderModel order) {
     showDialog(
         context: context,
         builder: (context) {
-          return Dialog(child: DetailsOrderWidget(order));
+          return Dialog(
+              child: DetailsOrderWidget(order, print: () {
+            _viewModel.print(order.id);
+          }));
         });
   }
 }

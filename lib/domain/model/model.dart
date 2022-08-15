@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:cma_admin/data/mapper/mapper.dart';
+import 'package:cma_admin/app/enum.dart';
 import 'package:flutter/material.dart';
+
+import 'package:cma_admin/data/mapper/mapper.dart';
 
 class User {
   int id;
@@ -39,6 +41,7 @@ class Category {
   Color color;
   String image;
   String label;
+  int orderNumber;
 
   Category(
     this.id,
@@ -49,6 +52,7 @@ class Category {
     this.color,
     this.image,
     this.label,
+    this.orderNumber
   );
 }
 
@@ -61,6 +65,7 @@ class Product {
   Color color;
   String image;
   String title;
+  int orderNumber;
   double price;
   Category? category;
   List<Supplement>? supplements;
@@ -74,6 +79,7 @@ class Product {
       this.color,
       this.image,
       this.title,
+      this.orderNumber,
       this.price,
       this.category,
       this.supplements);
@@ -89,6 +95,7 @@ class Supplement {
   String image;
   String title;
   double price;
+  int orderNumber;
 
   Supplement(
     this.id,
@@ -100,6 +107,7 @@ class Supplement {
     this.image,
     this.title,
     this.price,
+    this.orderNumber
   );
 }
 
@@ -113,13 +121,13 @@ class OrderProdcut {
   Product? product;
   List<Supplement>? supplements;
   int quantity;
-  double totalPrice;
+  double amount;
 
   OrderProdcut(
     this.product,
     this.supplements,
     this.quantity,
-    this.totalPrice,
+    this.amount,
   );
 
   String supplementsString() {
@@ -141,9 +149,9 @@ class OrderModel {
   String deletedAt;
   String modifiedAt;
   bool active;
-  String status;
+  OrderStatus status;
   List<OrderProdcut>? items;
-  double totalOrderPrice;
+  double totalAmount;
   int itemsNumber;
   User? waiter;
 
@@ -155,45 +163,138 @@ class OrderModel {
       this.active,
       this.status,
       this.items,
-      this.totalOrderPrice,
+      this.totalAmount,
       this.itemsNumber,
       this.waiter);
 
   factory OrderModel.empty() => OrderModel(
-      0, EMPTY, EMPTY, EMPTY, false, EMPTY, [], ZEROD, ZERO, User.empty());
+      0, EMPTY, EMPTY, EMPTY, false, OrderStatus.INPROGRESS, [], ZEROD, ZERO, User.empty());
 }
 
-class Statique {
-  double amount;
-  int numOfDoneOrders;
-  int numOfInProgressOrders;
-  int numOfOrders;
+class StatusCount {
+  int done;
+  int inprogress;
+  int canceled;
 
-  Statique(this.amount, this.numOfDoneOrders, this.numOfInProgressOrders,
-      this.numOfOrders);
+  StatusCount(
+    this.done,
+    this.inprogress,
+    this.canceled,
+  );
 }
 
 class Waiter {
-  User? waiter;
-  int ordersCount;
+  int id;
+  String name;
+  String image;
+  int inprogress;
+  int done;
+  int canceled;
+  double amount;
 
-  Waiter(this.waiter,this.ordersCount);
+  Waiter(
+    this.id,
+    this.name,
+    this.image,
+    this.inprogress,
+    this.done,
+    this.canceled,
+    this.amount,
+  );
 }
 
+class AllWaitersInsights {
+  StatusCount? statusCount;
+  
+  double totalAmount;
+
+  List<Waiter>? waiters;
+
+  AllWaitersInsights(
+    this.statusCount,
+    this.totalAmount,
+    this.waiters,
+  );
+}
+
+class WaiterInsights {
+  Waiter? waiter;
+  
+  List<TimeInsights>? timeInsights;
+
+  WaiterInsights(
+    this.waiter,
+    this.timeInsights
+  );
+}
+
+class TimeInsights {
+  String time;
+  int inprogress;
+  int done;
+  int canceled;
+  double amount;
+
+  TimeInsights(
+    this.time,
+    this.inprogress,
+    this.done,
+    this.canceled,
+    this.amount,
+  );
+}
 
 class CategoryCount {
   int id;
   Color color;
   String label;
-  int itemsCount;
-  CategoryCount(this.id,this.color,this.label,this.itemsCount);
+  int quantity;
+  CategoryCount(this.id,this.color,this.label,this.quantity);
 }
+
+class ProductCount {
+  int id;
+  Color color;
+  String title;
+  int categoryId;
+  int quantity;
+  ProductCount(this.id,this.color,this.title,this.categoryId,this.quantity);
+}
+
 class HomeData {
-  Statique? statique;
-  List<OrderModel>? orders;
+  StatusCount? statusCount;
+  List<OrderModel>? lastOrders;
+  double totalAmount;
   List<Waiter>? waiters;
+  List<TimeInsights>? hoursStatistics;
   List<CategoryCount>? categoryCounts;
-  HomeData(this.statique, this.orders,this.waiters,this.categoryCounts);
+  List<ProductCount>? productCounts;
+  
+  HomeData(
+    this.statusCount,
+    this.lastOrders,
+    this.totalAmount,
+    this.waiters,
+    this.hoursStatistics,
+    this.categoryCounts,
+    this.productCounts,
+  );
+}
+
+class OrdersInsights {
+  StatusCount? statusCount;
+  List<TimeInsights>? timeInsights;
+  double totalAmount;
+  int totalCount;
+  List<OrderModel>? orders;
+
+  OrdersInsights(
+    this.statusCount,
+    this.timeInsights,
+    this.totalAmount,
+    this.totalCount,
+    this.orders,
+  );
 }
 
 class SignInData {

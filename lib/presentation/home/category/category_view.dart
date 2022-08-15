@@ -10,6 +10,7 @@ import 'package:cma_admin/presentation/components/data_statistique_item.dart';
 import 'package:cma_admin/presentation/components/headar_text.dart';
 import 'package:cma_admin/presentation/components/image_column.dart';
 import 'package:cma_admin/presentation/components/popup_menu_column.dart';
+import 'package:cma_admin/presentation/components/reorder_column.dart';
 import 'package:cma_admin/presentation/components/responsive_grid.dart';
 import 'package:cma_admin/presentation/home/category/category_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
@@ -35,7 +36,8 @@ class _CategoryViewState extends State<CategoryView> {
     "CreatedAt",
     "Color",
     "Active",
-    "Actions"
+    "Up/Down",
+    "Actions",
   ];
 
   _bind() {
@@ -56,19 +58,15 @@ class _CategoryViewState extends State<CategoryView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorManager.white,
-      height: double.infinity,
-      child: StreamBuilder<FlowState>(
-          stream: _viewModel.outputState,
-          builder: (context, snapshot) {
-            return snapshot.data
-                    ?.getScreenWidget(context, _getcontentScreenWidget(), () {
-                  _bind();
-                }) ??
-                Container();
-          }),
-    );
+    return StreamBuilder<FlowState>(
+        stream: _viewModel.outputState,
+        builder: (context, snapshot) {
+          return snapshot.data
+                  ?.getScreenWidget(context, _getcontentScreenWidget(), () {
+                _bind();
+              }) ??
+              Container();
+        });
   }
 
   Widget _getcontentScreenWidget() {
@@ -85,6 +83,7 @@ class _CategoryViewState extends State<CategoryView> {
   }
 
   Widget _getDataTable(List<Category> categories) {
+    final List fixedList = Iterable<int>.generate(categories.length).toList();
     return SingleChildScrollView(
       controller: ScrollController(),
       child: Column(
@@ -100,28 +99,32 @@ class _CategoryViewState extends State<CategoryView> {
           SizedBox(height: AppSize.s20),
           CustomDataTable(
               columns: columns.map((column) => DataColumn(label: Text(column))).toList(),
-              rows: categories.map((category) => DataRow(cells: [
-                        DataCell(Text(category.id.toString())),
-                        DataCell(ImageColumn(category.image)),
-                        DataCell(Text(category.label)),
-                        DataCell(Text(category.createdAt)),
-                        DataCell(ColorColumn(category.color)),
-                        DataCell(Switch(
-                            value: category.active,
-                            onChanged: (value) {_viewModel.activeToggle(context,category, categories);})),
-                        DataCell(PopUpMenuColumn(
-                            update: () {
-                                    Navigator.of(context)
-                              .pushNamed(Routes.updateCategoryRoute,
-                                  arguments: category)
-                              .then((value) => _bind());
-                            },
-                            delete: (){
-                              _viewModel.delete(context, category, categories);
-                            },
-                            view: () {
-                              Navigator.of(context).pushNamed(Routes.categoryDetailsRoute,arguments: category) .then((value) => _bind());
-                            })),
+              rows: fixedList.map((index) => DataRow(cells: [
+                DataCell(Text(categories[index].id.toString())),
+                DataCell(ImageColumn(categories[index].image)),
+                DataCell(Text(categories[index].label)),
+                DataCell(Text(categories[index].createdAt)),
+                DataCell(ColorColumn(categories[index].color)),
+                DataCell(Switch(
+                  value: categories[index].active,
+                  onChanged: (value) {_viewModel.activeToggle(context,categories[index], categories);})),
+                DataCell(ReorderColumn(
+                  index: index,
+                  length: categories.length,
+                  up:(){
+                    _viewModel.reorder(context, categories, index, index-1);
+                  },
+                  down:(){
+                    _viewModel.reorder(context, categories, index, index+1);
+                  })),  
+                DataCell(PopUpMenuColumn(
+                  update: () {
+                    Navigator.of(context).pushNamed(Routes.updateCategoryRoute,arguments: categories[index]).then((value) => _bind());
+                  },
+                  delete: (){ _viewModel.delete(context,categories[index], categories); },
+                  view: () {
+                    Navigator.of(context).pushNamed(Routes.categoryDetailsRoute,arguments: categories[index]) .then((value) => _bind());
+                  })),
                       ])).toList())
         ],
       ),
@@ -134,7 +137,7 @@ class _CategoryViewState extends State<CategoryView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          HeaderText(AppStrings.category),
+          HeaderText(AppStrings.categories),
           Row(
             children: [
               ActionButton(
@@ -163,18 +166,18 @@ class _CategoryViewState extends State<CategoryView> {
     return ResponsiveGrid(
         widthPourcentage: isMobile(context) ? 0.3 : 0.25,
         children: [
-          DataStatistiqueItem(
+          DataStatististicsItem(
               label: AppStrings.active,
               count: isActiveCount.toString(),
               color: ColorManager.green,
               icon: IconManger.active),
-          DataStatistiqueItem(
+          DataStatististicsItem(
             label: AppStrings.notActive,
             count: isNotActiveCount.toString(),
             color: ColorManager.red,
             icon: IconManger.notActive,
           ),
-          DataStatistiqueItem(
+          DataStatististicsItem(
               label: AppStrings.total,
               count: categories.length.toString(),
               color: ColorManager.orange,

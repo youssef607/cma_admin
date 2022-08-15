@@ -15,8 +15,7 @@ class RequiredLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          const EdgeInsets.only(bottom: AppPadding.p4, left: AppPadding.p4),
+      padding: EdgeInsets.only(bottom: AppPadding.p8),
       child: RichText(
           text: TextSpan(
               style: TextStyle(color: ColorManager.black),

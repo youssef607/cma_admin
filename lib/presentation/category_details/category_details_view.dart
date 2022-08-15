@@ -14,6 +14,7 @@ import 'package:cma_admin/presentation/components/custom_data_table.dart';
 import 'package:cma_admin/presentation/components/image_column.dart';
 import 'package:cma_admin/presentation/components/not_found_widget.dart';
 import 'package:cma_admin/presentation/components/popup_menu_column.dart';
+import 'package:cma_admin/presentation/components/reorder_column.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
 import 'package:cma_admin/presentation/resources/routes_manager.dart';
@@ -42,6 +43,7 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
     "Color",
     "Category Id",
     "Status",
+    "Up/Down",
     "Actions"
   ];
 
@@ -66,7 +68,6 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(),
-      backgroundColor: ColorManager.white,
       body: StreamBuilder<FlowState>(
           stream: _viewModel.outputState,
           builder: (context, snapshot) {
@@ -103,8 +104,7 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
       children: [
         BorderedContainer(
           margin: EdgeInsets.symmetric(vertical: AppMargin.m14),
-          padding: EdgeInsets.all(
-              isMobile(context) ? AppPadding.p16 : AppPadding.p35),
+          padding: EdgeInsets.all(isMobile(context) ? AppPadding.p16 : AppPadding.p35),
           child: Row(
             children: [
               DetailsImage(category.image),
@@ -116,8 +116,7 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
                   SizedBox(height: AppSize.s16),
                   InfoText(text: AppStrings.label, value: category.label),
                   SizedBox(height: AppSize.s16),
-                  InfoText(
-                      text: AppStrings.createdAt, value: category.createdAt),
+                  InfoText(text: AppStrings.createdAt, value: category.createdAt),
                   SizedBox(height: AppSize.s16),
                   InfoText(
                       text: AppStrings.status,
@@ -141,7 +140,6 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
             left: AppSize.s50,
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: AppPadding.p10),
-                color: ColorManager.white,
                 child: Text(AppStrings.categoryInfo,
                     style: getBoldStyle(
                         color: ColorManager.black, fontSize: FontSize.s20)))),
@@ -152,8 +150,9 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
   Widget _getActionButton(Category category) {
     return Row(
       children: [
-        ActionButton(
-            color: ColorManager.gold, title: AppStrings.update, onTap: () {}),
+        ActionButton(color: ColorManager.gold, title: AppStrings.update, onTap: () {
+          Navigator.of(context).pushNamed(Routes.updateCategoryRoute,arguments: category);
+        }),
         SizedBox(width: AppSize.s20),
         ActionButton(color: ColorManager.primary, title: AppStrings.delete, onTap: () {
           _viewModel.delete(context, category.id);
@@ -161,8 +160,7 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
         SizedBox(width: AppSize.s20),
         ActionButton(
             color: category.active ? ColorManager.red : ColorManager.green,
-            title:
-                category.active ? AppStrings.deactivate : AppStrings.activate,
+            title: category.active ? AppStrings.deactivate : AppStrings.activate,
             onTap: () {
               _viewModel.activeToggle(context, category);
             })
@@ -176,6 +174,7 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
         builder: (context, snapshot) {
           List<Product>? products = snapshot.data;
           if (products != null) {
+            final List fixedList = Iterable<int>.generate(products.length).toList();
             return Center(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,27 +188,34 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> {
                           columns: columns
                               .map((column) => DataColumn(label: Text(column)))
                               .toList(),
-                          rows: products
-                              .map((product) => DataRow(cells: [
-                                    DataCell(Text(product.id.toString())),
-                                    DataCell(ImageColumn(product.image)),
-                                    DataCell(Text(product.title)),
+                          rows: fixedList.map((index) => DataRow(cells: [
+                                    DataCell(Text(products[index].id.toString())),
+                                    DataCell(ImageColumn(products[index].image)),
+                                    DataCell(Text(products[index].title)),
+                                    DataCell(Text("${products[index].price} ${AppStrings.dh}")),
+                                    DataCell(Text(products[index].createdAt)),
+                                    DataCell(ColorColumn(products[index].color)),
+                                    DataCell(Text("${products[index].category?.id}")),
                                     DataCell(Text(
-                                        "${product.price} ${AppStrings.dh}")),
-                                    DataCell(Text(product.createdAt)),
-                                    DataCell(ColorColumn(product.color)),
-                                    DataCell(Text("${product.category?.id}")),
-                                    DataCell(Text(
-                                        product.active
+                                        products[index].active
                                             ? AppStrings.active
                                             : AppStrings.notActive,
                                         style: getSemiBoldStyle(
-                                            color: product.active
+                                            color: products[index].active
                                                 ? ColorManager.green
                                                 : ColorManager.red,
                                             fontSize: FontSize.s12))),
+                                    DataCell(ReorderColumn(
+                                      up: (){_viewModel.reorder(context, products, index, index-1);}, 
+                                      down: (){_viewModel.reorder(context, products, index, index+1);}, 
+                                      index: index, 
+                                      length: products.length)),        
                                     DataCell(PopUpMenuColumn(
-                                        update: () {}, view: () {})),
+                                        update: () {
+                                          Navigator.of(context).pushNamed(Routes.updateProductRoute,arguments: products[index]);
+                                        }, view: () {
+                                          Navigator.of(context).pushNamed(Routes.productDetailsRoute,arguments: products[index]);
+                                        })),
                                   ]))
                               .toList()),
                 ],

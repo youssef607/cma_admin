@@ -6,13 +6,18 @@ import 'package:flutter/material.dart';
 
 class ImageColumn extends StatelessWidget {
   final String image;
-  const ImageColumn(this.image, {Key? key}) : super(key: key);
+  final double height;
+  final double width;
+  const ImageColumn(this.image, {Key? key,double? height,double? width}) :
+   height = height ?? AppSize.s50,
+   width = width ?? AppSize.s50,  
+   super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: AppSize.s50,
-        width: AppSize.s50,
+        height: height,
+        width: width,
         child: image == Constant.ImageUrl
             ? Center(
                 child: Text(

@@ -4,19 +4,16 @@ import 'package:cma_admin/domain/repository/repository.dart';
 import 'package:cma_admin/domain/usecase/base_usecase.dart';
 import 'package:dartz/dartz.dart';
 
-class DashboardUseCase extends BaseUseCase<DashboardUseCaseInput,HomeData> {
+class DashboardUseCase extends BaseUseCase<String,HomeData> {
   Repository _repository;
   DashboardUseCase(this._repository);
 
   @override
-  Future<Either<Failure,HomeData>> execute(DashboardUseCaseInput input) {
-    return _repository.home(input.date1,input.date2);
+  Future<Either<Failure,HomeData>> execute(String input) {
+    return _repository.home();
   }
-}
 
-class DashboardUseCaseInput{
-  String date1;
-  String date2;
-
-  DashboardUseCaseInput(this.date1,this.date2);
+  Future<Either<Failure,void>> print(String id){
+    return _repository.print(id);
+  }
 }

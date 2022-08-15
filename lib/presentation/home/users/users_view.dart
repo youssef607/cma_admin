@@ -3,11 +3,10 @@ import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/domain/model/model.dart';
 import 'package:cma_admin/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:cma_admin/presentation/components/action_button.dart';
+import 'package:cma_admin/presentation/components/circle_image.dart';
 import 'package:cma_admin/presentation/components/custom_data_table.dart';
 import 'package:cma_admin/presentation/components/data_statistique_item.dart';
 import 'package:cma_admin/presentation/components/headar_text.dart';
-import 'package:cma_admin/presentation/components/image_column.dart';
-import 'package:cma_admin/presentation/components/popup_menu_column.dart';
 import 'package:cma_admin/presentation/components/responsive_grid.dart';
 import 'package:cma_admin/presentation/home/users/users_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
@@ -34,7 +33,7 @@ class _UserViewState extends State<UserView> {
     "CreatedAt",
     "Role",
     "Active",
-    "Actions"
+    // "Actions"
   ];
 
   _bind() {
@@ -55,19 +54,15 @@ class _UserViewState extends State<UserView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorManager.white,
-      height: double.infinity,
-      child: StreamBuilder<FlowState>(
-          stream: _viewModel.outputState,
-          builder: (context, snapshot) {
-            return snapshot.data
-                    ?.getScreenWidget(context, _getcontentScreenWidget(), () {
-                  _bind();
-                }) ??
-                Container();
-          }),
-    );
+    return StreamBuilder<FlowState>(
+        stream: _viewModel.outputState,
+        builder: (context, snapshot) {
+          return snapshot.data
+                  ?.getScreenWidget(context, _getcontentScreenWidget(), () {
+                _bind();
+              }) ??
+              Container();
+        });
   }
 
   Widget _getcontentScreenWidget() {
@@ -102,7 +97,7 @@ class _UserViewState extends State<UserView> {
               rows: users.map((user) => DataRow(
                   cells: [
                         DataCell(Text(user.id.toString())),
-                        DataCell(ImageColumn(user.image)),
+                        DataCell(CircleImage(user.image)),
                         DataCell(Text(user.name)),
                         DataCell(Text(user.userName)),
                         DataCell(Text(user.createdAt)),
@@ -110,9 +105,9 @@ class _UserViewState extends State<UserView> {
                         DataCell(Switch(
                             value: user.active,
                             onChanged: (value) {_viewModel.activeToggle(context,user, users);})),
-                        DataCell(PopUpMenuColumn(
-                            update: () {},
-                            )),
+                        // DataCell(PopUpMenuColumn(
+                        //     update: () {},
+                        //     )),
                       ])).toList())
         ],
       ),
@@ -154,18 +149,18 @@ class _UserViewState extends State<UserView> {
     return ResponsiveGrid(
         widthPourcentage: isMobile(context) ? 0.3 : 0.25,
         children: [
-          DataStatistiqueItem(
+          DataStatististicsItem(
               label: AppStrings.active,
               count: isActiveCount.toString(),
               color: ColorManager.green,
               icon: IconManger.active),
-          DataStatistiqueItem(
+          DataStatististicsItem(
             label: AppStrings.notActive,
             count: isNotActiveCount.toString(),
             color: ColorManager.red,
             icon: IconManger.notActive,
           ),
-          DataStatistiqueItem(
+          DataStatististicsItem(
               label: AppStrings.total,
               count: users.length.toString(),
               color: ColorManager.orange,

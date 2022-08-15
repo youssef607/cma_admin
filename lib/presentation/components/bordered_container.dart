@@ -8,7 +8,10 @@ class BorderedContainer extends StatelessWidget {
   final EdgeInsets? padding;
   final double? height;
   final double? width;
-  const BorderedContainer({ Key? key,required this.child, this.margin,this.padding, this.height, this.width}) : super(key: key);
+  final Color? color;
+  final Color? borderColor;
+  const BorderedContainer({ Key? key,required this.child, 
+         this.margin,this.padding, this.height, this.width,this.color,this.borderColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +21,10 @@ class BorderedContainer extends StatelessWidget {
       width: width,
       padding: padding ?? EdgeInsets.symmetric(horizontal: AppPadding.p14),
       decoration: BoxDecoration(
+          color: color??ColorManager.white,
           borderRadius: BorderRadius.circular(AppSize.s6),
-          border: Border.all(color: ColorManager.grey100)),
+          border: Border.all(color: borderColor??ColorManager.grey100)
+      ),
       child: child
     );
   }

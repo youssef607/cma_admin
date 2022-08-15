@@ -18,8 +18,14 @@ ThemeData getApplicationTheme() {
       // card view theme
       cardTheme: CardTheme(
           color: ColorManager.white,
-          shadowColor: ColorManager.grey,
-          elevation: AppSize.s4),
+          shadowColor: ColorManager.lightGrey,
+          elevation: AppSize.s1_5),
+      dataTableTheme: DataTableThemeData(
+        dividerThickness: 0.8,
+        dataRowHeight: AppSize.s60,
+        headingTextStyle: getMediumStyle(color: ColorManager.lightGrey, fontSize: FontSize.s12),
+        dataTextStyle: getSemiBoldStyle(color: ColorManager.black, fontSize: FontSize.s12),   
+      ),    
       // App bar theme
       appBarTheme: AppBarTheme(
           centerTitle: true,
@@ -88,7 +94,7 @@ ThemeData getApplicationTheme() {
         errorBorder: OutlineInputBorder(
             borderSide:
                 BorderSide(color: ColorManager.errorLight, width: AppSize.s1_5),
-            borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
+            borderRadius: BorderRadius.all(Radius.circular(AppSize.s4))),
         // focused error border
         focusedErrorBorder: OutlineInputBorder(
             borderSide:

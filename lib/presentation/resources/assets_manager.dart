@@ -8,6 +8,7 @@ class ImageAssets {
   static const String gallery = "$IMAGE_PATH/gallery.png";
   static const String adduser = "$IMAGE_PATH/adduser.jpg";
   static const String color_picker = "$IMAGE_PATH/color-picker.png";
+  static const String profile = "$IMAGE_PATH/profile.jpg";
 }
 
 class JsonAssets {

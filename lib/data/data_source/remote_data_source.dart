@@ -1,6 +1,7 @@
 import 'package:cma_admin/data/network/app_api.dart';
 import 'package:cma_admin/data/request/request.dart';
 import 'package:cma_admin/data/responses/responses.dart';
+import 'package:cma_admin/domain/model/model.dart';
 
 abstract class RemoteDataSource {
   Future<SignInResponse> signIn(String userName, String password);
@@ -9,26 +10,27 @@ abstract class RemoteDataSource {
   Future<List<SupplementResponse>> getAllSupplement();
   Future<List<UserResponse>> getAllUser();
   Future<bool> activeToggle(String type, String id);
-  Future<HomeResponse> home(String date1, String date2);
+  Future<HomeResponse> home();
   Future<List<ProductResponse>> getProductsByCategory(String id);
   Future<List<SupplementResponse>> getSupplemensByProduct(String id);
   Future<List<SupplementResponse>> getSupplementsForAdd(String id);
-  Future<ProductResponse> addSupplementsToProduct(
-      String productId, String suppsId);
+  Future<ProductResponse> addSupplementsToProduct(String productId, String suppsId);
   Future<void> deleteSupplementsToProduct(String productId, String suppId);
   Future<SignInResponse> addUser(AddUserRequest addUserRequest);
   Future<CategoryResponse> addCategory(AddCategoryRequest addCategoryRequest);
   Future<ProductResponse> addProduct(AddProductRequest addProductRequest);
-  Future<SupplementResponse> addSupplement(
-      AddSupplementRequest addSupplementRequest);
-  Future<SupplementResponse> updateSupplement(
-      UpdateSupplementRequest updateSupplementRequest);
+  Future<SupplementResponse> addSupplement( AddSupplementRequest addSupplementRequest);
+  Future<SupplementResponse> updateSupplement(UpdateSupplementRequest updateSupplementRequest);
   Future<bool> delete(String type, String id);
-
-  Future<CategoryResponse> updateCategory(
-      UpdateCategoryRequest updateCategoryRequest);
-  Future<ProductResponse> updateProduct(
-      UpdateProductRequest updateProductRequest);
+  Future<CategoryResponse> updateCategory(UpdateCategoryRequest updateCategoryRequest);
+  Future<ProductResponse> updateProduct(UpdateProductRequest updateProductRequest);
+  Future<void> print(String id);
+  Future<void> reorder(String type,String id1,String id2);
+  Future<AllWaitersInsightsResponse> getAllWaitersInsights(String date1,String date2);
+  Future<WaiterInsightsResponse> getWaiterInsights(String date1,String date2,String id);
+  Future<OrdersInsightsResponse> getOrdersInsights(String date1,String date2,String pageIndex);
+  Future<List<CategoryCountResponse>> getCategoriesQuantityConsumed(String date1,String date2);
+  Future<List<ProductCountResponse>> getProductsQuantityConsumedByCategory(String date1,String date2,String categoryId);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -68,8 +70,8 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<HomeResponse> home(String date1, String date2) {
-    return _appServiceClient.home(date1, date2);
+  Future<HomeResponse> home() {
+    return _appServiceClient.home();
   }
 
   @override
@@ -175,5 +177,40 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
         image: updateProductRequest.image,
         price: updateProductRequest.price,
         title: updateProductRequest.title);
+  }
+
+  @override
+  Future<void> print(String id) {
+    return _appServiceClient.print(id);
+  }
+
+  @override
+  Future<void> reorder(String type, String id1, String id2) {
+    return _appServiceClient.reorder(type, id1, id2);
+  }
+
+  @override
+  Future<AllWaitersInsightsResponse> getAllWaitersInsights(String date1, String date2) {
+    return _appServiceClient.getAllWaitersInsights(date1, date2);
+  }  
+
+  @override
+  Future<WaiterInsightsResponse> getWaiterInsights(String date1, String date2, String id) {
+    return _appServiceClient.getWaiterInsights(date1, date2, id);
+  }
+
+  @override
+  Future<OrdersInsightsResponse> getOrdersInsights(String date1, String date2, String pageIndex) {
+    return _appServiceClient.getOrdersInsights(date1, date2, pageIndex);
+  }
+
+  @override
+  Future<List<CategoryCountResponse>> getCategoriesQuantityConsumed(String date1, String date2) {
+    return _appServiceClient.getCategoriesQuantityConsumed(date1, date2);
+  }
+
+  @override
+  Future<List<ProductCountResponse>> getProductsQuantityConsumedByCategory(String date1, String date2, String categoryId) {
+    return _appServiceClient.getProductsQuantityConsumedByCategory(date1, date2, categoryId);
   }
 }

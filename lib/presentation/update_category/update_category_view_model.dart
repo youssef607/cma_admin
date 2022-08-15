@@ -38,23 +38,22 @@ class UpdateCategoryViewModel extends BaseViewModel
 
   @override
   updateCategory(BuildContext context) async {
-    inputState.add(
-        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+    inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _updateCategoryUseCase.execute(UpdateCategoryUseCaseInput(
       updateCategoryViewObject.id,
       updateCategoryViewObject.color,
       updateCategoryViewObject.image,
       updateCategoryViewObject.label,
-    )))
-        .fold(
-            (failure) => {
-                  inputState.add(ErrorState(
-                      StateRendererType.POPUP_ERROR_STATE, failure.message))
-                }, (data) {
-      inputState.add(ContentState());
-      isUpdateCategorySuccessfullyStreamController.add(true);
-      // Navigator.of(context).pop();
-    });
+    ))).fold(
+      (failure) => {
+        inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE, failure.message))
+      }, 
+      (data) {
+        inputState.add(ContentState());
+        isUpdateCategorySuccessfullyStreamController.add(true);
+        Navigator.of(context).pop();
+      }
+    );
   }
 
   @override
@@ -79,8 +78,7 @@ class UpdateCategoryViewModel extends BaseViewModel
   setLabel(String label) {
     inputLabel.add(label);
     if (_isLabelValid(label)) {
-      updateCategoryViewObject =
-          updateCategoryViewObject.copyWith(label: label);
+      updateCategoryViewObject = updateCategoryViewObject.copyWith(label: label);
     } else {
       updateCategoryViewObject = updateCategoryViewObject.copyWith(label: "");
     }

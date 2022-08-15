@@ -1,10 +1,11 @@
 import 'package:ant_icons/ant_icons.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
 import 'package:cma_admin/presentation/resources/font_manager.dart';
+import 'package:cma_admin/presentation/resources/icon_manager.dart';
+import 'package:cma_admin/presentation/resources/strings_manager.dart';
 import 'package:cma_admin/presentation/resources/styles_manager.dart';
 import 'package:cma_admin/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:side_navigation/side_navigation.dart';
 
 class SideNavBar extends StatelessWidget {
@@ -15,19 +16,20 @@ class SideNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SideNavigationBar(
-        selectedIndex: selectedIndex,
+        selectedIndex: selectedIndex,    
         toggler: SideBarToggler(
             expandIcon: Icons.arrow_back_ios,
             shrinkIcon: Icons.arrow_forward_ios),
         header: _getSideNavHeader(),
         theme: _getSideNavTheme(),
         items: [
-          _getSideNavItem("Dashboard", AntIcons.dashboard_outline),
-          _getSideNavItem("Category", Ionicons.cube_outline),
-          _getSideNavItem("Product", Ionicons.bag_outline),
-          _getSideNavItem("Supplement", Ionicons.ice_cream_outline),
-          _getSideNavItem("Users", Ionicons.people_outline),
-          _getSideNavItem("Logout", AntIcons.logout_outline),
+          _getSideNavItem(AppStrings.dashboard,IconManger.dashboard),
+          _getSideNavItem(AppStrings.orders,IconManger.orders),
+          _getSideNavItem(AppStrings.categories,IconManger.categories),
+          _getSideNavItem(AppStrings.products,IconManger.products),
+          _getSideNavItem(AppStrings.supplements,IconManger.supplements),
+          _getSideNavItem(AppStrings.users,IconManger.users),
+          _getSideNavItem(AppStrings.logout,IconManger.logout),
         ],
         onTap: (index) {
           onTap.call(index);

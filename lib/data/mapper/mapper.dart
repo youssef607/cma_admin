@@ -1,4 +1,5 @@
 import 'package:cma_admin/app/constant.dart';
+import 'package:cma_admin/app/enum.dart';
 import 'package:cma_admin/app/extensions.dart';
 import 'package:cma_admin/app/functions.dart';
 import 'package:cma_admin/data/responses/responses.dart';
@@ -54,7 +55,9 @@ extension CategoryResponseExtension on CategoryResponse? {
         this?.active.orFalse() ?? FALSE,
         HexColor.fromHex("#${this?.color?.orEmpty() ?? EMPTY}"),
         Constant.ImageUrl + (this?.image?.orEmpty() ?? EMPTY),
-        this?.label?.orEmpty() ?? EMPTY);
+        this?.label?.orEmpty() ?? EMPTY,
+        this?.orderNumber?.orZero() ?? ZERO
+        );
   }
 }
 
@@ -69,6 +72,7 @@ extension ProductResponseExtension on ProductResponse? {
       HexColor.fromHex("#${this?.color?.orEmpty() ?? EMPTY}"),
       Constant.ImageUrl + (this?.image?.orEmpty() ?? EMPTY),
       this?.title?.orEmpty() ?? EMPTY,
+      this?.orderNumber?.orZero() ?? ZERO,
       this?.price?.orZeroD() ?? ZEROD,
       this?.category?.toDomain(),
       this?.supplements?.toDomain(),
@@ -88,6 +92,7 @@ extension SupplementResponseExtension on SupplementResponse? {
       Constant.ImageUrl + (this?.image?.orEmpty() ?? EMPTY),
       this?.title?.orEmpty() ?? EMPTY,
       this?.price?.orZeroD() ?? ZEROD,
+      this?.orderNumber?.orZero() ?? ZERO
     );
   }
 }
@@ -98,7 +103,7 @@ extension OrderProductResponseExtension on OrderProdcutResponse? {
       this?.product?.toDomain(),
       this?.supplements?.toDomain(),
       this?.quantity?.orZero() ?? ZERO,
-      this?.totalPrice?.orZeroD() ?? ZEROD,
+      this?.amount?.orZeroD() ?? ZEROD,
     );
   }
 }
@@ -111,28 +116,66 @@ extension OrderResponseExtension on OrderResponse? {
         this?.deletedAt?.orEmpty() ?? EMPTY,
         this?.modifiedAt?.orEmpty() ?? EMPTY,
         this?.active.orFalse() ?? FALSE,
-        this?.status.orEmpty() ?? EMPTY,
+        (this?.status.orEmpty() ?? EMPTY).toEnum(),
         this?.items?.toDomain(),
-        this?.totalOrderPrice.orZeroD() ?? ZEROD,
+        this?.totalAmount.orZeroD() ?? ZEROD,
         this?.itemsNumber?.orZero() ?? ZERO,
         this?.waiter?.toDomain());
   }
 }
 
-extension StatiqueResponseExtension on StatiqueResponse? {
-  Statique toDomain() {
-    return Statique(
-      this?.amount?.orZeroD() ?? ZEROD,
-      this?.numOfDoneOrders?.orZero() ?? ZERO,
-      this?.numOfInProgressOrders?.orZero() ?? ZERO,
-      this?.numOfOrders?.orZero() ?? ZERO,
+extension StatusCountResponseExtension on StatusCountResponse? {
+  StatusCount toDomain() {
+    return StatusCount(
+      this?.done?.orZero() ?? ZERO,
+      this?.inprogress?.orZero() ?? ZERO,
+      this?.canceled.orZero() ?? ZERO,
     );
   }
 }
 
 extension WaiterResponseExtension on WaiterResponse? {
   Waiter toDomain() {
-    return Waiter(this?.waiter?.toDomain(), this?.ordersCount.orZero() ?? ZERO);
+    return Waiter(
+      this?.id?.orZero()??ZERO,
+      this?.name?.orEmpty()??EMPTY,
+      Constant.ImageUrl+(this?.image?.orEmpty()??EMPTY),
+      this?.inprogress?.orZero()??ZERO,
+      this?.done?.orZero()??ZERO,
+      this?.canceled.orZero()??ZERO,
+      this?.amount?.orZeroD()??ZEROD,
+    );
+  }
+}
+
+extension AllWaiterinsightsResponseExtension on AllWaitersInsightsResponse? {
+  AllWaitersInsights toDomain() {
+    return AllWaitersInsights(
+      this?.statusCount?.toDomain(),
+      this?.totalAmount?.orZeroD()??ZEROD,
+      this?.waiters?.toDomain()
+    );
+  }
+}
+
+extension WaiterinsightsResponseExtension on WaiterInsightsResponse? {
+  WaiterInsights toDomain() {
+    return WaiterInsights(
+      this?.waiter?.toDomain(),
+      this?.timeInsights?.toDomain()
+    );
+  }
+}
+
+extension TimeInsightsResponseExtension on TimeInsightsResponse? {
+  TimeInsights toDomain() {
+    return TimeInsights(
+      this?.time?.orEmpty()??EMPTY,
+      this?.inprogress?.orZero()??ZERO,
+      this?.done?.orZero()??ZERO,
+      this?.canceled.orZero()??ZERO,
+      this?.amount?.orZeroD()??ZEROD,
+    );
   }
 }
 
@@ -142,14 +185,42 @@ extension CategoryCountResponseExtension on CategoryCountResponse? {
         this?.id?.orZero() ?? ZERO,
         HexColor.fromHex(this?.color?.orEmpty() ?? "F9F9F9"),
         this?.label.orEmpty() ?? EMPTY,
-        this?.itemsCount?.orZero() ?? ZERO,);
+        this?.quantity?.orZero() ?? ZERO,);
+  }
+}
+
+extension ProductCountResponseExtension on ProductCountResponse? {
+  ProductCount toDomain() {
+    return ProductCount(
+        this?.id?.orZero() ?? ZERO,
+        HexColor.fromHex(this?.color?.orEmpty() ?? "F9F9F9"),
+        this?.title.orEmpty() ?? EMPTY,
+        this?.categoryId.orZero() ?? ZERO,
+        this?.quantity?.orZero() ?? ZERO);
   }
 }
 
 extension HomeResponseExtension on HomeResponse? {
   HomeData toDomain() {
-    return HomeData(this?.statique?.toDomain(), this?.orders?.toDomain(),
-        this?.waiters?.toDomain(),this?.categoryCounts?.toDomain());
+    return HomeData(
+      this?.statusCount?.toDomain(), 
+      this?.lastOrders.toDomain(),
+      this?.totalAmount?.orZeroD()??ZEROD,
+      this?.waiters?.toDomain(),
+      this?.hoursInsights?.toDomain(),
+      this?.categoryCounts?.toDomain(),
+      this?.productCounts?.toDomain());
+  }
+}
+
+extension OrdersInsightsResponseExtension on OrdersInsightsResponse?{
+  OrdersInsights toDomain(){
+    return OrdersInsights(
+      this?.statusCount?.toDomain(), 
+      this?.timeInsights?.toDomain(),
+      this?.totalAmount?.orZeroD()??ZEROD, 
+      this?.totalCount?.orZero()??ZERO, 
+      this?.orders?.toDomain());
   }
 }
 
@@ -220,6 +291,17 @@ extension ListWaiterResponseExtension on List<WaiterResponse>? {
   }
 }
 
+extension ListHourInsightsResponseExtension on List<TimeInsightsResponse>? {
+  List<TimeInsights> toDomain() {
+    List<TimeInsights> timeInsights =
+        (this?.map((timeInsight) => timeInsight.toDomain()) ?? Iterable.empty())
+            .cast<TimeInsights>()
+            .toList();
+
+    return timeInsights;
+  }
+}
+
 
 extension ListCategoryCountResponseExtension on List<CategoryCountResponse>? {
   List<CategoryCount> toDomain() {
@@ -229,5 +311,16 @@ extension ListCategoryCountResponseExtension on List<CategoryCountResponse>? {
             .toList();
 
     return categoryCount;
+  }
+}
+
+extension ListProductCountResponseExtension on List<ProductCountResponse>? {
+  List<ProductCount> toDomain() {
+    List<ProductCount> productsCount =
+        (this?.map((productCount) => productCount.toDomain()) ?? Iterable.empty())
+            .cast<ProductCount>()
+            .toList();
+
+    return productsCount;
   }
 }

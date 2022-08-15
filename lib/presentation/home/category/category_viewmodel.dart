@@ -32,8 +32,8 @@ class CategoryViewModel extends BaseViewModel with CategoryViewModelInput,Catego
         inputState.add(ContentState());
       });
   }
-
-
+  
+  //input
   @override
   activeToggle(BuildContext context,Category category,List<Category> categories) async{
     inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
@@ -68,24 +68,46 @@ class CategoryViewModel extends BaseViewModel with CategoryViewModelInput,Catego
         
       });
   }
+  
+  @override
+  reorder(BuildContext context,List<Category> categories,int oldIndex,int newIndex) async{
+    inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+    (await _useCase.reorder(categories[oldIndex].id,categories[newIndex].id)).fold(
+      (failure) {
+        inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE,failure.message));
+      }, 
+      (_) {
+        int oldNumber = categories[oldIndex].orderNumber;
+        int newNumber = categories[newIndex].orderNumber;                   
+        categories[oldIndex].orderNumber = newNumber;
+        categories[newIndex].orderNumber = oldNumber;
+        inputCategories.add(categories);
+        inputState.add(ContentState());
+        Navigator.of(context).pop();
+      });
+  }
 
   @override
   Sink get inputCategories => _categoriesStreamController.sink;
 
   @override
-  Stream<List<Category>> get outputCategories => _categoriesStreamController.stream.map((categories) => categories);
-  
+  Stream<List<Category>> get outputCategories => _categoriesStreamController.stream.map((categories) => sortCategories(categories));
+
+  List<Category> sortCategories(List<Category> categories){
+    categories.sort((a, b) => a.orderNumber.compareTo(b.orderNumber));
+    return categories;
+  }
+
   @override
   void dispose() {
     _categoriesStreamController.close();
     super.dispose();
   }
-
-
   
 }
 
 abstract class CategoryViewModelInput {
+  reorder(BuildContext context,List<Category> categories,int oldIndex,int newIndex);
   activeToggle(BuildContext context,Category category,List<Category> categories);
   delete(BuildContext context,Category category,List<Category> categories);
   Sink get inputCategories;

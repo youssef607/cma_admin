@@ -67,8 +67,9 @@ class UpdateSupplementViewModel extends BaseViewModel
                       StateRendererType.POPUP_ERROR_STATE, failure.message))
                 }, (data) {
       inputState.add(ContentState());
-      isSupplementUpdatedSuccessfullyStreamController.add(true);
       // Navigator.of(context).pop();
+      isSupplementUpdatedSuccessfullyStreamController.add(true);
+      Navigator.of(context).pop();
     });
   }
 

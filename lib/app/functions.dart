@@ -31,6 +31,10 @@ dateToStringFormat(DateTime? dateTime) {
   return DateFormat('yyyy-MM-dd').format(dateTime!);
 }
 
+dateToStringFormat2(DateTime? dateTime) {
+  return DateFormat('dd MMMM yyyy').format(dateTime!);
+}
+
 bool isMobile(BuildContext context) => MediaQuery.of(context).size.width < 700;
 bool isTab(BuildContext context) =>
     MediaQuery.of(context).size.width < 1300 &&

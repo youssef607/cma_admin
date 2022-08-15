@@ -10,6 +10,7 @@ import 'package:cma_admin/presentation/components/data_statistique_item.dart';
 import 'package:cma_admin/presentation/components/headar_text.dart';
 import 'package:cma_admin/presentation/components/image_column.dart';
 import 'package:cma_admin/presentation/components/popup_menu_column.dart';
+import 'package:cma_admin/presentation/components/reorder_column.dart';
 import 'package:cma_admin/presentation/components/responsive_grid.dart';
 import 'package:cma_admin/presentation/home/product/product_viewmodel.dart';
 import 'package:cma_admin/presentation/resources/color_manager.dart';
@@ -35,8 +36,9 @@ class _ProductViewState extends State<ProductView> {
     "Price",
     "Created At",
     "Color",
-    "Category Id",
+    "Category",
     "Active",
+    "Up/Down",
     "Actions"
   ];
 
@@ -58,19 +60,15 @@ class _ProductViewState extends State<ProductView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorManager.white,
-      height: double.infinity,
-      child: StreamBuilder<FlowState>(
-          stream: _viewModel.outputState,
-          builder: (context, snapshot) {
-            return snapshot.data
-                    ?.getScreenWidget(context, _getcontentScreenWidget(), () {
-                  _bind();
-                }) ??
-                Container();
-          }),
-    );
+    return StreamBuilder<FlowState>(
+        stream: _viewModel.outputState,
+        builder: (context, snapshot) {
+          return snapshot.data
+                  ?.getScreenWidget(context, _getcontentScreenWidget(), () {
+                _bind();
+              }) ??
+              Container();
+        });
   }
 
   Widget _getcontentScreenWidget() {
@@ -87,6 +85,7 @@ class _ProductViewState extends State<ProductView> {
   }
 
   Widget _getDataTable(List<Product> products) {
+    final List fixedList = Iterable<int>.generate(products.length).toList();
     return SingleChildScrollView(
       controller: ScrollController(),
       child: Column(
@@ -103,33 +102,30 @@ class _ProductViewState extends State<ProductView> {
               columns: columns
                   .map((column) => DataColumn(label: Text(column)))
                   .toList(),
-              rows: products
-                  .map((product) => DataRow(cells: [
-                        DataCell(Text(product.id.toString())),
-                        DataCell(ImageColumn(product.image)),
-                        DataCell(Text(product.title)),
-                        DataCell(Text("${product.price} ${AppStrings.dh}")),
-                        DataCell(Text(product.createdAt)),
-                        DataCell(ColorColumn(product.color)),
-                        DataCell(Text("${product.category?.id}")),
+              rows: fixedList.map((index) => DataRow(cells: [
+                        DataCell(Text(products[index].id.toString())),
+                        DataCell(ImageColumn(products[index].image)),
+                        DataCell(Text(products[index].title)),
+                        DataCell(Text("${products[index].price} ${AppStrings.dh}")),
+                        DataCell(Text(products[index].createdAt)),
+                        DataCell(ColorColumn(products[index].color)),
+                        DataCell(Text("${products[index].category?.label}")),
                         DataCell(Switch(
-                            value: product.active,
-                            onChanged: (value) {
-                              _viewModel.activeToggle(
-                                  context, product, products);
-                            })),
+                          value: products[index].active,
+                          onChanged: (value) {
+                            _viewModel.activeToggle(context, products[index], products);
+                          })),
+                        DataCell(ReorderColumn(
+                          up: (){_viewModel.reorder(context, products, index, index-1);}, 
+                          down: (){_viewModel.reorder(context, products, index, index+1);}, 
+                          index: index, 
+                          length: products.length)),
                         DataCell(PopUpMenuColumn(update: () {
-                          Navigator.of(context)
-                              .pushNamed(Routes.updateProductRoute,
-                                  arguments: product)
-                              .then((value) => _bind());
+                          Navigator.of(context).pushNamed(Routes.updateProductRoute,arguments: products[index]).then((value) => _bind());
                         }, delete: () {
-                          _viewModel.delete(context, product, products);
+                          _viewModel.delete(context, products[index], products);
                         }, view: () {
-                          Navigator.of(context)
-                              .pushNamed(Routes.productDetailsRoute,
-                                  arguments: product)
-                              .then((value) => _bind());
+                          Navigator.of(context).pushNamed(Routes.productDetailsRoute,arguments: products[index]).then((value) => _bind());
                         }))
                       ]))
                   .toList())
@@ -177,18 +173,18 @@ class _ProductViewState extends State<ProductView> {
     return ResponsiveGrid(
         widthPourcentage: isMobile(context) ? 0.3 : 0.25,
         children: [
-          DataStatistiqueItem(
+          DataStatististicsItem(
             label: AppStrings.active,
             count: isActiveCount.toString(),
             color: ColorManager.green,
             icon: IconManger.active,
           ),
-          DataStatistiqueItem(
+          DataStatististicsItem(
               label: AppStrings.notActive,
               count: isNotActiveCount.toString(),
               color: ColorManager.red,
               icon: IconManger.notActive),
-          DataStatistiqueItem(
+          DataStatististicsItem(
             label: AppStrings.total,
             count: products.length.toString(),
             color: ColorManager.orange,

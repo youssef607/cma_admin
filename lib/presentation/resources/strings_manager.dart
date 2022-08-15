@@ -9,6 +9,7 @@ class AppStrings {
   static const String usernameError = "Username is wrong";
   static const String passwordError = "password is wrong";
   static const String password = "Password";
+  static const String signIn = "Sign in";
   static const String login = "Login";
   static const String forgetPassword = "Forget password";
   static const String registerText = "Not a member ? Sign up";
@@ -35,15 +36,31 @@ class AppStrings {
   static const String stores = "Stores";
   static const String dh = "DH";
   static const String barman = "Barman";
+  static const String noDataAvailable = "No data available";
+  static const String category = "Category";
 
   //Dashbord
-  static const String allOrders = "All Orders";
-  static const String chartLineTitle = "Number of Orders";
-  static const String pieChartTitle = "The quantity used for each category";
+  static const String allOrders = "All orders";
+  static const String latestOrders = "Latest orders";
+  static const String numberOfOrders = "Number of orders";
+  static const String ordersCount = "Orders count";
+  static const String totalAmount = "Total amount";
+  static const String totalAmountByWaiter = "Total amount by waiter";
+  static const String ordersCountByWaiter = "Orders count by waiter";
+  static const String totalAmountByHour = "Total amount by hour";
+  static const String ordersCountByHour = "Orders count by hour";
+  static const String goBack = "Go back";
+  static const String viewInsights = "View insights";
+  static const String viewAll = "View all";
+  static const String categoryPieChartTitle = "Quantity consumed by category";
+  static const String productPieChartTitle = "Quantity consumed by product in category";
+  static const String inProgressOrdersCount = "In progress orders count";
+  static const String canceledOrdersCount = "Canceled orders count";
+  static const String compeletedOrdersCount = "Completed orders count";
 
   //Navigation
   static const String dashboard = "Dashboard";
-  static const String category = "Category";
+  static const String categories = "Categories";
   static const String products = "Products";
   static const String supplements = "Supplements";
   static const String users = "Users";
@@ -53,12 +70,16 @@ class AppStrings {
   static const String completed = "Completed";
   static const String completedOrders = "Completed Orders";
   static const String inProgressOrders = "In Progress Orders";
+  static const String canceledOrders = "Canceled Orders";
   static const String inProgress = "inProgress";
   static const String total = "Total";
   static const String totalOrders = "Total Orders";
   static const String amount = "Amount";
   static const String orderN = "Order N° ";
   static const String orders = "Orders";
+  static const String print = "Print";
+  static const String successPrint = "The invoice has been printed";
+
 
   // category
   static const String addCategory = "Add Category";
@@ -87,6 +108,19 @@ class AppStrings {
   //orders details
   static const String orderDetails = "Order details";
   static const String orderPriceTotal = "Total : ";
+
+  // internal server error types
+  static const String userNotFound = "User not found";
+  static const String badCredentials = "Bad credentials";
+  static const String userIsDisabled = "User is disabled";
+  static const String indentificationsErronees = "Les identifications sont erronées";
+  
+    // internal server error messages
+  static const String usernameIEM = "This username is incorrect";
+  static const String passwordIEM = "This password is incorrect";
+  static const String accountDisbledIEM = "Your Account is Disabled";
+  static const String accessError = "You don't have access to this App";
+
 
   static const String badRequestError = "bad request error, try again later";
   static const String noContent = "no content, try again later";

@@ -79,11 +79,12 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, HomeData>> home(String date1, String date2) async {
+  Future<Either<Failure, HomeData>> home() async {
     try {
-      final response = await _remoteDataSource.home(date1, date2);
+      final response = await _remoteDataSource.home();
       return Right(response.toDomain());
     } catch (error) {
+      print(error.toString());
       return Left(ErrorHandler.handle(error).failure);
     }
   }
@@ -243,4 +244,75 @@ class RepositoryImpl extends Repository {
       return Left(ErrorHandler.handle(error).failure);
     }
   }
+
+  @override
+  Future<Either<Failure, void>> print(String id) async{
+    try {
+      final response = await _remoteDataSource.print(id);
+      return Right(response);
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> reorder(String type, String id1, String id2)async {
+    try {
+      final response = await _remoteDataSource.reorder(type, id1, id2);
+      return Right(response);
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+  @override
+  Future<Either<Failure, AllWaitersInsights>> getAllWaitersInsights(String date1, String date2)async {
+    try {
+      final response = await _remoteDataSource.getAllWaitersInsights(date1, date2);
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }  
+
+  @override
+  Future<Either<Failure, WaiterInsights>> getWaiterInsights(String date1, String date2,String id)async {
+    try {
+      final response = await _remoteDataSource.getWaiterInsights(date1, date2,id);
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }  
+  
+  @override
+  Future<Either<Failure, OrdersInsights>> getOrdersInsights(String date1, String date2, String pageIndex) async{
+    try {
+      final response = await _remoteDataSource.getOrdersInsights(date1, date2, pageIndex);
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CategoryCount>>> getCategoriesQuantityConsumed(String date1, String date2)async {
+       try {
+      final response = await _remoteDataSource.getCategoriesQuantityConsumed(date1, date2);
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ProductCount>>> getProductsQuantityConsumedByCategory(String date1, String date2, String categoryId) async{
+       try {
+      final response = await _remoteDataSource.getProductsQuantityConsumedByCategory(date1, date2, categoryId);
+      return Right(response.toDomain());
+    } catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+   
 }
